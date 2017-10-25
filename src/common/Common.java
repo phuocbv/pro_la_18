@@ -98,6 +98,10 @@ public class Common {
 			currentPage = countPage;
 		}
 		int partition = (currentPage - 1) / countPaging; // partition of current page
+		//if have prev partition then get 
+//		if (partition != 0) {
+//			list.add(limit * partition - 1);
+//		}
 		int start = partition * countPaging + 1;// start paging
 		int end = (partition + 1) * countPaging;// end paging
 		// add to paging
@@ -107,6 +111,7 @@ public class Common {
 				break;
 			}
 		}
+		
 		return list;
 	}
 

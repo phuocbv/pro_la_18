@@ -75,18 +75,29 @@ public class ListUserController extends HttpServlet {
 		// get param
 		String fullName = request.getParameter(UserInfor.FULL_NAME);
 		String groupId = request.getParameter(UserInfor.GROUP_ID);
+		String type = request.getParameter(Constant.TYPE);
 		String currentPage = request.getParameter(Constant.PAGE);
-		
-		
+		// String sortType = request.getParameter(Constant.SORT_TYPE);
+		//
+		Map<String, String> map = new HashMap<>();
+		map.put(Constant.TYPE, type);
+		map.put(Constant.PAGE, request.getParameter(Constant.PAGE));
+		map.put(Constant.KEY_FULL_NAME, fullName);
+		map.put(Constant.KEY_GROUP_ID, groupId);
+		map.put(Constant.SORT_TYPE, request.getParameter(Constant.SORT_TYPE));
+		map.put(Constant.SORT_BY_FULL_NAME, request.getParameter(Constant.SORT_BY_FULL_NAME));
+		map.put(Constant.SORT_BY_CODE_LEVEL, request.getParameter(Constant.SORT_BY_CODE_LEVEL));
+		map.put(Constant.SORT_BY_END_DATE, request.getParameter(Constant.SORT_BY_END_DATE));
+
+		if (type == null) {
+
+		} else if (type == Constant.TYPE_SEARCH) {
+
+		}
+
 		HttpSession session = request.getSession();
 		// change session if fullName and groupId != null
-		if (fullName != null && groupId != null) {
-			Map<String, String> map = new HashMap<>();
-			map.put(Constant.KEY_FULL_NAME, fullName);
-			map.put(Constant.KEY_GROUP_ID, groupId);
-			map.put(Constant.KEY_PAGE, currentPage);
-			Common.storeSession(session, Constant.SESSION_CONDITION_STORE, map);
-		}
+		Common.storeSession(session, Constant.SESSION_CONDITION_STORE, map);
 		int page = 1;// default page
 		// get current page
 		if (currentPage != null) {
@@ -97,13 +108,14 @@ public class ListUserController extends HttpServlet {
 			}
 		}
 		// get condition search
-		Map<String, String> map = (HashMap<String, String>) Common.getSession(session,
-				Constant.SESSION_CONDITION_STORE);
-		System.out.println(map);
-		if (map != null) {
-			fullName = map.get(Constant.KEY_FULL_NAME);
-			groupId = map.get(Constant.KEY_GROUP_ID);
-		}
+		// Map<String, String> data = (HashMap<String, String>)
+		// Common.getSession(session,
+		// Constant.SESSION_CONDITION_STORE);
+		// System.out.println(map);
+		// if (data != null) {
+		// fullName = data.get(Constant.KEY_FULL_NAME);
+		// groupId = data.get(Constant.KEY_GROUP_ID);
+		// }
 		// get total user
 		int totalUser = tblUserLogic.getTotalUsers(groupId, fullName);
 		// get limit in page

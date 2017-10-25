@@ -65,6 +65,16 @@ public class Constant {
 	//paging
 	public static final String PAGE = "page";
 	
+	//type
+	public static final String TYPE = "type";
+	public static final String TYPE_SEARCH = "search";
+	
+	//sort
+	public static final String SORT_TYPE = "sortType";
+	public static final String SORT_BY_FULL_NAME = "sortByFullName";
+	public static final String SORT_BY_CODE_LEVEL = "sortByCodeLevel";
+	public static final String SORT_BY_END_DATE = "sortByEndDate";
+	
 	//search
 	public static final String KEY_FULL_NAME = "KEY_FULL_NAME";
 	public static final String KEY_GROUP_ID = "KEY_GROUP_ID";

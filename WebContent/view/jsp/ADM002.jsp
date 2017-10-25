@@ -15,7 +15,7 @@
 <body>
 	<jsp:include page="header.jsp" />
 	<!-- Begin vung dieu kien tim kiem -->
-	<form action="listUser.do" method="post" name="mainform">
+	<form action="listUser.do?type=search" method="post" name="mainform">
 		<table class="tbl_input" border="0" width="90%" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -64,18 +64,30 @@
 	<!-- Begin vung hien thi danh sach user -->
 	<table class="tbl_list" border="1" cellpadding="4" cellspacing="0"
 		width="80%">
-
+		<c:set var="currentPage" value="${sessionScope.CONDITION_STORE.page}"></c:set>
+		<c:set var="sortType"
+			value="${sessionScope.CONDITION_STORE.sortType }"></c:set>
+		<c:set var="sortByFullName"
+			value="${session.CONDITION_STORE.sortByFullName }"></c:set>
+		<c:set var="sortByCodeLevel"
+			value="${session.CONDITION_STORE.sortByCodeLevel }"></c:set>
+		<c:set var="sortByEndDate"
+			value="${sessionScope.CONDITION_STORE.sortByEndDate}"></c:set>
+		<c:set var="paramSort"
+			value="page=${currentPage}&type=sort&sortType=${sortType}
+				&sortByFullName=${sortByFullName}&sortByCodeLevel=${sortByCodeLevel}
+				&sortByEndDate=${sortByEndDate}"></c:set>
 		<tr class="tr2">
 			<th align="center" width="20px">ID</th>
-			<th align="left">氏名 <a href="">▲▽</a>
+			<th align="left">氏名 <a href="listUser.do?${paramSort} }">▲▽</a>
 			</th>
 			<th align="left">生年月日</th>
 			<th align="left">グループ</th>
 			<th align="left">メールアドレス</th>
 			<th align="left" width="70px">電話番号</th>
-			<th align="left">日本語能力 <a href="">▲▽</a>
+			<th align="left">日本語能力 <a href="listUser.do?${paramSort }">▲▽</a>
 			</th>
-			<th align="left">失効日 <a href="">△▼</a>
+			<th align="left">失効日 <a href="listUser.do?${paramSort }">△▼</a>
 			</th>
 			<th align="left">点数</th>
 		</tr>
@@ -112,13 +124,10 @@
 	<!-- Begin vung paging -->
 	<table>
 		<tr>
-			<td class="lbl_paging"><c:set var="limit"
-					value="${DatabaseProperties.databaseProperties.get(ConstantProperties.LIMIT_RECORD)}" />
-				<c:if test="${(sessionScope.CONDITION_STORE.KEY_PAGE - 1)/ limit }">
-
-				</c:if> <a href="#"><<</a>&nbsp; <c:forEach var="item"
+			<td class="lbl_paging"><c:forEach var="item"
 					items="${listPaging}">
-					<a href="listUser.do?page=${item}">${item}</a> &nbsp;
+					<a
+						href="listUser.do?listUser.do?page=${item}&type=paging&sortType=1&sortByFullName=ASC&sortByCodeLevel=ASC&sortByEndDate=DESC">${item}</a> &nbsp;
 				</c:forEach> <a href="#">>></a></td>
 		</tr>
 	</table>
