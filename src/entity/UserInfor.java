@@ -40,15 +40,14 @@ public class UserInfor {
 	public static final String TEL = "tel";
 	public static final String BIRTHDAY = "birthday";
 	public static final String SALT = "salt";
-
-	// total user
-	public static final String TOTAL_USER = "total_user";
-
-	// field foreign
 	public static final String GROUP_NAME = "group_name";
 	public static final String NAME_LEVEL = "name_level";
 	public static final String END_DATE = "end_date";
 	public static final String TOTAL = "total";
+	
+	// total user
+	public static final String TOTAL_USER = "total_user";
+	
 
 	/**
 	 * @return the userId

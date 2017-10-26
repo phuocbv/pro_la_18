@@ -1,6 +1,7 @@
 <%@page import="properties.DatabaseProperties"%>
 <%@page import="properties.MessageProperties"%>
 <%@page import="common.ConstantProperties"%>
+<%@page import="common.Constant"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -31,7 +32,7 @@
 							<td class="lbl_left">氏名:</td>
 							<td align="left"><input class="txBox" type="text"
 								name="full_name"
-								value="<c:out value="${sessionScope.CONDITION_STORE.KEY_FULL_NAME}" escapeXml="true" />"
+								value="<c:out value="${sessionScope.CONDITION_STORE.fullName}" escapeXml="true" />"
 								size="20" onfocus="this.style.borderColor='#0066ff';"
 								onblur="this.style.borderColor='#aaaaaa';" /></td>
 							<td></td>
@@ -43,7 +44,7 @@
 									<c:forEach var="group" items="${listGroup}">
 										<c:choose>
 											<c:when
-												test="${group.groupId == sessionScope.CONDITION_STORE.KEY_GROUP_ID}">
+												test="${group.groupId == sessionScope.CONDITION_STORE.groupId}">
 												<option value="${group.groupId }" selected="selected">${group.groupName }</option>
 											</c:when>
 											<c:otherwise>
@@ -68,26 +69,60 @@
 		<c:set var="sortType"
 			value="${sessionScope.CONDITION_STORE.sortType }"></c:set>
 		<c:set var="sortByFullName"
-			value="${session.CONDITION_STORE.sortByFullName }"></c:set>
+			value="${sessionScope.CONDITION_STORE.sortByFullName }"></c:set>
 		<c:set var="sortByCodeLevel"
-			value="${session.CONDITION_STORE.sortByCodeLevel }"></c:set>
+			value="${sessionScope.CONDITION_STORE.sortByCodeLevel }"></c:set>
 		<c:set var="sortByEndDate"
 			value="${sessionScope.CONDITION_STORE.sortByEndDate}"></c:set>
 		<c:set var="paramSort"
-			value="page=${currentPage}&type=sort&sortType=${sortType}
-				&sortByFullName=${sortByFullName}&sortByCodeLevel=${sortByCodeLevel}
+			value="page=${currentPage}&type=sort
+				&sortByFullName=${sortByFullName}
+				&sortByCodeLevel=${sortByCodeLevel}
 				&sortByEndDate=${sortByEndDate}"></c:set>
 		<tr class="tr2">
 			<th align="center" width="20px">ID</th>
-			<th align="left">氏名 <a href="listUser.do?${paramSort} }">▲▽</a>
+			<th align="left">氏名 <a
+				href="listUser.do?${paramSort}&sortType=${Constant.SORT_BY_FULL_NAME}">
+					<c:choose>
+						<c:when
+							test="${sessionScope.CONDITION_STORE.sortByFullName == Constant.ASC}">
+					▲▽
+				</c:when>
+						<c:otherwise>
+					△▼
+				</c:otherwise>
+					</c:choose>
+			</a>
 			</th>
 			<th align="left">生年月日</th>
 			<th align="left">グループ</th>
 			<th align="left">メールアドレス</th>
 			<th align="left" width="70px">電話番号</th>
-			<th align="left">日本語能力 <a href="listUser.do?${paramSort }">▲▽</a>
+			<th align="left">日本語能力 <a
+				href="listUser.do?${paramSort}&sortType=${Constant.SORT_BY_CODE_LEVEL}">
+					<c:choose>
+						<c:when
+							test="${sessionScope.CONDITION_STORE.sortByCodeLevel == Constant.ASC}">
+					▲▽
+				</c:when>
+						<c:otherwise>
+					△▼
+				</c:otherwise>
+					</c:choose>
+			</a>
 			</th>
-			<th align="left">失効日 <a href="listUser.do?${paramSort }">△▼</a>
+			<th align="left">失効日 <a
+				href="listUser.do?${paramSort}&sortType=${Constant.SORT_BY_END_DATE}">
+					<c:choose>
+						<c:when
+							test="${sessionScope.CONDITION_STORE.sortByEndDate == Constant.ASC}">
+					▲▽
+				</c:when>
+						<c:otherwise>
+					△▼
+				</c:otherwise>
+					</c:choose>
+			</a>
 			</th>
 			<th align="left">点数</th>
 		</tr>
@@ -127,7 +162,9 @@
 			<td class="lbl_paging"><c:forEach var="item"
 					items="${listPaging}">
 					<a
-						href="listUser.do?listUser.do?page=${item}&type=paging&sortType=1&sortByFullName=ASC&sortByCodeLevel=ASC&sortByEndDate=DESC">${item}</a> &nbsp;
+						href="listUser.do?page=${item}&type=paging&sortType=${sortType}
+						&sortByFullName=${sortByFullName}&sortByCodeLevel=${sortByCodeLevel}
+						&sortByEndDate=${sortByEndDate}">${item}</a> &nbsp;
 				</c:forEach> <a href="#">>></a></td>
 		</tr>
 	</table>

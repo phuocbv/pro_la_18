@@ -72,63 +72,73 @@ public class ListUserController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// get param
-		String fullName = request.getParameter(UserInfor.FULL_NAME);
-		String groupId = request.getParameter(UserInfor.GROUP_ID);
-		String type = request.getParameter(Constant.TYPE);
-		String currentPage = request.getParameter(Constant.PAGE);
-		// String sortType = request.getParameter(Constant.SORT_TYPE);
-		//
-		Map<String, String> map = new HashMap<>();
-		map.put(Constant.TYPE, type);
-		map.put(Constant.PAGE, request.getParameter(Constant.PAGE));
-		map.put(Constant.KEY_FULL_NAME, fullName);
-		map.put(Constant.KEY_GROUP_ID, groupId);
-		map.put(Constant.SORT_TYPE, request.getParameter(Constant.SORT_TYPE));
-		map.put(Constant.SORT_BY_FULL_NAME, request.getParameter(Constant.SORT_BY_FULL_NAME));
-		map.put(Constant.SORT_BY_CODE_LEVEL, request.getParameter(Constant.SORT_BY_CODE_LEVEL));
-		map.put(Constant.SORT_BY_END_DATE, request.getParameter(Constant.SORT_BY_END_DATE));
-
-		if (type == null) {
-
-		} else if (type == Constant.TYPE_SEARCH) {
-
-		}
-
-		HttpSession session = request.getSession();
-		// change session if fullName and groupId != null
-		Common.storeSession(session, Constant.SESSION_CONDITION_STORE, map);
-		int page = 1;// default page
-		// get current page
-		if (currentPage != null) {
-			try {
-				page = Integer.parseInt(currentPage);
-			} catch (NumberFormatException e) {
-				page = 1;
+		try {
+			// get param
+			String type = request.getParameter(Constant.TYPE);
+			String currentPage = request.getParameter(Constant.PAGE);
+			HttpSession session = request.getSession();// get session
+			Map<String, String> dataSession = (HashMap<String, String>) Common.getSession(session,
+					Constant.SESSION_CONDITION_STORE);// get condition get user in session
+			if (dataSession == null) {// in case first request
+				dataSession = new HashMap<>();
 			}
+			int page = 1;// default page
+			if (currentPage != null) {// get current page
+				try {
+					page = Integer.parseInt(currentPage);
+				} catch (NumberFormatException e) {
+					page = 1;
+				}
+			}
+			// add type and page into session
+			dataSession.put(Constant.TYPE, type);
+			dataSession.put(Constant.PAGE, String.valueOf(page));
+			if (type == null) {// first request then set params sort and default sort type
+				dataSession.put(Constant.SORT_TYPE, Constant.SORT_BY_FULL_NAME);
+				dataSession.put(Constant.SORT_BY_FULL_NAME, Constant.ASC);
+				dataSession.put(Constant.SORT_BY_CODE_LEVEL, Constant.ASC);
+				dataSession.put(Constant.SORT_BY_END_DATE, Constant.DESC);
+				Common.storeSession(session, Constant.SESSION_CONDITION_STORE, dataSession);
+			} else if (Constant.TYPE_SEARCH.equals(type)) {// in case submit form search
+				String fullName = request.getParameter(UserInfor.FULL_NAME);// get param fullName
+				String groupId = request.getParameter(UserInfor.GROUP_ID);// get param groupId
+				dataSession.put(Constant.FULL_NAME, fullName);// put into session
+				dataSession.put(Constant.GROUP_ID, groupId);
+			} else if (Constant.TYPE_SORT.equals(type)) {// click into sort
+				String sortType = request.getParameter(Constant.SORT_TYPE);
+				dataSession.put(Constant.SORT_TYPE, sortType);
+				if (Constant.SORT_BY_FULL_NAME.equals(sortType)) {// if is sort by fullName
+					String condition = dataSession.get(Constant.SORT_BY_FULL_NAME);
+					dataSession.put(Constant.SORT_BY_FULL_NAME,
+							(condition == Constant.ASC) ? Constant.DESC : Constant.ASC);
+				} else if (Constant.SORT_BY_CODE_LEVEL.equals(sortType)) {// if is sort by codeLevel
+					String condition = dataSession.get(Constant.SORT_BY_CODE_LEVEL);
+					dataSession.put(Constant.SORT_BY_CODE_LEVEL,
+							(condition == Constant.ASC) ? Constant.DESC : Constant.ASC);
+				} else if (Constant.SORT_BY_END_DATE.equals(sortType)) {// if is sort by endDate
+					String condition = dataSession.get(Constant.SORT_BY_END_DATE);// get current condition in session
+					dataSession.put(Constant.SORT_BY_END_DATE,
+							(condition == Constant.ASC) ? Constant.DESC : Constant.ASC);
+				}
+			}
+			int totalUser = tblUserLogic.getTotalUsers(dataSession.get(Constant.GROUP_ID),
+					dataSession.get(Constant.FULL_NAME));// get total user
+			// get limit in page
+			int limit = Integer.parseInt(DatabaseProperties.databaseProperties.get(ConstantProperties.LIMIT_RECORD));
+			List<Integer> listPaging = Common.getListPaging(totalUser, limit, page);// get list paging
+			int offset = Common.getOffset(page, limit);// get offset of paging
+			ArrayList<UserInfor> listUser = tblUserLogic.getListUsers(offset, limit,
+					(String) dataSession.get(Constant.GROUP_ID), (String) dataSession.get(Constant.FULL_NAME),
+					(String) dataSession.get(Constant.SORT_TYPE), (String) dataSession.get(Constant.SORT_BY_FULL_NAME),
+					(String) dataSession.get(Constant.SORT_BY_CODE_LEVEL),
+					(String) dataSession.get(Constant.SORT_BY_END_DATE)); // get listUser
+			ArrayList<MstGroup> listGroup = mstGroupLogic.getListGroup();// get list group
+			request.setAttribute("listUser", listUser);
+			request.setAttribute("listGroup", listGroup);
+			request.setAttribute("listPaging", listPaging);
+			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM002);
+			dispatcher.forward(request, response);// forward đến trang jsp
+		} catch (Exception e) {
 		}
-		// get condition search
-		// Map<String, String> data = (HashMap<String, String>)
-		// Common.getSession(session,
-		// Constant.SESSION_CONDITION_STORE);
-		// System.out.println(map);
-		// if (data != null) {
-		// fullName = data.get(Constant.KEY_FULL_NAME);
-		// groupId = data.get(Constant.KEY_GROUP_ID);
-		// }
-		// get total user
-		int totalUser = tblUserLogic.getTotalUsers(groupId, fullName);
-		// get limit in page
-		int limit = Integer.parseInt(DatabaseProperties.databaseProperties.get(ConstantProperties.LIMIT_RECORD));
-		List<Integer> listPaging = Common.getListPaging(totalUser, limit, page);
-		int offset = Common.getOffset(page, limit);
-		// get listUser and listGroup
-		ArrayList<UserInfor> listUser = tblUserLogic.getListUser(offset, limit, groupId, fullName);
-		ArrayList<MstGroup> listGroup = mstGroupLogic.getListGroup();
-		request.setAttribute("listUser", listUser);
-		request.setAttribute("listGroup", listGroup);
-		request.setAttribute("listPaging", listPaging);
-		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM002);
-		dispatcher.forward(request, response);// forward đến trang jsp
 	}
 }

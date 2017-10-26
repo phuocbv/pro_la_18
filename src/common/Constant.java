@@ -38,6 +38,7 @@ public class Constant {
 	// format string
 	public static final String UTF_8 = "UTF-8";
 	public static final String ISO_8859_1 = "ISO-8859-1";
+	public static final String CONTANT_TYPE = "text/html; charset=UTF-8";
 
 	// length salt
 	public static final int LENGTH_SALT = 20;
@@ -52,12 +53,13 @@ public class Constant {
 	public static final String ADM002 = "/view/jsp/ADM002.jsp";
 	public static final String ADM003 = "/view/jsp/ADM003.jsp";
 	public static final String ADM004 = "/view/jsp/ADM004.jsp";
-
+	public static final String VIEW_ERROR = "/view/jsp/view_error.jsp";
 	// url
 	public static final String URL_HOME = "/";
 	public static final String URL_LOGIN = "/login";
 	public static final String URL_LOGOUT = "/logout";
 	public static final String URL_LIST_USER = "/listUser.do";
+	public static final String URL_VIEW_EROR = "/viewError.do";
 
 	// url filter
 	public static final String URL_FILTER = "/*";
@@ -68,16 +70,18 @@ public class Constant {
 	//type
 	public static final String TYPE = "type";
 	public static final String TYPE_SEARCH = "search";
+	public static final String TYPE_SORT = "sort";
+	public static final String TYPE_PAGING = "paging";
 	
 	//sort
+	public static final String ASC = "ASC";
+	public static final String DESC = "DESC";
 	public static final String SORT_TYPE = "sortType";
 	public static final String SORT_BY_FULL_NAME = "sortByFullName";
 	public static final String SORT_BY_CODE_LEVEL = "sortByCodeLevel";
 	public static final String SORT_BY_END_DATE = "sortByEndDate";
 	
 	//search
-	public static final String KEY_FULL_NAME = "KEY_FULL_NAME";
-	public static final String KEY_GROUP_ID = "KEY_GROUP_ID";
-	public static final String KEY_SORT = "KEY_SORT";
-	public static final String KEY_PAGE = "KEY_PAGE";
+	public static final String FULL_NAME = "fullName";
+	public static final String GROUP_ID = "groupId";
 }

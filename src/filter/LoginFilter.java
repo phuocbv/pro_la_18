@@ -39,6 +39,7 @@ public class LoginFilter implements Filter {
 		listUrlAllow = new ArrayList<String>();
 		listUrlAllow.add(Constant.URL_LIST_USER);
 		listUrlAllow.add(Constant.URL_LOGOUT);
+		listUrlAllow.add(Constant.URL_VIEW_EROR);
 	}
 
 	/**
@@ -49,11 +50,11 @@ public class LoginFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-		res.setHeader("Pragma", "no-cache");
-		res.setDateHeader("Expires", 0);
+//		res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+//		res.setHeader("Pragma", "no-cache");
+//		res.setDateHeader("Expires", 0);
 		req.setCharacterEncoding(Constant.UTF_8);// set utf 8 for request
-		res.setCharacterEncoding(Constant.UTF_8);
+		res.setContentType(Constant.CONTANT_TYPE);// set contant type for response
 		// get relative path
 		String path = req.getRequestURI().substring(req.getContextPath().length());
 		// get session admin

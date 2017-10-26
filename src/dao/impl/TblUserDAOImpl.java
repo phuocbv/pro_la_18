@@ -7,6 +7,7 @@ package dao.impl;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import common.Common;
 import common.Constant;
 import dao.TblUserDAO;
 import entity.UserInfor;
@@ -40,7 +41,8 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 * @return ArrayList<User>
 	 */
 	@Override
-	public ArrayList<UserInfor> getListUsers(int offset, int limit, String groupId, String fullName) {
+	public ArrayList<UserInfor> getListUsers(int offset, int limit, String groupId, String fullName, String sortType,
+			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
 		ArrayList<UserInfor> listUser = new ArrayList<>();
 		try {
 			connection = getConnection();// get connection
@@ -48,15 +50,16 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 				return listUser;
 			}
 			String sql = getSQLSearch(sqlGetListUser.toString(), groupId, fullName);// get SQL search
-			sql = getSQLPaging(sql, offset, limit);
+			sql = getSQLSort(sql, sortType, sortByFullName, sortByCodeLevel, sortByEndDate);
+			sql = getSQLPaging(sql, offset, limit);// add paging
 			pstm = connection.prepareStatement(sql);// sử dụng PrepareStatement
-			System.out.println("sql: " + pstm.toString() + "\n xx:" + sql);
+			System.out.println("pstm: " + pstm.toString() + "\n sql:" + sql);
 			StringBuffer stringBuffer = new StringBuffer();
 			if (groupId != null && fullName != null) {// add param
 				int i = 0;
 				pstm.setString(++i, groupId);
-				pstm.setString(++i,
-						stringBuffer.append(Constant.PERCENT).append(fullName).append(Constant.PERCENT).toString());
+				pstm.setString(++i, stringBuffer.append(Constant.PERCENT).append(Common.filterString(fullName))
+						.append(Constant.PERCENT).toString());
 			}
 			resultSet = pstm.executeQuery();// execute sql
 			while (resultSet.next()) {// lặp từng bản ghi lấy ra và thêm vào list
@@ -98,7 +101,6 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			}
 			String sql = getSQLSearch(sqlGetTotaluser.toString(), groupId, fullName);// get SQL
 			pstm = connection.prepareStatement(sql);// sử dụng PrepareStatement
-			System.out.println("sql " + pstm.toString());
 			StringBuffer stringBuffer = new StringBuffer();
 			// add param
 			if (groupId != null && fullName != null) {
@@ -140,10 +142,37 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		if (fullName != null) {// in case fullName != null then add where
 			stringBuffer.append(" AND ( tbl_user.full_name LIKE ? ");
 			// in case fullName is "" then add where OR 1=1
-			if (Constant.EMPTY_STRING.equals(fullName)) {
-				stringBuffer.append(" OR 1 = 1 ");
-			}
+			// if (Constant.EMPTY_STRING.equals(fullName)) {
+			// stringBuffer.append(" OR 1 = 1 ");
+			// }
 			stringBuffer.append(" ) ");
+		}
+		return stringBuffer.toString();
+	}
+
+	/**
+	 * get sql sort
+	 * 
+	 * @param SQL clause sql
+	 * @param sortType
+	 * @param sortByFullName
+	 * @param sortByCodeLevel
+	 * @param sortByEndDate
+	 * @return
+	 */
+	private String getSQLSort(String SQL, String sortType, String sortByFullName, String sortByCodeLevel,
+			String sortByEndDate) {
+		StringBuffer stringBuffer = new StringBuffer(SQL);
+		if (Constant.SORT_BY_FULL_NAME.equals(sortType)) {//in case sort by full name
+			stringBuffer.append(" ORDER BY full_name ").append(sortByFullName).append(" , name_level ")
+					.append(sortByCodeLevel).append(" , end_date ").append(sortByEndDate);
+		} else if (Constant.SORT_BY_CODE_LEVEL.equals(sortType)) {
+			System.out.println("vao");
+			stringBuffer.append(" ORDER BY name_level ").append(sortByCodeLevel).append(" , full_name ")
+					.append(sortByFullName).append(" , end_date ").append(sortByEndDate);
+		} else if (Constant.SORT_BY_END_DATE.equals(sortType)) {
+			stringBuffer.append(" ORDER BY end_date ").append(sortByEndDate).append(" , full_name ")
+					.append(sortByFullName).append(" , name_level ").append(sortByCodeLevel);
 		}
 		return stringBuffer.toString();
 	}
@@ -166,4 +195,5 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		}
 		return stringBuffer.toString();
 	}
+
 }

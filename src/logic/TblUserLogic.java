@@ -20,7 +20,8 @@ public interface TblUserLogic {
 	 * 
 	 * @return Arraylist<TblUser>
 	 */
-	public ArrayList<UserInfor> getListUser(int offfset, int limit, String groupId, String fullName);
+	public ArrayList<UserInfor> getListUsers(int offset, int limit, String groupId, String fullName, String sortType,
+			String sortByFullName, String sortByCodeLevel, String sortByEndDate);
 
 	/**
 	 * get total user

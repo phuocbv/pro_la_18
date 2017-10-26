@@ -23,8 +23,9 @@ public interface TblUserDAO {
 	 * @param fullName
 	 * @return
 	 */
-	public ArrayList<UserInfor> getListUsers(int offfset, int limit, String groupId, String fullName);
-	
+	public ArrayList<UserInfor> getListUsers(int offset, int limit, String groupId, String fullName, String sortType,
+			String sortByFullName, String sortByCodeLevel, String sortByEndDate);
+
 	/**
 	 * 
 	 * @param groupId

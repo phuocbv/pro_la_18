@@ -1,12 +1,1 @@
-/admin.properties
-/common/
 /controller/
-/dao/
-/database.properties
-/entity/
-/filter/
-/logic/
-/message.properties
-/message_error.properties
-/properties/
-/validate/

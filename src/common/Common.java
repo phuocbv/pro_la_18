@@ -114,6 +114,19 @@ public class Common {
 		
 		return list;
 	}
+	
+	/**
+	 * filter string
+	 * 
+	 * @param value 
+	 * @return
+	 */
+	public static String filterString(String value) {
+		if (value != null) {
+			value = value.replace("%", "?%").replace("/", "?/").replace("_", "?_").replace("'", "?'").replace("'", "?'");
+		}
+		return value;
+	}
 
 	/**
 	 * get offset

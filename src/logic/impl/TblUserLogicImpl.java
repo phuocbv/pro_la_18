@@ -32,8 +32,10 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * 
 	 * @return Arraylist<TblUser>
 	 */
-	public ArrayList<UserInfor> getListUser(int offfset, int limit, String groupId, String fullName) {
-		return userDao.getListUsers(offfset, limit, groupId, fullName);
+	public ArrayList<UserInfor> getListUsers(int offset, int limit, String groupId, String fullName, String sortType,
+			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
+		return userDao.getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName, sortByCodeLevel,
+				sortByEndDate);
 	}
 
 	/**
