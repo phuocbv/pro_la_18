@@ -47,6 +47,8 @@ public class Constant {
 	// session
 	public static final String SESSION_LOGGINED_USER = "LOGINED_USER";
 	public static final String SESSION_CONDITION_STORE = "CONDITION_STORE";
+	public static final String SESSION_PREV = "PREV";
+	public static final String SESSION_NEXT = "NEXT";
 
 	// part file jsp
 	public static final String ADM001 = "/view/jsp/ADM001.jsp";

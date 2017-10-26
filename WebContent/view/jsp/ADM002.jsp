@@ -4,8 +4,8 @@
 <%@page import="common.Constant"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -161,18 +161,27 @@
 			&sortByFullName=${sortByFullName}
 			&sortByCodeLevel=${sortByCodeLevel}
 			&sortByEndDate=${sortByEndDate}"></c:set>
-	<table>
-		<tr>
-			<td class="lbl_paging"><%-- <c:if test="${ partition != 0 }">
-					<a href="listUser.do?page=${partition * 3 - 1}&${paramPaging}"><<</a>
-				</c:if> --%> <c:forEach var="item" items="${listPaging}">
-					<a href="listUser.do?page=${item}&${paramPaging}">${item}</a> &nbsp;
-					<%-- <c:if test="${item == 0}">
-						<a href="listUser.do?page=${partition * 3 + 1}&${paramPaging}">>></a>
-					</c:if> --%>
-				</c:forEach></td>
-		</tr>
-	</table>
+	<c:set var="countPaging"
+		value="${DatabaseProperties.databaseProperties.get(ConstantProperties.COUNT_PAGING) }"></c:set>
+	<c:set var="limit"
+		value="${DatabaseProperties.databaseProperties.get(ConstantProperties.LIMIT_RECORD) }"></c:set>
+	<c:if test="${not empty listPaging}">
+		<table>
+			<tr>
+				<td class="lbl_paging"><c:if
+						test="${currentPage > countPaging}">
+						<a href="listUser.do?page=${listPaging.get(0) - 1}&${paramPaging}"><<</a>&nbsp;
+			</c:if> <c:forEach var="item" items="${listPaging}">
+						<a href="listUser.do?page=${item}&${paramPaging}">${item}</a> &nbsp;
+				</c:forEach> <c:if
+						test="${listPaging.get(listPaging.size() - 1) % countPaging == 0 &&  totalUser > listPaging.get(listPaging.size() - 1) * limit}">
+						<a
+							href="listUser.do?page=${listPaging.get(listPaging.size() - 1) + 1}&${paramPaging}">>></a>
+
+					</c:if></td>
+			</tr>
+		</table>
+	</c:if>
 	<!-- End vung paging -->
 	<jsp:include page="footer.jsp" />
 </body>

@@ -137,6 +137,7 @@ public class ListUserController extends HttpServlet {
 					(String) dataSession.get(Constant.SORT_BY_CODE_LEVEL),
 					(String) dataSession.get(Constant.SORT_BY_END_DATE)); // get listUser
 			ArrayList<MstGroup> listGroup = mstGroupLogic.getListGroup();// get list group
+			request.setAttribute("totalUser", totalUser);
 			request.setAttribute("listUser", listUser);
 			request.setAttribute("listGroup", listGroup);
 			request.setAttribute("listPaging", listPaging);

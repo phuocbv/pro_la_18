@@ -23,7 +23,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	private StringBuffer sqlJoin = new StringBuffer()
 			.append(" FROM tbl_user INNER JOIN mst_group ON tbl_user.group_id = mst_group.group_id ")
 			.append(" INNER JOIN (tbl_detail_user_japan INNER JOIN mst_japan ON tbl_detail_user_japan.code_level = mst_japan.code_level) ")
-			.append(" ON tbl_user.user_id = tbl_detail_user_japan.user_id ");
+			.append(" ON tbl_user.user_id = tbl_detail_user_japan.user_id ").append(" WHERE 1 = 1 ");
 
 	// sql get all user
 	private StringBuffer sqlGetListUser = new StringBuffer()
@@ -46,7 +46,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 * @param sortByFullName
 	 * @param sortByCodeLevel
 	 * @param sortByEndDate
-	 * @return
+	 * @return ArrayList<UserInfor>
 	 */
 	@Override
 	public ArrayList<UserInfor> getListUsers(int offset, int limit, String groupId, String fullName, String sortType,
@@ -61,14 +61,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			sql = getSQLSort(sql, sortType, sortByFullName, sortByCodeLevel, sortByEndDate);// get SQL sort
 			sql = getSQLPaging(sql, offset, limit);// add paging
 			pstm = connection.prepareStatement(sql);// sử dụng PrepareStatement
-			System.out.println("pstm: " + pstm.toString() + "\n sql:" + sql);
-			StringBuffer stringBuffer = new StringBuffer();
-			if (groupId != null && fullName != null) {// add param
-				int i = 0;
-				pstm.setString(++i, groupId);
-				pstm.setString(++i, stringBuffer.append(Constant.PERCENT).append(Common.filterString(fullName))
-						.append(Constant.PERCENT).toString());
-			}
+			setParam(sql, groupId, fullName);
 			resultSet = pstm.executeQuery();// execute sql
 			while (resultSet.next()) {// lặp từng bản ghi lấy ra và thêm vào list
 				UserInfor user = new UserInfor();
@@ -108,15 +101,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 				return totalUser;
 			}
 			String sql = getSQLSearch(sqlGetTotaluser.toString(), groupId, fullName);// get SQL
-			pstm = connection.prepareStatement(sql);// use PrepareStatement
-			StringBuffer stringBuffer = new StringBuffer();
-			// add param
-			if (groupId != null && fullName != null) {
-				int i = 0;
-				pstm.setString(++i, groupId);
-				pstm.setString(++i,
-						stringBuffer.append(Constant.PERCENT).append(fullName).append(Constant.PERCENT).toString());
-			}
+			setParam(sql, groupId, fullName);// set param into pstm
 			resultSet = pstm.executeQuery();// execute sql
 			resultSet.next();
 			totalUser = resultSet.getInt(UserInfor.TOTAL_USER);// read total user
@@ -131,6 +116,29 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	};
 
 	/**
+	 * set param for pstm
+	 * 
+	 * @param sql
+	 * @param groupId
+	 * @param fullName
+	 * @throws SQLException
+	 */
+	private void setParam(String sql, String groupId, String fullName) throws SQLException {
+		pstm = connection.prepareStatement(sql);
+		StringBuffer stringBuffer = new StringBuffer();
+		int i = 0;
+		// add where groupId
+		if (groupId != null && !Constant.ZERO.equals(groupId) && !Constant.EMPTY_STRING.equals(groupId)) {
+			pstm.setString(++i, groupId);
+		}
+		// add where fullName
+		if (fullName != null && !Constant.EMPTY_STRING.equals(fullName)) {
+			pstm.setString(++i, stringBuffer.append(Constant.PERCENT).append(Common.filterString(fullName))
+					.append(Constant.PERCENT).toString());
+		}
+	}
+
+	/**
 	 * function get SQL by param
 	 * 
 	 * @param groupId
@@ -139,21 +147,14 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 */
 	private String getSQLSearch(String firstSQL, String groupId, String fullName) {
 		StringBuffer stringBuffer = new StringBuffer(firstSQL);
-		if (groupId != null) {// in case group != null then add where
-			stringBuffer.append(" WHERE (tbl_user.group_id = ? ");
-			// in case group is "" or 0 then add where OR 1 = 1
-			if (Constant.ZERO.equals(groupId) || Constant.EMPTY_STRING.equals(groupId)) {
-				stringBuffer.append(" OR 1 = 1 ");
-			}
-			stringBuffer.append(" ) ");
+		// if groupId is not null , is not zero, is not empty string then add condition
+		// in where
+		if (groupId != null && !Constant.ZERO.equals(groupId) && !Constant.EMPTY_STRING.equals(groupId)) {
+			stringBuffer.append(" AND (tbl_user.group_id = ? ) ");
 		}
-		if (fullName != null) {// in case fullName != null then add where
-			stringBuffer.append(" AND ( tbl_user.full_name LIKE ? ");
-			// in case fullName is "" then add where OR 1=1
-			// if (Constant.EMPTY_STRING.equals(fullName)) {
-			// stringBuffer.append(" OR 1 = 1 ");
-			// }
-			stringBuffer.append(" ) ");
+		// if fullName is not null , is not empty string then add condition in where
+		if (fullName != null && !Constant.EMPTY_STRING.equals(fullName)) {
+			stringBuffer.append(" AND ( tbl_user.full_name LIKE ? ) ");
 		}
 		return stringBuffer.toString();
 	}
@@ -176,11 +177,11 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			// add order full_name - name_level - end_date
 			stringBuffer.append(" ORDER BY full_name ").append(sortByFullName).append(" , name_level ")
 					.append(sortByCodeLevel).append(" , end_date ").append(sortByEndDate);
-		} else if (Constant.SORT_BY_CODE_LEVEL.equals(sortType)) {
+		} else if (Constant.SORT_BY_CODE_LEVEL.equals(sortType)) {// sort by code level
 			// add order name_level - full_name - end_date
 			stringBuffer.append(" ORDER BY name_level ").append(sortByCodeLevel).append(" , full_name ")
 					.append(sortByFullName).append(" , end_date ").append(sortByEndDate);
-		} else if (Constant.SORT_BY_END_DATE.equals(sortType)) {
+		} else if (Constant.SORT_BY_END_DATE.equals(sortType)) {// sort by end date
 			// add order end_date - full_name - name_level
 			stringBuffer.append(" ORDER BY end_date ").append(sortByEndDate).append(" , full_name ")
 					.append(sortByFullName).append(" , name_level ").append(sortByCodeLevel);
@@ -199,10 +200,10 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	private String getSQLPaging(String SQL, int offset, int limit) {
 		StringBuffer stringBuffer = new StringBuffer(SQL);
 		// add limit
-		stringBuffer.append(" limit ").append(limit).append(" ");
+		stringBuffer.append(" limit ").append(limit);
 		if (offset >= 0) {
 			// add offset
-			stringBuffer.append(" offset ").append(offset).append(" ");
+			stringBuffer.append(" offset ").append(offset);
 		}
 		return stringBuffer.toString();
 	}
