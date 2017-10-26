@@ -70,8 +70,7 @@ public class ListUserController extends HttpServlet {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			// get param
 			String type = request.getParameter(Constant.TYPE);
@@ -90,8 +89,7 @@ public class ListUserController extends HttpServlet {
 					page = 1;
 				}
 			}
-			// add type and page into session
-			dataSession.put(Constant.TYPE, type);
+			// add page into session
 			dataSession.put(Constant.PAGE, String.valueOf(page));
 			if (type == null) {// first request then set params sort and default sort type
 				dataSession.put(Constant.SORT_TYPE, Constant.SORT_BY_FULL_NAME);
@@ -120,7 +118,13 @@ public class ListUserController extends HttpServlet {
 					dataSession.put(Constant.SORT_BY_END_DATE,
 							(condition == Constant.ASC) ? Constant.DESC : Constant.ASC);
 				}
+			} else if (Constant.TYPE_PAGING.equals(type)) {
+				// dataSession.put(Constant.PAGE, String.valueOf(page)); // add page into
+				// session
+
 			}
+			
+			System.out.println(dataSession);
 			int totalUser = tblUserLogic.getTotalUsers(dataSession.get(Constant.GROUP_ID),
 					dataSession.get(Constant.FULL_NAME));// get total user
 			// get limit in page
@@ -139,6 +143,13 @@ public class ListUserController extends HttpServlet {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM002);
 			dispatcher.forward(request, response);// forward đến trang jsp
 		} catch (Exception e) {
+			StringBuffer stringBuffer = new StringBuffer(request.getContextPath());
+			try {
+				//in case have error then send redirect to view error
+				response.sendRedirect(stringBuffer.append(Constant.URL_VIEW_EROR).toString());
+			} catch (IOException e1) {
+				
+			}
 		}
 	}
 }

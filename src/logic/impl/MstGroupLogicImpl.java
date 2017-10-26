@@ -30,7 +30,7 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	/**
 	 * get all group
 	 * 
-	 * @return MstGroupLogic
+	 * @return  ArrayList<MstGroup>
 	 */
 	@Override
 	public ArrayList<MstGroup> getListGroup() {

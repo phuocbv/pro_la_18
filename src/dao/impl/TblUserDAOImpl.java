@@ -38,7 +38,15 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	/**
 	 * function get all user in user table
 	 * 
-	 * @return ArrayList<User>
+	 * @param offset
+	 * @param limit
+	 * @param groupId
+	 * @param fullName
+	 * @param sortType
+	 * @param sortByFullName
+	 * @param sortByCodeLevel
+	 * @param sortByEndDate
+	 * @return
 	 */
 	@Override
 	public ArrayList<UserInfor> getListUsers(int offset, int limit, String groupId, String fullName, String sortType,
@@ -50,7 +58,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 				return listUser;
 			}
 			String sql = getSQLSearch(sqlGetListUser.toString(), groupId, fullName);// get SQL search
-			sql = getSQLSort(sql, sortType, sortByFullName, sortByCodeLevel, sortByEndDate);
+			sql = getSQLSort(sql, sortType, sortByFullName, sortByCodeLevel, sortByEndDate);// get SQL sort
 			sql = getSQLPaging(sql, offset, limit);// add paging
 			pstm = connection.prepareStatement(sql);// sử dụng PrepareStatement
 			System.out.println("pstm: " + pstm.toString() + "\n sql:" + sql);
@@ -96,11 +104,11 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		int totalUser = 0;
 		try {
 			connection = getConnection();// get connection
-			if (connection == null) {// nếu connect null thì return
+			if (connection == null) {// if connect null then return
 				return totalUser;
 			}
 			String sql = getSQLSearch(sqlGetTotaluser.toString(), groupId, fullName);// get SQL
-			pstm = connection.prepareStatement(sql);// sử dụng PrepareStatement
+			pstm = connection.prepareStatement(sql);// use PrepareStatement
 			StringBuffer stringBuffer = new StringBuffer();
 			// add param
 			if (groupId != null && fullName != null) {
@@ -127,7 +135,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 * 
 	 * @param groupId
 	 * @param fullName
-	 * @return
+	 * @return String
 	 */
 	private String getSQLSearch(String firstSQL, String groupId, String fullName) {
 		StringBuffer stringBuffer = new StringBuffer(firstSQL);
@@ -153,24 +161,27 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	/**
 	 * get sql sort
 	 * 
-	 * @param SQL clause sql
+	 * @param SQL
+	 *            clause sql
 	 * @param sortType
 	 * @param sortByFullName
 	 * @param sortByCodeLevel
 	 * @param sortByEndDate
-	 * @return
+	 * @return String
 	 */
 	private String getSQLSort(String SQL, String sortType, String sortByFullName, String sortByCodeLevel,
 			String sortByEndDate) {
 		StringBuffer stringBuffer = new StringBuffer(SQL);
-		if (Constant.SORT_BY_FULL_NAME.equals(sortType)) {//in case sort by full name
+		if (Constant.SORT_BY_FULL_NAME.equals(sortType)) {// in case sort by full name
+			// add order full_name - name_level - end_date
 			stringBuffer.append(" ORDER BY full_name ").append(sortByFullName).append(" , name_level ")
 					.append(sortByCodeLevel).append(" , end_date ").append(sortByEndDate);
 		} else if (Constant.SORT_BY_CODE_LEVEL.equals(sortType)) {
-			System.out.println("vao");
+			// add order name_level - full_name - end_date
 			stringBuffer.append(" ORDER BY name_level ").append(sortByCodeLevel).append(" , full_name ")
 					.append(sortByFullName).append(" , end_date ").append(sortByEndDate);
 		} else if (Constant.SORT_BY_END_DATE.equals(sortType)) {
+			// add order end_date - full_name - name_level
 			stringBuffer.append(" ORDER BY end_date ").append(sortByEndDate).append(" , full_name ")
 					.append(sortByFullName).append(" , name_level ").append(sortByCodeLevel);
 		}
@@ -183,15 +194,15 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 * @param SQL
 	 * @param offset
 	 * @param limit
-	 * @return
+	 * @return String
 	 */
 	private String getSQLPaging(String SQL, int offset, int limit) {
 		StringBuffer stringBuffer = new StringBuffer(SQL);
-		if (limit >= 0) {
-			stringBuffer.append(" limit ").append(limit).append(" ");
-			if (offset >= 0) {
-				stringBuffer.append(" offset ").append(offset).append(" ");
-			}
+		// add limit
+		stringBuffer.append(" limit ").append(limit).append(" ");
+		if (offset >= 0) {
+			// add offset
+			stringBuffer.append(" offset ").append(offset).append(" ");
 		}
 		return stringBuffer.toString();
 	}

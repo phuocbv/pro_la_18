@@ -18,7 +18,7 @@ public interface MstGroupLogic {
 	/**
 	 * get all group
 	 * 
-	 * @return MstGroupLogic
+	 * @return ArrayList<MstGroup>
 	 */
 	public ArrayList<MstGroup> getListGroup();
 }

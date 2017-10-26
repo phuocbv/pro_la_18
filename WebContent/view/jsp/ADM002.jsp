@@ -4,8 +4,8 @@
 <%@page import="common.Constant"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -152,20 +152,25 @@
 				</tbody>
 			</c:otherwise>
 		</c:choose>
-
 	</table>
 	<!-- End vung hien thi danh sach user -->
 
 	<!-- Begin vung paging -->
+	<c:set var="paramPaging"
+		value="type=paging&sortType=${sortType}
+			&sortByFullName=${sortByFullName}
+			&sortByCodeLevel=${sortByCodeLevel}
+			&sortByEndDate=${sortByEndDate}"></c:set>
 	<table>
 		<tr>
-			<td class="lbl_paging"><c:forEach var="item"
-					items="${listPaging}">
-					<a
-						href="listUser.do?page=${item}&type=paging&sortType=${sortType}
-						&sortByFullName=${sortByFullName}&sortByCodeLevel=${sortByCodeLevel}
-						&sortByEndDate=${sortByEndDate}">${item}</a> &nbsp;
-				</c:forEach> <a href="#">>></a></td>
+			<td class="lbl_paging"><%-- <c:if test="${ partition != 0 }">
+					<a href="listUser.do?page=${partition * 3 - 1}&${paramPaging}"><<</a>
+				</c:if> --%> <c:forEach var="item" items="${listPaging}">
+					<a href="listUser.do?page=${item}&${paramPaging}">${item}</a> &nbsp;
+					<%-- <c:if test="${item == 0}">
+						<a href="listUser.do?page=${partition * 3 + 1}&${paramPaging}">>></a>
+					</c:if> --%>
+				</c:forEach></td>
 		</tr>
 	</table>
 	<!-- End vung paging -->

@@ -98,10 +98,6 @@ public class Common {
 			currentPage = countPage;
 		}
 		int partition = (currentPage - 1) / countPaging; // partition of current page
-		//if have prev partition then get 
-//		if (partition != 0) {
-//			list.add(limit * partition - 1);
-//		}
 		int start = partition * countPaging + 1;// start paging
 		int end = (partition + 1) * countPaging;// end paging
 		// add to paging
@@ -111,19 +107,19 @@ public class Common {
 				break;
 			}
 		}
-		
 		return list;
 	}
-	
+
 	/**
 	 * filter string
 	 * 
-	 * @param value 
+	 * @param value
 	 * @return
 	 */
 	public static String filterString(String value) {
 		if (value != null) {
-			value = value.replace("%", "?%").replace("/", "?/").replace("_", "?_").replace("'", "?'").replace("'", "?'");
+			value = value.replace("%", "?%").replace("/", "?/").replace("_", "?_").replace("'", "?'").replace("'",
+					"?'");
 		}
 		return value;
 	}
@@ -187,7 +183,7 @@ public class Common {
 	/**
 	 * get properties of message
 	 * 
-	 * @return
+	 * @return Properties
 	 */
 	public static Properties getProperties(String fileName) {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
