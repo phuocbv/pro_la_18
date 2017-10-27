@@ -75,14 +75,15 @@ public class ListUserController extends HttpServlet {
 			// get param
 			String type = request.getParameter(Constant.TYPE);
 			HttpSession session = request.getSession();// get session
+			if (type == null) {
+				
+			}
 			Map<String, String> dataSession = (HashMap<String, String>) Common.getSession(session,
 					Constant.SESSION_CONDITION_STORE);// get condition get user in session
-			if (dataSession == null) {// in case first request
-				dataSession = new HashMap<>();
-			}
-
 			int page = 1;// default page
 			if (type == null) {// first request then set params sort and default sort type
+				Common.remoteSession(session, Constant.SESSION_CONDITION_STORE);//remote session
+				dataSession = new HashMap<>();
 				dataSession.put(Constant.SORT_TYPE, Constant.SORT_BY_FULL_NAME);
 				dataSession.put(Constant.SORT_BY_FULL_NAME, Constant.ASC);
 				dataSession.put(Constant.SORT_BY_CODE_LEVEL, Constant.ASC);
@@ -119,11 +120,11 @@ public class ListUserController extends HttpServlet {
 			}
 			// add page into session
 			dataSession.put(Constant.PAGE, String.valueOf(page));
-			System.out.println(dataSession);
 			int totalUser = tblUserLogic.getTotalUsers(dataSession.get(Constant.GROUP_ID),
 					dataSession.get(Constant.FULL_NAME));// get total user
 			// get limit in page
 			int limit = Integer.parseInt(DatabaseProperties.databaseProperties.get(ConstantProperties.LIMIT_RECORD));
+			page = Integer.parseInt(dataSession.get(Constant.PAGE));//get current page
 			List<Integer> listPaging = Common.getListPaging(totalUser, limit, page);// get list paging
 			int offset = Common.getOffset(page, limit);// get offset of paging
 			ArrayList<UserInfor> listUser = tblUserLogic.getListUsers(offset, limit,

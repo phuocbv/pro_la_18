@@ -73,13 +73,6 @@
 			value="${sessionScope.CONDITION_STORE.sortByCodeLevel }"></c:set>
 		<c:set var="sortByEndDate"
 			value="${sessionScope.CONDITION_STORE.sortByEndDate}"></c:set>
-
-		<%-- 	<c:set var="sortByFullName"
-			value="${sessionScope.CONDITION_STORE.sortByFullName == Constant.ASC ? Constant.DESC : Constant.ASC }"></c:set>
-		<c:set var="sortByCodeLevel"
-			value="${sessionScope.CONDITION_STORE.sortByCodeLevel == Constant.ASC ? Constant.DESC : Constant.ASC }"></c:set>
-		<c:set var="sortByEndDate"
-			value="${sessionScope.CONDITION_STORE.sortByEndDate == Constant.ASC ? Constant.DESC : Constant.ASC}"></c:set> --%>
 		<c:set var="paramSort" value="page=1&type=sort"></c:set>
 		<tr class="tr2">
 			<th align="center" width="20px">ID</th>

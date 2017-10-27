@@ -27,7 +27,7 @@ public class Common {
 	 * function md5
 	 * 
 	 * @param value
-	 * @return
+	 * @return String
 	 */
 	public static String MD5(String value) {
 		String result = "";
@@ -46,7 +46,7 @@ public class Common {
 	 * 
 	 * @param value
 	 * @param salt
-	 * @return
+	 * @return String
 	 */
 	public static String MD5(String value, String salt) {
 		StringBuffer stringBuffer = new StringBuffer();
@@ -59,7 +59,7 @@ public class Common {
 	 * function random string
 	 * 
 	 * @param length
-	 * @return
+	 * @return String
 	 */
 	public static String randomString() {
 		StringBuilder builder = new StringBuilder();
@@ -76,7 +76,7 @@ public class Common {
 	 * @param tolalRecords
 	 * @param limit
 	 * @param currentPage
-	 * @return
+	 * @return List<Integer>
 	 */
 	public static List<Integer> getListPaging(int tolalRecords, int limit, int currentPage) {
 		List<Integer> list = new ArrayList<>();
@@ -93,6 +93,7 @@ public class Common {
 		if (currentPage > countPage) {
 			currentPage = countPage;
 		}
+		int currentRange = (int) Math.ceil((float) currentPage / countPaging);
 		int partition = (currentPage - 1) / countPaging; // partition of current page
 		int start = partition * countPaging + 1;// start paging
 		int end = (partition + 1) * countPaging;// end paging
@@ -105,12 +106,18 @@ public class Common {
 		}
 		return list;
 	}
+	
+	private int getCurrentRange(int currentPage, int numberRange) {
+		return (int) Math.ceil((float) currentPage / numberRange);
+	}
+	
+	//private int 
 
 	/**
 	 * filter string
 	 * 
 	 * @param value
-	 * @return
+	 * @return String
 	 */
 	public static String filterString(String value) {
 		if (value != null) {
@@ -125,7 +132,7 @@ public class Common {
 	 * 
 	 * @param currentPage
 	 * @param limit
-	 * @return
+	 * @return String
 	 */
 	public static int getOffset(int currentPage, int limit) {
 		return (currentPage - 1) * limit;
@@ -145,7 +152,7 @@ public class Common {
 	 * get session by key
 	 * 
 	 * @param session
-	 * @return
+	 * @return Object
 	 */
 	public static Object getSession(HttpSession session, String key) {
 		return session.getAttribute(key);
@@ -164,7 +171,7 @@ public class Common {
 	 * format japanese
 	 * 
 	 * @param value
-	 * @return
+	 * @return String
 	 */
 	public static String getJapanes(String value) {
 		String result = "";
