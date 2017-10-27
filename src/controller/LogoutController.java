@@ -37,7 +37,7 @@ public class LogoutController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Common.remoteSession(session, Constant.SESSION_LOGGINED_USER);
+		Common.remoteSession(session, Constant.SESSION_LOGGINED_USER);//remote session
 		StringBuffer stringBuffer = new StringBuffer(request.getContextPath());
 		stringBuffer.append(Constant.URL_LOGIN);
 		response.sendRedirect(stringBuffer.toString());

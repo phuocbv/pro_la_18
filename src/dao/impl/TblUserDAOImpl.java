@@ -13,7 +13,7 @@ import dao.TblUserDAO;
 import entity.UserInfor;
 
 /**
- * class user DAO impl
+ * class user DAO impl : manipulation with table tbl_user
  * 
  * @author da
  *
@@ -133,8 +133,8 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		}
 		// add where fullName
 		if (fullName != null && !Constant.EMPTY_STRING.equals(fullName)) {
-			pstm.setString(++i, stringBuffer.append(Constant.PERCENT).append(Common.filterString(fullName))
-					.append(Constant.PERCENT).toString());
+			pstm.setString(++i,
+					stringBuffer.append(Constant.PERCENT).append(fullName).append(Constant.PERCENT).toString());
 		}
 	}
 

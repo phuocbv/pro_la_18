@@ -7,47 +7,40 @@ package entity;
 import java.util.Date;
 
 /**
- * class entity tbl user
+ * class entity user infor
  * 
  * @author da
  *
  */
 public class UserInfor {
 	private int userId;
-	private int groupId;
-	private String loginName;
-	private String password;
 	private String fullName;
-	private String fullNameKana;
+	private Date birthday;
+	private String groupName;
 	private String email;
 	private String tel;
-	private Date birthday;
-	private String salt;
-
-	private String groupName;
 	private String nameLevel;
 	private Date endDate;
 	private int total;
 
-	// field name in table tbl_user of database
+	// field name in ADM002 of database
 	public static final String USER_ID = "user_id";
-	public static final String GROUP_ID = "group_id";
-	public static final String LOGIN_NAME = "login_name";
-	public static final String PASSWORD = "password";
 	public static final String FULL_NAME = "full_name";
-	public static final String FULL_NAME_KANA = "full_name_kana";
+	public static final String BIRTHDAY = "birthday";
 	public static final String EMAIL = "email";
 	public static final String TEL = "tel";
-	public static final String BIRTHDAY = "birthday";
-	public static final String SALT = "salt";
 	public static final String GROUP_NAME = "group_name";
 	public static final String NAME_LEVEL = "name_level";
 	public static final String END_DATE = "end_date";
 	public static final String TOTAL = "total";
+
+	//param
+	public static final String LOGIN_NAME = "login_name";
+	public static final String PASSWORD = "password";
+	public static final String GROUP_ID = "group_id";
 	
 	// total user
 	public static final String TOTAL_USER = "total_user";
-	
 
 	/**
 	 * @return the userId
@@ -62,51 +55,6 @@ public class UserInfor {
 	 */
 	public void setUserId(int userId) {
 		this.userId = userId;
-	}
-
-	/**
-	 * @return the groupId
-	 */
-	public int getGroupId() {
-		return groupId;
-	}
-
-	/**
-	 * @param groupId
-	 *            the groupId to set
-	 */
-	public void setGroupId(int groupId) {
-		this.groupId = groupId;
-	}
-
-	/**
-	 * @return the loginName
-	 */
-	public String getLoginName() {
-		return loginName;
-	}
-
-	/**
-	 * @param loginName
-	 *            the loginName to set
-	 */
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
-
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * @param password
-	 *            the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	/**
@@ -125,18 +73,33 @@ public class UserInfor {
 	}
 
 	/**
-	 * @return the fullNameKana
+	 * @return the birthday
 	 */
-	public String getFullNameKana() {
-		return fullNameKana;
+	public Date getBirthday() {
+		return birthday;
 	}
 
 	/**
-	 * @param fullNameKana
-	 *            the fullNameKana to set
+	 * @param birthday
+	 *            the birthday to set
 	 */
-	public void setFullNameKana(String fullNameKana) {
-		this.fullNameKana = fullNameKana;
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	/**
+	 * @return the groupName
+	 */
+	public String getGroupName() {
+		return groupName;
+	}
+
+	/**
+	 * @param groupName
+	 *            the groupName to set
+	 */
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
 
 	/**
@@ -167,51 +130,6 @@ public class UserInfor {
 	 */
 	public void setTel(String tel) {
 		this.tel = tel;
-	}
-
-	/**
-	 * @return the birthday
-	 */
-	public Date getBirthday() {
-		return birthday;
-	}
-
-	/**
-	 * @param birthday
-	 *            the birthday to set
-	 */
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-
-	/**
-	 * @return the salt
-	 */
-	public String getSalt() {
-		return salt;
-	}
-
-	/**
-	 * @param salt
-	 *            the salt to set
-	 */
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
-
-	/**
-	 * @return the groupName
-	 */
-	public String getGroupName() {
-		return groupName;
-	}
-
-	/**
-	 * @param groupName
-	 *            the groupName to set
-	 */
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
 	}
 
 	/**

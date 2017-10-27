@@ -24,7 +24,7 @@ public class MessageProperties {
 	/**
 	 * get map properties of message
 	 * 
-	 * @return
+	 * @return Map<String, String> : list message
 	 */
 	public static Map<String, String> getMessageProperties() {
 		Map<String, String> map = new HashMap<String, String>();

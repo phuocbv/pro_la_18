@@ -6,6 +6,7 @@ package logic.impl;
 
 import java.util.ArrayList;
 
+import common.Common;
 import dao.TblUserDAO;
 import dao.impl.TblUserDAOImpl;
 import entity.UserInfor;
@@ -42,6 +43,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	public ArrayList<UserInfor> getListUsers(int offset, int limit, String groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
+		fullName = Common.filterString(fullName);
 		return userDao.getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName, sortByCodeLevel,
 				sortByEndDate);
 	}

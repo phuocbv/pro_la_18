@@ -12,6 +12,7 @@ import entity.MstGroup;
 
 /**
  * class MstGroupDAOImpl
+ * manipulation with table mst_group
  * 
  * @author da
  *

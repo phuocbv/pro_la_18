@@ -66,23 +66,28 @@
 	<table class="tbl_list" border="1" cellpadding="4" cellspacing="0"
 		width="80%">
 		<c:set var="currentPage" value="${sessionScope.CONDITION_STORE.page}"></c:set>
-		<c:set var="sortType"
-			value="${sessionScope.CONDITION_STORE.sortType }"></c:set>
+		<c:set var="sortType" value="${sessionScope.CONDITION_STORE.sortType}"></c:set>
 		<c:set var="sortByFullName"
-			value="${sessionScope.CONDITION_STORE.sortByFullName }"></c:set>
+			value="${sessionScope.CONDITION_STORE.sortByFullName}"></c:set>
 		<c:set var="sortByCodeLevel"
 			value="${sessionScope.CONDITION_STORE.sortByCodeLevel }"></c:set>
 		<c:set var="sortByEndDate"
 			value="${sessionScope.CONDITION_STORE.sortByEndDate}"></c:set>
-		<c:set var="paramSort"
-			value="page=${currentPage}&type=sort
-				&sortByFullName=${sortByFullName}
-				&sortByCodeLevel=${sortByCodeLevel}
-				&sortByEndDate=${sortByEndDate}"></c:set>
+
+		<%-- 	<c:set var="sortByFullName"
+			value="${sessionScope.CONDITION_STORE.sortByFullName == Constant.ASC ? Constant.DESC : Constant.ASC }"></c:set>
+		<c:set var="sortByCodeLevel"
+			value="${sessionScope.CONDITION_STORE.sortByCodeLevel == Constant.ASC ? Constant.DESC : Constant.ASC }"></c:set>
+		<c:set var="sortByEndDate"
+			value="${sessionScope.CONDITION_STORE.sortByEndDate == Constant.ASC ? Constant.DESC : Constant.ASC}"></c:set> --%>
+		<c:set var="paramSort" value="page=1&type=sort"></c:set>
 		<tr class="tr2">
 			<th align="center" width="20px">ID</th>
 			<th align="left">氏名 <a
-				href="listUser.do?${paramSort}&sortType=${Constant.SORT_BY_FULL_NAME}">
+				href="listUser.do?${paramSort}
+				&sortByFullName=${sessionScope.CONDITION_STORE.sortByFullName == Constant.ASC ? Constant.DESC : Constant.ASC}
+				&sortByCodeLevel=${sortByCodeLevel}
+				&sortByEndDate=${sortByEndDate}&sortType=${Constant.SORT_BY_FULL_NAME}">
 					<c:choose>
 						<c:when
 							test="${sessionScope.CONDITION_STORE.sortByFullName == Constant.ASC}">
@@ -99,7 +104,11 @@
 			<th align="left">メールアドレス</th>
 			<th align="left" width="70px">電話番号</th>
 			<th align="left">日本語能力 <a
-				href="listUser.do?${paramSort}&sortType=${Constant.SORT_BY_CODE_LEVEL}">
+				href="listUser.do?${paramSort}
+				&sortByFullName=${sortByFullName}
+				&sortByCodeLevel=${sessionScope.CONDITION_STORE.sortByCodeLevel == Constant.ASC ? Constant.DESC : Constant.ASC}
+				&sortByEndDate=${sortByEndDate}
+				&sortType=${Constant.SORT_BY_CODE_LEVEL}">
 					<c:choose>
 						<c:when
 							test="${sessionScope.CONDITION_STORE.sortByCodeLevel == Constant.ASC}">
@@ -112,7 +121,11 @@
 			</a>
 			</th>
 			<th align="left">失効日 <a
-				href="listUser.do?${paramSort}&sortType=${Constant.SORT_BY_END_DATE}">
+				href="listUser.do?${paramSort}
+				&sortByFullName=${sortByFullName}
+				&sortByCodeLevel=${sortByCodeLevel}
+				&sortByEndDate=${sessionScope.CONDITION_STORE.sortByEndDate == Constant.ASC ? Constant.DESC : Constant.ASC}
+				&sortType=${Constant.SORT_BY_END_DATE}">
 					<c:choose>
 						<c:when
 							test="${sessionScope.CONDITION_STORE.sortByEndDate == Constant.ASC}">
@@ -157,10 +170,11 @@
 
 	<!-- Begin vung paging -->
 	<c:set var="paramPaging"
-		value="type=paging&sortType=${sortType}
+		value="type=paging
 			&sortByFullName=${sortByFullName}
 			&sortByCodeLevel=${sortByCodeLevel}
-			&sortByEndDate=${sortByEndDate}"></c:set>
+			&sortByEndDate=${sortByEndDate}
+			&sortType=${sortType}"></c:set>
 	<c:set var="countPaging"
 		value="${DatabaseProperties.databaseProperties.get(ConstantProperties.COUNT_PAGING) }"></c:set>
 	<c:set var="limit"

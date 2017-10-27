@@ -70,7 +70,7 @@ public class LoginController extends HttpServlet {
 		// validate admin login
 		List<String> listMessage = authLogic.validateAdmin(loginName, password);
 		StringBuffer stringBuffer = new StringBuffer(request.getContextPath());
-		// if empty error then redirect to list user else then forward to login
+		// if listMessage empty then redirect to list user else then forward to login
 		if (listMessage.isEmpty()) {//if listMessage empty then login success
 			HttpSession session = request.getSession();
 			Common.storeSession(session, Constant.SESSION_LOGGINED_USER, loginName);

@@ -86,11 +86,7 @@ public class Common {
 		}
 		int countPaging = Integer.parseInt(DatabaseProperties.databaseProperties.get(ConstantProperties.COUNT_PAGING));
 		// count page follow limit
-		int countPage = tolalRecords / limit;
-		// test end page have record
-		if ((tolalRecords % limit) > 0) {
-			countPage++;
-		}
+		int countPage = (int) Math.ceil((float) tolalRecords / limit);
 		if (currentPage < 1) {
 			currentPage = 1;
 		}

@@ -74,23 +74,14 @@ public class ListUserController extends HttpServlet {
 		try {
 			// get param
 			String type = request.getParameter(Constant.TYPE);
-			String currentPage = request.getParameter(Constant.PAGE);
 			HttpSession session = request.getSession();// get session
 			Map<String, String> dataSession = (HashMap<String, String>) Common.getSession(session,
 					Constant.SESSION_CONDITION_STORE);// get condition get user in session
 			if (dataSession == null) {// in case first request
 				dataSession = new HashMap<>();
 			}
+
 			int page = 1;// default page
-			if (currentPage != null) {// get current page
-				try {
-					page = Integer.parseInt(currentPage);
-				} catch (NumberFormatException e) {
-					page = 1;
-				}
-			}
-			// add page into session
-			dataSession.put(Constant.PAGE, String.valueOf(page));
 			if (type == null) {// first request then set params sort and default sort type
 				dataSession.put(Constant.SORT_TYPE, Constant.SORT_BY_FULL_NAME);
 				dataSession.put(Constant.SORT_BY_FULL_NAME, Constant.ASC);
@@ -106,24 +97,28 @@ public class ListUserController extends HttpServlet {
 				String sortType = request.getParameter(Constant.SORT_TYPE);
 				dataSession.put(Constant.SORT_TYPE, sortType);
 				if (Constant.SORT_BY_FULL_NAME.equals(sortType)) {// if is sort by fullName
-					String condition = dataSession.get(Constant.SORT_BY_FULL_NAME);
-					dataSession.put(Constant.SORT_BY_FULL_NAME,
-							(condition == Constant.ASC) ? Constant.DESC : Constant.ASC);
+					String sortByFullName = request.getParameter(Constant.SORT_BY_FULL_NAME);
+					dataSession.put(Constant.SORT_BY_FULL_NAME, sortByFullName);
 				} else if (Constant.SORT_BY_CODE_LEVEL.equals(sortType)) {// if is sort by codeLevel
-					String condition = dataSession.get(Constant.SORT_BY_CODE_LEVEL);
-					dataSession.put(Constant.SORT_BY_CODE_LEVEL,
-							(condition == Constant.ASC) ? Constant.DESC : Constant.ASC);
+					String sortByCodeLevel = request.getParameter(Constant.SORT_BY_CODE_LEVEL);
+					dataSession.put(Constant.SORT_BY_CODE_LEVEL, sortByCodeLevel);
 				} else if (Constant.SORT_BY_END_DATE.equals(sortType)) {// if is sort by endDate
-					String condition = dataSession.get(Constant.SORT_BY_END_DATE);// get current condition in session
-					dataSession.put(Constant.SORT_BY_END_DATE,
-							(condition == Constant.ASC) ? Constant.DESC : Constant.ASC);
+					String sortByEndDate = request.getParameter(Constant.SORT_BY_END_DATE);
+					dataSession.put(Constant.SORT_BY_END_DATE, sortByEndDate);
 				}
-			} else if (Constant.TYPE_PAGING.equals(type)) {
-				// dataSession.put(Constant.PAGE, String.valueOf(page)); // add page into
-				// session
+			} else if (Constant.TYPE_PAGING.equals(type)) {// paging
+				String currentPage = request.getParameter(Constant.PAGE);
+				if (currentPage != null) {// get current page
+					try {
+						page = Integer.parseInt(currentPage);
+					} catch (NumberFormatException e) {
+						page = 1;
+					}
+				}
 
 			}
-			
+			// add page into session
+			dataSession.put(Constant.PAGE, String.valueOf(page));
 			System.out.println(dataSession);
 			int totalUser = tblUserLogic.getTotalUsers(dataSession.get(Constant.GROUP_ID),
 					dataSession.get(Constant.FULL_NAME));// get total user
@@ -146,10 +141,10 @@ public class ListUserController extends HttpServlet {
 		} catch (Exception e) {
 			StringBuffer stringBuffer = new StringBuffer(request.getContextPath());
 			try {
-				//in case have error then send redirect to view error
+				// in case have error then send redirect to view error
 				response.sendRedirect(stringBuffer.append(Constant.URL_VIEW_EROR).toString());
 			} catch (IOException e1) {
-				
+
 			}
 		}
 	}
