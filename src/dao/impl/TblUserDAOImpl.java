@@ -7,7 +7,6 @@ package dao.impl;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import common.Common;
 import common.Constant;
 import dao.TblUserDAO;
 import entity.UserInfor;
@@ -22,7 +21,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	// sql join table
 	private StringBuffer sqlJoin = new StringBuffer()
 			.append(" FROM tbl_user INNER JOIN mst_group ON tbl_user.group_id = mst_group.group_id ")
-			.append(" INNER JOIN (tbl_detail_user_japan INNER JOIN mst_japan ON tbl_detail_user_japan.code_level = mst_japan.code_level) ")
+			.append(" LEFT JOIN (tbl_detail_user_japan INNER JOIN mst_japan ON tbl_detail_user_japan.code_level = mst_japan.code_level) ")
 			.append(" ON tbl_user.user_id = tbl_detail_user_japan.user_id ").append(" WHERE 1 = 1 ");
 
 	// sql get all user
@@ -36,17 +35,25 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			.append(sqlJoin.toString());
 
 	/**
-	 * function get all user in user table
+	 * get list user
 	 * 
 	 * @param offset
+	 *            : position get data
 	 * @param limit
+	 *            : limit records view on screen
 	 * @param groupId
+	 *            : value in field group_id of table tbl_user
 	 * @param fullName
+	 *            : value in field group_id of table tbl_user
 	 * @param sortType
+	 *            : sort type
 	 * @param sortByFullName
+	 *            : sort follow field full_name in tbl_user
 	 * @param sortByCodeLevel
+	 *            : sort follow field code_level in mst_japan
 	 * @param sortByEndDate
-	 * @return ArrayList<UserInfor>
+	 *            : sort follow field end_date
+	 * @return ArrayList<UserInfor> : store list object UserInfor for view on screen
 	 */
 	@Override
 	public ArrayList<UserInfor> getListUsers(int offset, int limit, String groupId, String fullName, String sortType,
@@ -90,8 +97,10 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 * get total user
 	 * 
 	 * @param groupId
+	 *            : field group_id in table tbl_user
 	 * @param fullName
-	 * @return int
+	 *            : field full_name in table tbl_user
+	 * @return int : total user with condition input
 	 */
 	public int getTotalUsers(String groupId, String fullName) {
 		int totalUser = 0;
@@ -119,8 +128,11 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 * set param for pstm
 	 * 
 	 * @param sql
+	 *            : clause sql
 	 * @param groupId
+	 *            : value in field group_id of table tbl_user
 	 * @param fullName
+	 *            : value in field of full_name table tbl_user
 	 * @throws SQLException
 	 */
 	private void setParam(String sql, String groupId, String fullName) throws SQLException {
@@ -139,11 +151,15 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	}
 
 	/**
-	 * function get SQL by param
+	 * add condition search
 	 * 
+	 * @param firstSQL
+	 *            : clause sql
 	 * @param groupId
+	 *            : value in field group_id of table tbl_user
 	 * @param fullName
-	 * @return String
+	 *            : value in field of full_name table tbl_user
+	 * @return string : clause sql after add condition search
 	 */
 	private String getSQLSearch(String firstSQL, String groupId, String fullName) {
 		StringBuffer stringBuffer = new StringBuffer(firstSQL);
@@ -160,15 +176,19 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	}
 
 	/**
-	 * get sql sort
+	 * add condition sort
 	 * 
 	 * @param SQL
-	 *            clause sql
+	 *            : clause sql
 	 * @param sortType
+	 *            : sort type
 	 * @param sortByFullName
+	 *            : sort follow field full_name in table tbl_user
 	 * @param sortByCodeLevel
+	 *            : sort follow field code_level in table tbl_user
 	 * @param sortByEndDate
-	 * @return String
+	 *            : sort follow field end_date in table tbl_user
+	 * @return String : sql after add condition search
 	 */
 	private String getSQLSort(String SQL, String sortType, String sortByFullName, String sortByCodeLevel,
 			String sortByEndDate) {
@@ -193,15 +213,18 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 * function get SQL paging
 	 * 
 	 * @param SQL
+	 *            : string SQL input
 	 * @param offset
+	 *            : record location in db
 	 * @param limit
-	 * @return String
+	 *            : limit record
+	 * @return String : string SQL
 	 */
 	private String getSQLPaging(String SQL, int offset, int limit) {
 		StringBuffer stringBuffer = new StringBuffer(SQL);
 		// add limit
 		stringBuffer.append(" limit ").append(limit);
-		if (offset >= 0) {
+		if (limit > 0) {
 			// add offset
 			stringBuffer.append(" offset ").append(offset);
 		}

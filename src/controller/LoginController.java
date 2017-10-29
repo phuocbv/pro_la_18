@@ -80,7 +80,7 @@ public class LoginController extends HttpServlet {
 			request.setAttribute("loginName", loginName);
 			request.setAttribute("listMessage", listMessage);
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM001);
-			dispatcher.forward(request, response);// forward đến trang jsp
+			dispatcher.forward(request, response);// forward to page jsp
 		}
 	}
 }

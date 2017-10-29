@@ -47,8 +47,6 @@ public class Constant {
 	// session
 	public static final String SESSION_LOGGINED_USER = "LOGINED_USER";
 	public static final String SESSION_CONDITION_STORE = "CONDITION_STORE";
-	public static final String SESSION_PREV = "PREV";
-	public static final String SESSION_NEXT = "NEXT";
 
 	// part file jsp
 	public static final String ADM001 = "/view/jsp/ADM001.jsp";
@@ -56,6 +54,7 @@ public class Constant {
 	public static final String ADM003 = "/view/jsp/ADM003.jsp";
 	public static final String ADM004 = "/view/jsp/ADM004.jsp";
 	public static final String VIEW_ERROR = "/view/jsp/view_error.jsp";
+	
 	// url
 	public static final String URL_HOME = "/";
 	public static final String URL_LOGIN = "/login";
@@ -86,4 +85,8 @@ public class Constant {
 	//search
 	public static final String FULL_NAME = "fullName";
 	public static final String GROUP_ID = "groupId";
+	
+	//default value
+	public static final int DEFAULT_NUMBER_PAGE_IN_PAGE = 3;
+	public static final int DEFAULT_LIMIT = 5;
 }

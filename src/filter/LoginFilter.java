@@ -31,28 +31,31 @@ import common.Constant;
 public class LoginFilter implements Filter {
 	private List<String> listUrlAllow;// store list url allow
 
-	/**
-	 * function init filter
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.servlet.Filter#destroy()
 	 */
 	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-		listUrlAllow = new ArrayList<String>();
-		listUrlAllow.add(Constant.URL_LIST_USER);
-		listUrlAllow.add(Constant.URL_LOGOUT);
-		listUrlAllow.add(Constant.URL_VIEW_EROR);
+	public void destroy() {
+		// TODO Auto-generated method stub
+
 	}
 
-	/**
-	 * function filter login
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest,
+	 * javax.servlet.ServletResponse, javax.servlet.FilterChain)
 	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-//		res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-//		res.setHeader("Pragma", "no-cache");
-//		res.setDateHeader("Expires", 0);
+		// res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		// res.setHeader("Pragma", "no-cache");
+		// res.setDateHeader("Expires", 0);
 		req.setCharacterEncoding(Constant.UTF_8);// set utf 8 for request
 		res.setContentType(Constant.CONTANT_TYPE);// set contant type for response
 		// get relative path
@@ -92,9 +95,20 @@ public class LoginFilter implements Filter {
 
 		// if not login then redirect to path login
 		res.sendRedirect(stringBuffer.append(Constant.URL_LOGIN).toString());
+
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
+	 */
 	@Override
-	public void destroy() {
+	public void init(FilterConfig arg0) throws ServletException {
+		listUrlAllow = new ArrayList<String>();
+		listUrlAllow.add(Constant.URL_LIST_USER);
+		listUrlAllow.add(Constant.URL_LOGOUT);
+		listUrlAllow.add(Constant.URL_VIEW_EROR);
 	}
+
 }

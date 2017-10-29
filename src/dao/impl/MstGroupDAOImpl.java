@@ -24,7 +24,7 @@ public class MstGroupDAOImpl extends BaseDAOImpl implements MstGroupDAO {
 	/**
 	 * get all group
 	 * 
-	 * @return ArrayList<MstGroup>
+	 * @return ArrayList<MstGroup> : store list all group
 	 */
 	@Override
 	public ArrayList<MstGroup> getListGroups() {

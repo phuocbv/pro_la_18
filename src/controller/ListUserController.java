@@ -76,13 +76,13 @@ public class ListUserController extends HttpServlet {
 			String type = request.getParameter(Constant.TYPE);
 			HttpSession session = request.getSession();// get session
 			if (type == null) {
-				
+
 			}
 			Map<String, String> dataSession = (HashMap<String, String>) Common.getSession(session,
 					Constant.SESSION_CONDITION_STORE);// get condition get user in session
 			int page = 1;// default page
 			if (type == null) {// first request then set params sort and default sort type
-				Common.remoteSession(session, Constant.SESSION_CONDITION_STORE);//remote session
+				Common.remoteSession(session, Constant.SESSION_CONDITION_STORE);// remote session
 				dataSession = new HashMap<>();
 				dataSession.put(Constant.SORT_TYPE, Constant.SORT_BY_FULL_NAME);
 				dataSession.put(Constant.SORT_BY_FULL_NAME, Constant.ASC);
@@ -110,21 +110,17 @@ public class ListUserController extends HttpServlet {
 			} else if (Constant.TYPE_PAGING.equals(type)) {// paging
 				String currentPage = request.getParameter(Constant.PAGE);
 				if (currentPage != null) {// get current page
-					try {
-						page = Integer.parseInt(currentPage);
-					} catch (NumberFormatException e) {
-						page = 1;
-					}
+					page = Common.parseInt(currentPage, 1);
 				}
-
 			}
 			// add page into session
 			dataSession.put(Constant.PAGE, String.valueOf(page));
 			int totalUser = tblUserLogic.getTotalUsers(dataSession.get(Constant.GROUP_ID),
 					dataSession.get(Constant.FULL_NAME));// get total user
 			// get limit in page
-			int limit = Integer.parseInt(DatabaseProperties.databaseProperties.get(ConstantProperties.LIMIT_RECORD));
-			page = Integer.parseInt(dataSession.get(Constant.PAGE));//get current page
+			int limit = Common.parseInt(DatabaseProperties.databaseProperties.get(ConstantProperties.LIMIT_RECORD),
+					Constant.DEFAULT_LIMIT);
+			page = Common.parseInt(dataSession.get(Constant.PAGE), 1);// get current page
 			List<Integer> listPaging = Common.getListPaging(totalUser, limit, page);// get list paging
 			int offset = Common.getOffset(page, limit);// get offset of paging
 			ArrayList<UserInfor> listUser = tblUserLogic.getListUsers(offset, limit,

@@ -23,7 +23,7 @@ public class AdminProperties {
 	/**
 	 * get map properties of admin
 	 * 
-	 * @return
+	 * @return Map<String, String> : store account of admin
 	 */
 	public static Map<String, String> getAdminProperties() {
 		Map<String, String> map = new HashMap<String, String>();

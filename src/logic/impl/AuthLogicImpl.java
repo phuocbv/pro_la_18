@@ -26,9 +26,10 @@ public class AuthLogicImpl implements AuthLogic {
 	 * function validate admin
 	 * 
 	 * @param loginName
+	 *            : is username of account admin
 	 * @param password
-	 * @param session
-	 * @return
+	 *            : is password of account admin
+	 * @return List<String> : list message
 	 */
 	@Override
 	public List<String> validateAdmin(String loginName, String password) {

@@ -21,7 +21,7 @@ public class ConstantProperties {
 
 	// attribute database properties
 	public static final String LIMIT_RECORD = "LIMIT_RECORD";
-	public static final String COUNT_PAGING = "COUNT_PAGING";
+	public static final String NUMBER_PAGE_IN_PAGE = "NUMBER_PAGE_IN_PAGE";
 
 	// attribute database properties
 	public static final String URL = "URL";

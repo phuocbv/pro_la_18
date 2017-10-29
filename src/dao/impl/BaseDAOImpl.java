@@ -49,7 +49,7 @@ public class BaseDAOImpl implements BaseDAO {
 	/**
 	 * function return connection
 	 * 
-	 * @return
+	 * @return Connection : connection to sql
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
@@ -60,7 +60,7 @@ public class BaseDAOImpl implements BaseDAO {
 	/**
 	 * get mysql connection
 	 * 
-	 * @return
+	 * @return Connection : connect to mysql
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */

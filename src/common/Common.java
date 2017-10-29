@@ -27,7 +27,8 @@ public class Common {
 	 * function md5
 	 * 
 	 * @param value
-	 * @return String
+	 *            : string need encode
+	 * @return String : encoded string
 	 */
 	public static String MD5(String value) {
 		String result = "";
@@ -45,8 +46,10 @@ public class Common {
 	 * function md5 with 2 param
 	 * 
 	 * @param value
+	 *            : string need encode
 	 * @param salt
-	 * @return String
+	 *            : string random
+	 * @return String : encode string with salt
 	 */
 	public static String MD5(String value, String salt) {
 		StringBuffer stringBuffer = new StringBuffer();
@@ -58,8 +61,7 @@ public class Common {
 	/**
 	 * function random string
 	 * 
-	 * @param length
-	 * @return String
+	 * @return String : string random
 	 */
 	public static String randomString() {
 		StringBuilder builder = new StringBuilder();
@@ -74,50 +76,118 @@ public class Common {
 	 * get list paging
 	 * 
 	 * @param tolalRecords
+	 *            : total record of result data
 	 * @param limit
+	 *            : number record on page
 	 * @param currentPage
-	 * @return List<Integer>
+	 * @return List<Integer> : list paging
 	 */
-	public static List<Integer> getListPaging(int tolalRecords, int limit, int currentPage) {
+	public static List<Integer> getListPaging(int totalRecords, int limit, int currentPage) {
 		List<Integer> list = new ArrayList<>();
 		// if total <= limit then not display paging
-		if (tolalRecords <= limit) {
+		if (totalRecords <= limit) {
 			return list;
 		}
-		int countPaging = Integer.parseInt(DatabaseProperties.databaseProperties.get(ConstantProperties.COUNT_PAGING));
-		// count page follow limit
-		int countPage = (int) Math.ceil((float) tolalRecords / limit);
-		if (currentPage < 1) {
+		// read total paging in config
+		int numberPageInPage = parseInt(
+				DatabaseProperties.databaseProperties.get(ConstantProperties.NUMBER_PAGE_IN_PAGE),
+				Constant.DEFAULT_NUMBER_PAGE_IN_PAGE);
+		// total page follow limit
+		int totalPage = totalPage(totalRecords, limit);// (int) Math.ceil((float) totalRecords / limit);
+		if (currentPage < 1) {// if page < 1 still display paging 1 2 3 and data empty
 			currentPage = 1;
 		}
-		if (currentPage > countPage) {
-			currentPage = countPage;
+		if (currentPage > totalPage) {
+			currentPage = totalPage;
 		}
-		int currentRange = (int) Math.ceil((float) currentPage / countPaging);
-		int partition = (currentPage - 1) / countPaging; // partition of current page
-		int start = partition * countPaging + 1;// start paging
-		int end = (partition + 1) * countPaging;// end paging
+		int currentRange = getCurrentRange(currentPage, numberPageInPage);// get current range
+		int start = getStartPage(currentRange, numberPageInPage);// start paging
+		int end = getEndPage(currentRange, numberPageInPage, totalPage);// end paging
 		// add to paging
 		for (int i = start; i <= end; i++) {
 			list.add(i);
-			if (i == countPage) {
-				break;
-			}
 		}
 		return list;
 	}
-	
-	private int getCurrentRange(int currentPage, int numberRange) {
-		return (int) Math.ceil((float) currentPage / numberRange);
+
+	/**
+	 * get total page
+	 * 
+	 * @param totalRecords
+	 *            : total record
+	 * @param limit
+	 *            : limit record view
+	 * @return int : total page
+	 */
+	public static int totalPage(int totalRecords, int limit) {
+		return (int) Math.ceil((float) totalRecords / limit);
 	}
-	
-	//private int 
+
+	/**
+	 * get current range
+	 * 
+	 * @param currentPage
+	 *            : current page of web
+	 * @param numberRange
+	 *            : number range
+	 * @return int is current range
+	 */
+	private static int getCurrentRange(int currentPage, int numberPageInPage) {
+		return (int) Math.ceil((float) currentPage / numberPageInPage);
+	}
+
+	/**
+	 * get start page
+	 * 
+	 * @param currentRange
+	 *            : current page of web
+	 * @param numberPageInPage
+	 *            : number page in page
+	 * @return int : start page
+	 */
+	private static int getStartPage(int currentRange, int numberPageInPage) {
+		return (currentRange - 1) * numberPageInPage + 1;// start paging
+	}
+
+	/**
+	 * get end page
+	 * 
+	 * @param currentRange
+	 *            : current page of web
+	 * @param numberPageInPage
+	 * @param totalPage
+	 * @return
+	 */
+	private static int getEndPage(int currentRange, int numberPageInPage, int totalPage) {
+		int end = currentRange * numberPageInPage;// end paging
+		return end > totalPage ? totalPage : end;
+	}
+
+	/**
+	 * convert string to int
+	 * 
+	 * @param input
+	 *            string need convert
+	 * @param defaultValue
+	 *            default value when has error
+	 * @return int value after parse
+	 */
+	public static int parseInt(String input, int defaultValue) {
+		int result = defaultValue;
+		try {
+			result = Integer.parseInt(input);
+		} catch (NumberFormatException e) {
+			result = defaultValue;
+		}
+		return result;
+	}
 
 	/**
 	 * filter string
 	 * 
 	 * @param value
-	 * @return String
+	 *            - string need fitter
+	 * @return String - string replaced
 	 */
 	public static String filterString(String value) {
 		if (value != null) {
@@ -131,8 +201,10 @@ public class Common {
 	 * get offset
 	 * 
 	 * @param currentPage
+	 *            : current page
 	 * @param limit
-	 * @return String
+	 *            : limit record
+	 * @return int : offset of record
 	 */
 	public static int getOffset(int currentPage, int limit) {
 		return (currentPage - 1) * limit;
@@ -142,7 +214,11 @@ public class Common {
 	 * store object in session
 	 * 
 	 * @param session
-	 * @param loginedUser
+	 *            : object session
+	 * @param key
+	 *            : key session
+	 * @param object
+	 *            : value session
 	 */
 	public static void storeSession(HttpSession session, String key, Object object) {
 		session.setAttribute(key, object);
@@ -152,7 +228,10 @@ public class Common {
 	 * get session by key
 	 * 
 	 * @param session
-	 * @return Object
+	 *            : object session
+	 * @param key
+	 *            : key session
+	 * @return Object : value session get by key
 	 */
 	public static Object getSession(HttpSession session, String key) {
 		return session.getAttribute(key);
@@ -162,6 +241,7 @@ public class Common {
 	 * remote session by key
 	 * 
 	 * @param session
+	 *            : object session
 	 */
 	public static void remoteSession(HttpSession session, String key) {
 		session.removeAttribute(key);
@@ -171,7 +251,8 @@ public class Common {
 	 * format japanese
 	 * 
 	 * @param value
-	 * @return String
+	 *            : string need convert
+	 * @return String : string japanes
 	 */
 	public static String getJapanes(String value) {
 		String result = "";
@@ -184,9 +265,9 @@ public class Common {
 	}
 
 	/**
-	 * get properties of message
+	 * get object properties
 	 * 
-	 * @return Properties
+	 * @return Properties : object Properties for read file .properties
 	 */
 	public static Properties getProperties(String fileName) {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();

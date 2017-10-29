@@ -18,7 +18,7 @@ public interface MstGroupDAO {
 	/**
 	 * get all group
 	 * 
-	 * @return ArrayList<MstGroup>
+	 * @return ArrayList<MstGroup> : store list all group
 	 */
 	public ArrayList<MstGroup> getListGroups();
 }

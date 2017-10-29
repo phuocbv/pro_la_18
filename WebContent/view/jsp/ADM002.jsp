@@ -81,15 +81,7 @@
 				&sortByFullName=${sessionScope.CONDITION_STORE.sortByFullName == Constant.ASC ? Constant.DESC : Constant.ASC}
 				&sortByCodeLevel=${sortByCodeLevel}
 				&sortByEndDate=${sortByEndDate}&sortType=${Constant.SORT_BY_FULL_NAME}">
-					<c:choose>
-						<c:when
-							test="${sessionScope.CONDITION_STORE.sortByFullName == Constant.ASC}">
-					▲▽
-				</c:when>
-						<c:otherwise>
-					△▼
-				</c:otherwise>
-					</c:choose>
+					${sessionScope.CONDITION_STORE.sortByFullName == Constant.ASC ? '▲▽' : '△▼'}
 			</a>
 			</th>
 			<th align="left">生年月日</th>
@@ -102,15 +94,7 @@
 				&sortByCodeLevel=${sessionScope.CONDITION_STORE.sortByCodeLevel == Constant.ASC ? Constant.DESC : Constant.ASC}
 				&sortByEndDate=${sortByEndDate}
 				&sortType=${Constant.SORT_BY_CODE_LEVEL}">
-					<c:choose>
-						<c:when
-							test="${sessionScope.CONDITION_STORE.sortByCodeLevel == Constant.ASC}">
-					▲▽
-				</c:when>
-						<c:otherwise>
-					△▼
-				</c:otherwise>
-					</c:choose>
+					${sessionScope.CONDITION_STORE.sortByCodeLevel == Constant.ASC ? '▲▽' : '△▼'}
 			</a>
 			</th>
 			<th align="left">失効日 <a
@@ -119,15 +103,7 @@
 				&sortByCodeLevel=${sortByCodeLevel}
 				&sortByEndDate=${sessionScope.CONDITION_STORE.sortByEndDate == Constant.ASC ? Constant.DESC : Constant.ASC}
 				&sortType=${Constant.SORT_BY_END_DATE}">
-					<c:choose>
-						<c:when
-							test="${sessionScope.CONDITION_STORE.sortByEndDate == Constant.ASC}">
-					▲▽
-				</c:when>
-						<c:otherwise>
-					△▼
-				</c:otherwise>
-					</c:choose>
+					${sessionScope.CONDITION_STORE.sortByEndDate == Constant.ASC ? '▲▽' : '△▼'}
 			</a>
 			</th>
 			<th align="left">点数</th>
@@ -168,20 +144,20 @@
 			&sortByCodeLevel=${sortByCodeLevel}
 			&sortByEndDate=${sortByEndDate}
 			&sortType=${sortType}"></c:set>
-	<c:set var="countPaging"
-		value="${DatabaseProperties.databaseProperties.get(ConstantProperties.COUNT_PAGING) }"></c:set>
+	<c:set var="totalPaging"
+		value="${DatabaseProperties.databaseProperties.get(ConstantProperties.NUMBER_PAGE_IN_PAGE) }"></c:set>
 	<c:set var="limit"
 		value="${DatabaseProperties.databaseProperties.get(ConstantProperties.LIMIT_RECORD) }"></c:set>
 	<c:if test="${not empty listPaging}">
 		<table>
 			<tr>
 				<td class="lbl_paging"><c:if
-						test="${currentPage > countPaging}">
+						test="${currentPage > totalPaging}">
 						<a href="listUser.do?page=${listPaging.get(0) - 1}&${paramPaging}"><<</a>&nbsp;
 			</c:if> <c:forEach var="item" items="${listPaging}">
 						<a href="listUser.do?page=${item}&${paramPaging}">${item}</a> &nbsp;
 				</c:forEach> <c:if
-						test="${listPaging.get(listPaging.size() - 1) % countPaging == 0 &&  totalUser > listPaging.get(listPaging.size() - 1) * limit}">
+						test="${listPaging.get(listPaging.size() - 1) % totalPaging == 0 &&  totalUser > listPaging.get(listPaging.size() - 1) * limit}">
 						<a
 							href="listUser.do?page=${listPaging.get(listPaging.size() - 1) + 1}&${paramPaging}">>></a>
 

@@ -14,12 +14,13 @@ import java.util.List;
  */
 public interface AuthLogic {
 	/**
-	 * function logic login
+	 * function validate admin
 	 * 
 	 * @param loginName
+	 *            : is username of account admin
 	 * @param password
-	 * @param session
-	 * @return
+	 *            is password of account admin
+	 * @return List<String> : list message
 	 */
 	public List<String> validateAdmin(String loginName, String password);
 }

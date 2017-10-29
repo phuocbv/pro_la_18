@@ -24,7 +24,7 @@ public class MessageErrorProperties {
 	/**
 	 * get Message Error Properties
 	 * 
-	 * @return Map<String, String>
+	 * @return Map<String, String> store message error
 	 */
 	public static Map<String, String> getMessageErrorProperties() {
 		Map<String, String> listError = new HashMap<String, String>();
