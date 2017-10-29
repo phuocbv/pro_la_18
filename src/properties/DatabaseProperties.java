@@ -24,7 +24,7 @@ public class DatabaseProperties {
 	/**
 	 * get map properties of database
 	 * 
-	 * @return
+	 * @return Map<String, String> store config database
 	 */
 	public static Map<String, String> getDatabaseProperties() {
 		Map<String, String> map = new HashMap<String, String>();
