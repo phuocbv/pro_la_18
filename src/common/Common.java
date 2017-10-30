@@ -183,6 +183,19 @@ public class Common {
 	}
 
 	/**
+	 * check sort
+	 * 
+	 * @param sort
+	 * @return
+	 */
+	public static String checkSort(String sort) {
+		if (Constant.DESC.equals(sort)) {
+			return Constant.DESC;
+		}
+		return Constant.ASC;
+	}
+
+	/**
 	 * filter string
 	 * 
 	 * @param value

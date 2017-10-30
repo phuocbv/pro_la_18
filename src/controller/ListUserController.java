@@ -96,21 +96,22 @@ public class ListUserController extends HttpServlet {
 				dataSession.put(Constant.GROUP_ID, groupId);
 			} else if (Constant.TYPE_SORT.equals(type)) {// click into sort
 				String sortType = request.getParameter(Constant.SORT_TYPE);
+				
 				dataSession.put(Constant.SORT_TYPE, sortType);
 				if (Constant.SORT_BY_FULL_NAME.equals(sortType)) {// if is sort by fullName
 					String sortByFullName = request.getParameter(Constant.SORT_BY_FULL_NAME);
-					dataSession.put(Constant.SORT_BY_FULL_NAME, sortByFullName);
+					dataSession.put((Constant.SORT_BY_FULL_NAME), sortByFullName);
 				} else if (Constant.SORT_BY_CODE_LEVEL.equals(sortType)) {// if is sort by codeLevel
 					String sortByCodeLevel = request.getParameter(Constant.SORT_BY_CODE_LEVEL);
-					dataSession.put(Constant.SORT_BY_CODE_LEVEL, sortByCodeLevel);
+					dataSession.put((Constant.SORT_BY_CODE_LEVEL), sortByCodeLevel);
 				} else if (Constant.SORT_BY_END_DATE.equals(sortType)) {// if is sort by endDate
 					String sortByEndDate = request.getParameter(Constant.SORT_BY_END_DATE);
-					dataSession.put(Constant.SORT_BY_END_DATE, sortByEndDate);
+					dataSession.put((Constant.SORT_BY_END_DATE), sortByEndDate);
 				}
 			} else if (Constant.TYPE_PAGING.equals(type)) {// paging
 				String currentPage = request.getParameter(Constant.PAGE);
 				if (currentPage != null) {// get current page
-					page = Common.parseInt(currentPage, 1);
+					page = Common.parseInt(currentPage, Constant.DEFAULT_PAGE);
 				}
 			}
 			// add page into session

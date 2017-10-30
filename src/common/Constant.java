@@ -89,4 +89,5 @@ public class Constant {
 	//default value
 	public static final int DEFAULT_NUMBER_PAGE_IN_PAGE = 3;
 	public static final int DEFAULT_LIMIT = 5;
+	public static final int DEFAULT_PAGE = 1;
 }

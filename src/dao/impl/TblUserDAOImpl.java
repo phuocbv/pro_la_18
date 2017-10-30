@@ -145,8 +145,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		}
 		// add where fullName
 		if (fullName != null && !Constant.EMPTY_STRING.equals(fullName)) {
-			pstm.setString(++i,
-					stringBuffer.append(Constant.PERCENT).append(fullName).append(Constant.PERCENT).toString());
+			pstm.setString(++i, stringBuffer.append(fullName).toString());
 		}
 	}
 
@@ -170,7 +169,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		}
 		// if fullName is not null , is not empty string then add condition in where
 		if (fullName != null && !Constant.EMPTY_STRING.equals(fullName)) {
-			stringBuffer.append(" AND ( tbl_user.full_name LIKE ? ) ");
+			stringBuffer.append(" AND ( tbl_user.full_name REGEXP ? ) ");
 		}
 		return stringBuffer.toString();
 	}

@@ -51,7 +51,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	public ArrayList<UserInfor> getListUsers(int offset, int limit, String groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
-		fullName = Common.filterString(fullName);
+		//fullName = Common.filterString(fullName);
 		return userDao.getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName, sortByCodeLevel,
 				sortByEndDate);
 	}
@@ -66,7 +66,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @return int : total user with condition input
 	 */
 	public int getTotalUsers(String groupId, String fullName) {
-		fullName = Common.filterString(fullName);
+		//fullName = Common.filterString(fullName);
 		return userDao.getTotalUsers(groupId, fullName);
 	}
 }

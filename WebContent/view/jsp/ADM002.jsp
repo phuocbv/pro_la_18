@@ -155,8 +155,16 @@
 						test="${currentPage > totalPaging}">
 						<a href="listUser.do?page=${listPaging.get(0) - 1}&${paramPaging}"><<</a>&nbsp;
 			</c:if> <c:forEach var="item" items="${listPaging}">
-						<a href="listUser.do?page=${item}&${paramPaging}">${item}</a> &nbsp;
-				</c:forEach> <c:if
+						<c:choose>
+							<c:when test="${item == currentPage }">
+							${item} &nbsp;
+						</c:when>
+							<c:otherwise>
+								<a href="listUser.do?page=${item}&${paramPaging}">${item}</a> &nbsp;
+						</c:otherwise>
+						</c:choose>
+
+					</c:forEach> <c:if
 						test="${listPaging.get(listPaging.size() - 1) % totalPaging == 0 &&  totalUser > listPaging.get(listPaging.size() - 1) * limit}">
 						<a
 							href="listUser.do?page=${listPaging.get(listPaging.size() - 1) + 1}&${paramPaging}">>></a>

@@ -35,6 +35,6 @@ public class ErrorController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.VIEW_ERROR);
-		dispatcher.forward(req, resp);// forward đến trang jsp
+		dispatcher.forward(req, resp);// forward to jsp page
 	}
 }

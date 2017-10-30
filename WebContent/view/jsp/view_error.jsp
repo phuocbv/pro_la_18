@@ -36,7 +36,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="center" colspan="2"><font color="red">Hệ thống có lỗi</font></td>
+				<td align="center" colspan="2"><font color="red">システムエラーが発生しました。</font></td>
 			</tr>
 			<tr>
 				<td align="center" colspan="2">
