@@ -69,6 +69,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			sql = getSQLPaging(sql, offset, limit);// add paging
 			pstm = connection.prepareStatement(sql);// sử dụng PrepareStatement
 			setParam(sql, groupId, fullName);
+			System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
 			while (resultSet.next()) {// lặp từng bản ghi lấy ra và thêm vào list
 				UserInfor user = new UserInfor();

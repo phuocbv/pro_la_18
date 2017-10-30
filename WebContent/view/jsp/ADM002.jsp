@@ -63,53 +63,56 @@
 		<!-- End vung dieu kien tim kiem -->
 	</form>
 	<!-- Begin vung hien thi danh sach user -->
-	<table class="tbl_list" border="1" cellpadding="4" cellspacing="0"
-		width="80%">
-		<c:set var="currentPage" value="${sessionScope.CONDITION_STORE.page}"></c:set>
-		<c:set var="sortType" value="${sessionScope.CONDITION_STORE.sortType}"></c:set>
-		<c:set var="sortByFullName"
-			value="${sessionScope.CONDITION_STORE.sortByFullName}"></c:set>
-		<c:set var="sortByCodeLevel"
-			value="${sessionScope.CONDITION_STORE.sortByCodeLevel }"></c:set>
-		<c:set var="sortByEndDate"
-			value="${sessionScope.CONDITION_STORE.sortByEndDate}"></c:set>
-		<c:set var="paramSort" value="page=1&type=sort"></c:set>
-		<tr class="tr2">
-			<th align="center" width="20px">ID</th>
-			<th align="left">氏名 <a
-				href="listUser.do?${paramSort}
+	<c:choose>
+		<c:when test="${not empty listUser}">
+			<table class="tbl_list" border="1" cellpadding="4" cellspacing="0"
+				width="80%">
+				<c:set var="currentPage"
+					value="${sessionScope.CONDITION_STORE.page}"></c:set>
+				<c:set var="sortType"
+					value="${sessionScope.CONDITION_STORE.sortType}"></c:set>
+				<c:set var="sortByFullName"
+					value="${sessionScope.CONDITION_STORE.sortByFullName}"></c:set>
+				<c:set var="sortByCodeLevel"
+					value="${sessionScope.CONDITION_STORE.sortByCodeLevel }"></c:set>
+				<c:set var="sortByEndDate"
+					value="${sessionScope.CONDITION_STORE.sortByEndDate}"></c:set>
+				<c:set var="paramSort" value="page=1&type=sort"></c:set>
+				<tr class="tr2">
+					<th align="center" width="20px">ID</th>
+					<th align="left">氏名 <a
+						href="listUser.do?${paramSort}
 				&sortByFullName=${sessionScope.CONDITION_STORE.sortByFullName == Constant.ASC ? Constant.DESC : Constant.ASC}
 				&sortByCodeLevel=${sortByCodeLevel}
 				&sortByEndDate=${sortByEndDate}&sortType=${Constant.SORT_BY_FULL_NAME}">
-					${sessionScope.CONDITION_STORE.sortByFullName == Constant.ASC ? '▲▽' : '△▼'}
-			</a>
-			</th>
-			<th align="left">生年月日</th>
-			<th align="left">グループ</th>
-			<th align="left">メールアドレス</th>
-			<th align="left" width="70px">電話番号</th>
-			<th align="left">日本語能力 <a
-				href="listUser.do?${paramSort}
+							${sessionScope.CONDITION_STORE.sortByFullName == Constant.ASC ? '▲▽' : '△▼'}
+					</a>
+					</th>
+					<th align="left">生年月日</th>
+					<th align="left">グループ</th>
+					<th align="left">メールアドレス</th>
+					<th align="left" width="70px">電話番号</th>
+					<th align="left">日本語能力 <a
+						href="listUser.do?${paramSort}
 				&sortByFullName=${sortByFullName}
 				&sortByCodeLevel=${sessionScope.CONDITION_STORE.sortByCodeLevel == Constant.ASC ? Constant.DESC : Constant.ASC}
 				&sortByEndDate=${sortByEndDate}
 				&sortType=${Constant.SORT_BY_CODE_LEVEL}">
-					${sessionScope.CONDITION_STORE.sortByCodeLevel == Constant.ASC ? '▲▽' : '△▼'}
-			</a>
-			</th>
-			<th align="left">失効日 <a
-				href="listUser.do?${paramSort}
+							${sessionScope.CONDITION_STORE.sortByCodeLevel == Constant.ASC ? '▲▽' : '△▼'}
+					</a>
+					</th>
+					<th align="left">失効日 <a
+						href="listUser.do?${paramSort}
 				&sortByFullName=${sortByFullName}
 				&sortByCodeLevel=${sortByCodeLevel}
 				&sortByEndDate=${sessionScope.CONDITION_STORE.sortByEndDate == Constant.ASC ? Constant.DESC : Constant.ASC}
 				&sortType=${Constant.SORT_BY_END_DATE}">
-					${sessionScope.CONDITION_STORE.sortByEndDate == Constant.ASC ? '▲▽' : '△▼'}
-			</a>
-			</th>
-			<th align="left">点数</th>
-		</tr>
-		<c:choose>
-			<c:when test="${not empty listUser}">
+							${sessionScope.CONDITION_STORE.sortByEndDate == Constant.ASC ? '▲▽' : '△▼'}
+					</a>
+					</th>
+					<th align="left">点数</th>
+				</tr>
+
 				<c:forEach var="item" items="${listUser}">
 					<tr>
 						<td align="right"><a href="ADM005.html">${item.userId}</a></td>
@@ -125,16 +128,15 @@
 						<td align="right">${item.total}</td>
 					</tr>
 				</c:forEach>
-			</c:when>
-			<c:otherwise>
-				<tbody>
-					<tr align="center">
-						<td colspan="9">${MessageProperties.messageProperties.get(ConstantProperties.MSG005)}</td>
-					</tr>
-				</tbody>
-			</c:otherwise>
-		</c:choose>
-	</table>
+
+			</table>
+		</c:when>
+		<c:otherwise>
+			<div align="center">
+				${MessageProperties.messageProperties.get(ConstantProperties.MSG005)}
+			</div>
+		</c:otherwise>
+	</c:choose>
 	<!-- End vung hien thi danh sach user -->
 
 	<!-- Begin vung paging -->

@@ -19,7 +19,7 @@ import entity.MstGroup;
  */
 public class MstGroupDAOImpl extends BaseDAOImpl implements MstGroupDAO {
 	// sql get all group
-	private static String SQL_GET_ALL_GROUP = "SELECT mst_group.group_id, mst_group.group_name FROM mst_group";
+	private static String SQL_GET_ALL_GROUP = "SELECT mst_group.group_id, mst_group.group_name FROM mst_group ORDER BY mst_group.group_name ASC";
 
 	/**
 	 * get all group

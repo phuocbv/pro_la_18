@@ -9,6 +9,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -221,6 +222,19 @@ public class Common {
 	 */
 	public static int getOffset(int currentPage, int limit) {
 		return (currentPage - 1) * limit;
+	}
+
+	/**
+	 * get list year
+	 * @return List<Integer> list year 1980 - current year
+	 */
+	public static List<Integer> getListYear() {
+		List<Integer> listYear = new ArrayList<>();
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		for (int i = Constant.START_YEAR; i <= currentYear; i++) {
+			listYear.add(i);
+		}
+		return listYear;
 	}
 
 	/**

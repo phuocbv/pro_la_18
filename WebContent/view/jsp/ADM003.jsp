@@ -1,11 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="../css/style.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../js/user.js"></script>
+<link href="view/css/style.css" rel="stylesheet" type="text/css" />
 <title>ユーザ管理</title>
 </head>
 <body>
@@ -38,9 +39,10 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> グループ:</td>
 								<td align="left"><select name="group_id">
-										<option value="0">選択してください</option>
-										<option value="0">Nhóm 1</option>
-										<option value="0">Nhóm 2</option>
+										<option value="0">選択してくださいグループ</option>
+										<c:forEach var="group" items="${listGroup}">
+											<option value="${group.groupId }">${group.groupName }</option>
+										</c:forEach>
 								</select> <span>&nbsp;&nbsp;&nbsp;</span></td>
 							</tr>
 							<tr>
@@ -60,18 +62,9 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> 生年月日:</td>
 								<td align="left"><select>
-										<option value="2000">2000</option>
-										<option value="2001">2001</option>
-										<option value="2002">2002</option>
-										<option value="2003">2003</option>
-										<option value="2004">2004</option>
-										<option value="2005">2005</option>
-										<option value="2006">2006</option>
-										<option value="2007">2007</option>
-										<option value="2008">2008</option>
-										<option value="2009">2009</option>
-										<option value="2010" selected="selected">2010</option>
-										<option value="2011">2011</option>
+										<c:forEach var="item" items="${listYear}">
+											<option value="${item}">${item}</option>
+										</c:forEach>
 								</select>年 <select>
 										<option value="1">1</option>
 										<option value="2">2</option>
@@ -153,29 +146,18 @@
 							<tr>
 								<td class="lbl_left">資格:</td>
 								<td align="left"><select name="kyu_id">
-										<option value="0">選択してください</option>
-										<option value="0">N1</option>
-										<option value="0">N2</option>
-										<option value="0">N3</option>
-										<option value="0">N4</option>
-										<option value="0">N5</option>
+										<option value="0">選択してください資格</option>
+										<c:forEach var="item" items="${listJapan}">
+											<option value="${item.codeLevel}">${item.nameLevel}</option>
+										</c:forEach>
 								</select></td>
 							</tr>
 							<tr>
 								<td class="lbl_left">資格交付日:</td>
 								<td align="left"><select>
-										<option value="2000">2000</option>
-										<option value="2001">2001</option>
-										<option value="2002">2002</option>
-										<option value="2003">2003</option>
-										<option value="2004">2004</option>
-										<option value="2005">2005</option>
-										<option value="2006">2006</option>
-										<option value="2007">2007</option>
-										<option value="2008">2008</option>
-										<option value="2009">2009</option>
-										<option value="2010" selected="selected">2010</option>
-										<option value="2011">2011</option>
+										<c:forEach var="item" items="${listYear}">
+											<option value="${item}">${item}</option>
+										</c:forEach>
 								</select>年 <select>
 										<option value="1">1</option>
 										<option value="2">2</option>

@@ -60,11 +60,15 @@ public class Constant {
 	public static final String URL_LOGIN = "/login";
 	public static final String URL_LOGOUT = "/logout";
 	public static final String URL_LIST_USER = "/listUser.do";
+	public static final String URL_ADD_USER_INPUT = "/addUserInput.do";
 	public static final String URL_VIEW_EROR = "/viewError.do";
 
 	// url filter
 	public static final String URL_FILTER = "/*";
-
+	
+	//start year
+	public static final int START_YEAR = 1980;
+	
 	//paging
 	public static final String PAGE = "page";
 	
