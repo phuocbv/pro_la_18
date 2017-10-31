@@ -197,21 +197,6 @@ public class Common {
 	}
 
 	/**
-	 * filter string
-	 * 
-	 * @param value
-	 *            - string need fitter
-	 * @return String - string replaced
-	 */
-	public static String filterString(String value) {
-		if (value != null) {
-			value = value.replace("%", "?%").replace("/", "?/").replace("_", "?_").replace("'", "?'").replace("'",
-					"?'");
-		}
-		return value;
-	}
-
-	/**
 	 * get offset
 	 * 
 	 * @param currentPage
@@ -226,6 +211,7 @@ public class Common {
 
 	/**
 	 * get list year
+	 * 
 	 * @return List<Integer> list year 1980 - current year
 	 */
 	public static List<Integer> getListYear() {
@@ -235,6 +221,32 @@ public class Common {
 			listYear.add(i);
 		}
 		return listYear;
+	}
+
+	/**
+	 * get list month
+	 * 
+	 * @return List<Integer> list month 1 - 12
+	 */
+	public static List<Integer> getListMonth() {
+		List<Integer> listMonth = new ArrayList<>();
+		for (int i = 1; i <= 12; i++) {
+			listMonth.add(i);
+		}
+		return listMonth;
+	}
+
+	/**
+	 * get list day
+	 * 
+	 * @return List<Integer> list day 1 - 31
+	 */
+	public static List<Integer> getListDay() {
+		List<Integer> listDay = new ArrayList<>();
+		for (int i = 1; i <= 31; i++) {
+			listDay.add(i);
+		}
+		return listDay;
 	}
 
 	/**

@@ -26,12 +26,42 @@ public class BaseDAOImpl implements BaseDAO {
 	protected ResultSet resultSet = null;
 
 	/**
+	 * function return connection
+	 * 
+	 * @return Connection : connection to sql
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	@Override
+	public Connection getConnection() throws SQLException, ClassNotFoundException {
+		return getMySQLConnection();
+	}
+
+	/**
+	 * get mysql connection
+	 * 
+	 * @return Connection : connect to mysql
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	private Connection getMySQLConnection() throws SQLException, ClassNotFoundException {
+		String connectionURL = DatabaseProperties.databaseProperties.get(ConstantProperties.URL);
+		String userName = DatabaseProperties.databaseProperties.get(ConstantProperties.USERNAME);
+		String password = DatabaseProperties.databaseProperties.get(ConstantProperties.PASSWORD);
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection(connectionURL, userName, password);
+		return conn;
+	}
+
+
+	/**
 	 * close connection
 	 * 
-	 * @param
+	 * @param 
 	 * @return
 	 */
-	protected void closeConnect() {
+	@Override
+	public void closeConnect() {
 		try {
 			if (resultSet != null) {
 				resultSet.close();
@@ -44,32 +74,5 @@ public class BaseDAOImpl implements BaseDAO {
 			}
 		} catch (SQLException e) {
 		}
-	}
-
-	/**
-	 * function return connection
-	 * 
-	 * @return Connection : connection to sql
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
-	 */
-	protected static Connection getConnection() throws SQLException, ClassNotFoundException {
-		return getMySQLConnection();
-	}
-
-	/**
-	 * get mysql connection
-	 * 
-	 * @return Connection : connect to mysql
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
-	 */
-	private static Connection getMySQLConnection() throws SQLException, ClassNotFoundException {
-		String connectionURL = DatabaseProperties.databaseProperties.get(ConstantProperties.URL);
-		String userName = DatabaseProperties.databaseProperties.get(ConstantProperties.USERNAME);
-		String password = DatabaseProperties.databaseProperties.get(ConstantProperties.PASSWORD);
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn = DriverManager.getConnection(connectionURL, userName, password);
-		return conn;
 	}
 }

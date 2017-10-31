@@ -6,7 +6,6 @@ package logic.impl;
 
 import java.util.ArrayList;
 
-import common.Common;
 import dao.TblUserDAO;
 import dao.impl.TblUserDAOImpl;
 import entity.UserInfor;

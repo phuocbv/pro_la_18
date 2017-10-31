@@ -103,6 +103,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 *            : field full_name in table tbl_user
 	 * @return int : total user with condition input
 	 */
+	@Override
 	public int getTotalUsers(String groupId, String fullName) {
 		int totalUser = 0;
 		try {

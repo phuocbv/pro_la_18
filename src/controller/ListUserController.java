@@ -96,7 +96,7 @@ public class ListUserController extends HttpServlet {
 				dataSession.put(Constant.GROUP_ID, groupId);
 			} else if (Constant.TYPE_SORT.equals(type)) {// click into sort
 				String sortType = request.getParameter(Constant.SORT_TYPE);
-				
+
 				dataSession.put(Constant.SORT_TYPE, sortType);
 				if (Constant.SORT_BY_FULL_NAME.equals(sortType)) {// if is sort by fullName
 					String sortByFullName = request.getParameter(Constant.SORT_BY_FULL_NAME);
@@ -118,22 +118,25 @@ public class ListUserController extends HttpServlet {
 			dataSession.put(Constant.PAGE, String.valueOf(page));
 			int totalUser = tblUserLogic.getTotalUsers(dataSession.get(Constant.GROUP_ID),
 					dataSession.get(Constant.FULL_NAME));// get total user
-			// get limit in page
-			int limit = Common.parseInt(DatabaseProperties.databaseProperties.get(ConstantProperties.LIMIT_RECORD),
-					Constant.DEFAULT_LIMIT);
-			page = Common.parseInt(dataSession.get(Constant.PAGE), 1);// get current page
-			List<Integer> listPaging = Common.getListPaging(totalUser, limit, page);// get list paging
-			int offset = Common.getOffset(page, limit);// get offset of paging
-			ArrayList<UserInfor> listUser = tblUserLogic.getListUsers(offset, limit,
-					(String) dataSession.get(Constant.GROUP_ID), (String) dataSession.get(Constant.FULL_NAME),
-					(String) dataSession.get(Constant.SORT_TYPE), (String) dataSession.get(Constant.SORT_BY_FULL_NAME),
-					(String) dataSession.get(Constant.SORT_BY_CODE_LEVEL),
-					(String) dataSession.get(Constant.SORT_BY_END_DATE)); // get listUser
-			ArrayList<MstGroup> listGroup = mstGroupLogic.getListGroup();// get list group
-			request.setAttribute("totalUser", totalUser);
-			request.setAttribute("listUser", listUser);
-			request.setAttribute("listGroup", listGroup);
-			request.setAttribute("listPaging", listPaging);
+			if (totalUser != 0) {//check total user
+				// get limit in page
+				int limit = Common.parseInt(DatabaseProperties.databaseProperties.get(ConstantProperties.LIMIT_RECORD),
+						Constant.DEFAULT_LIMIT);
+				page = Common.parseInt(dataSession.get(Constant.PAGE), 1);// get current page
+				List<Integer> listPaging = Common.getListPaging(totalUser, limit, page);// get list paging
+				int offset = Common.getOffset(page, limit);// get offset of paging
+				ArrayList<UserInfor> listUser = tblUserLogic.getListUsers(offset, limit,
+						(String) dataSession.get(Constant.GROUP_ID), (String) dataSession.get(Constant.FULL_NAME),
+						(String) dataSession.get(Constant.SORT_TYPE),
+						(String) dataSession.get(Constant.SORT_BY_FULL_NAME),
+						(String) dataSession.get(Constant.SORT_BY_CODE_LEVEL),
+						(String) dataSession.get(Constant.SORT_BY_END_DATE)); // get listUser
+				ArrayList<MstGroup> listGroup = mstGroupLogic.getListGroups();// get list group
+				request.setAttribute("totalUser", totalUser);
+				request.setAttribute("listUser", listUser);
+				request.setAttribute("listGroup", listGroup);
+				request.setAttribute("listPaging", listPaging);
+			}
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM002);
 			dispatcher.forward(request, response);// forward đến trang jsp
 		} catch (Exception e) {

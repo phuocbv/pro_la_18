@@ -20,5 +20,5 @@ public interface MstGroupLogic {
 	 * 
 	 * @return ArrayList<MstGroup> : store list all group
 	 */
-	public ArrayList<MstGroup> getListGroup();
+	public ArrayList<MstGroup> getListGroups();
 }

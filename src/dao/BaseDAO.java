@@ -4,6 +4,9 @@
  */
 package dao;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 /**
  * interface BaseDAO
  * 
@@ -11,4 +14,20 @@ package dao;
  *
  */
 public interface BaseDAO {
+	/**
+	 * close connection
+	 * 
+	 * @param
+	 * @return
+	 */
+	public void closeConnect();
+
+	/**
+	 * function return connection
+	 * 
+	 * @return Connection : connection to sql
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	public Connection getConnection() throws SQLException, ClassNotFoundException;
 }

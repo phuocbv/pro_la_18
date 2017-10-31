@@ -19,8 +19,8 @@ public class MstJapanLogicImpl implements MstJapanLogic {
 	 * 
 	 * @return ArrayList<MstJapan> : store list level japan
 	 */
+	@Override
 	public ArrayList<MstJapan> getAllMstJapan() {
 		return mstJapanDAO.getAllMstJapan();
 	}
-
 }

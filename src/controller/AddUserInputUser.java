@@ -80,9 +80,13 @@ public class AddUserInputUser extends HttpServlet {
 	 */
 	private void setDataLogic(HttpServletRequest req, HttpServletResponse resp) {
 		ArrayList<MstJapan> listJapan = mstJapanLogic.getAllMstJapan();
-		ArrayList<MstGroup> listGroup = mstGroupLogic.getListGroup();
+		ArrayList<MstGroup> listGroup = mstGroupLogic.getListGroups();
 		List<Integer> listYear = Common.getListYear();
+		List<Integer> listMonth = Common.getListMonth();
+		List<Integer> listDay = Common.getListDay();
 		req.setAttribute("listYear", listYear);
+		req.setAttribute("listMonth", listMonth);
+		req.setAttribute("listDay", listDay);
 		req.setAttribute("listJapan", listJapan);
 		req.setAttribute("listGroup", listGroup);
 	}
