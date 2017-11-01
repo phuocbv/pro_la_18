@@ -27,7 +27,7 @@ public class MstGroupDAOImpl extends BaseDAOImpl implements MstGroupDAO {
 	 * @return ArrayList<MstGroup> : store list all group
 	 */
 	@Override
-	public ArrayList<MstGroup> getListGroups() {
+	public ArrayList<MstGroup> getAllListGroups() {
 		ArrayList<MstGroup> listGroup = new ArrayList<>();
 		try {
 			connection = getConnection();// get connection

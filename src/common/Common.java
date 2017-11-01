@@ -15,7 +15,7 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpSession;
 
-import properties.DatabaseProperties;
+import properties.ConfigProperties;
 
 /**
  * class project function helper
@@ -91,7 +91,7 @@ public class Common {
 		}
 		// read total paging in config
 		int numberPageInPage = parseInt(
-				DatabaseProperties.databaseProperties.get(ConstantProperties.NUMBER_PAGE_IN_PAGE),
+				ConfigProperties.configProperties.get(ConstantProperties.NUMBER_PAGE_IN_PAGE),
 				Constant.DEFAULT_NUMBER_PAGE_IN_PAGE);
 		// total page follow limit
 		int totalPage = totalPage(totalRecords, limit);// (int) Math.ceil((float) totalRecords / limit);

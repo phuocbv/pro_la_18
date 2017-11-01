@@ -14,6 +14,7 @@ public class Constant {
 	// path file properties
 	public static final String PATH_FILE_ADMIN_PROPERTIES = "admin.properties";
 	public static final String PATH_FILE_DATABASE_PROPERTIES = "database.properties";
+	public static final String PATH_FILE_CONFIG_PROPERTIES = "config.properties";
 	public static final String PATH_FILE_MESSAGE_ERROR_PROPERTIES = "message_error.properties";
 	public static final String PATH_FILE_MESSAGE_PROPERTIES = "message.properties";
 

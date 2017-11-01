@@ -33,8 +33,8 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	 * @return ArrayList<MstGroup> : store list all group
 	 */
 	@Override
-	public ArrayList<MstGroup> getListGroups() {
-		return mstGroupDAO.getListGroups();
+	public ArrayList<MstGroup> getAllListGroups() {
+		return mstGroupDAO.getAllListGroups();
 	}
 
 }

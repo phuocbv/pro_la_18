@@ -1,4 +1,4 @@
-<%@page import="properties.DatabaseProperties"%>
+<%@page import="properties.ConfigProperties"%>
 <%@page import="properties.MessageProperties"%>
 <%@page import="common.ConstantProperties"%>
 <%@page import="common.Constant"%>
@@ -54,17 +54,30 @@
 									</c:forEach>
 							</select></td>
 							<td align="left"><input class="btn" type="submit" value="検索" />
-								<input class="btn" type="button" value="新規追加" /></td>
+								<input class="btn" type="button" value="新規追加"
+								id="btnRedirectAddUser" /></td>
 						</tr>
+						<script>
+							var btnRedirectAddUser = document
+									.getElementById('btnRedirectAddUser');
+							btnRedirectAddUser.addEventListener('click',
+									redirectAddUser);
+
+							function redirectAddUser() {
+								window.location
+										.replace("http://localhost:8080/pro_manageuser_14_buivanphuoc/addUserInput.do");
+							}
+						</script>
 					</table>
 				</td>
 			</tr>
 		</table>
 		<!-- End vung dieu kien tim kiem -->
 	</form>
-	<!-- Begin vung hien thi danh sach user -->
+
 	<c:choose>
 		<c:when test="${not empty listUser}">
+			<!-- Begin vung hien thi danh sach user -->
 			<table class="tbl_list" border="1" cellpadding="4" cellspacing="0"
 				width="80%">
 				<c:set var="currentPage"
@@ -128,8 +141,47 @@
 						<td align="right">${item.total}</td>
 					</tr>
 				</c:forEach>
-
 			</table>
+			<!-- End vung hien thi danh sach user -->
+
+			<!-- Begin vung paging -->
+			<c:set var="paramPaging"
+				value="type=paging
+			&sortByFullName=${sortByFullName}
+			&sortByCodeLevel=${sortByCodeLevel}
+			&sortByEndDate=${sortByEndDate}
+			&sortType=${sortType}"></c:set>
+			<c:set var="totalPaging"
+				value="${ConfigProperties.configProperties.get(ConstantProperties.NUMBER_PAGE_IN_PAGE) }"></c:set>
+			<c:set var="limit"
+				value="${ConfigProperties.configProperties.get(ConstantProperties.LIMIT_RECORD) }"></c:set>
+			<c:if test="${not empty listPaging}">
+				<table>
+					<tr>
+						<td class="lbl_paging"><c:if
+								test="${currentPage > totalPaging}">
+								<a
+									href="listUser.do?page=${listPaging.get(0) - 1}&${paramPaging}"><<</a>&nbsp;
+			</c:if> <c:forEach var="item" items="${listPaging}">
+								<c:choose>
+									<c:when test="${item == currentPage }">
+							${item} &nbsp;
+						</c:when>
+									<c:otherwise>
+										<a href="listUser.do?page=${item}&${paramPaging}">${item}</a> &nbsp;
+						</c:otherwise>
+								</c:choose>
+
+							</c:forEach> <c:if
+								test="${listPaging.get(listPaging.size() - 1) % totalPaging == 0 &&  totalUser > listPaging.get(listPaging.size() - 1) * limit}">
+								<a
+									href="listUser.do?page=${listPaging.get(listPaging.size() - 1) + 1}&${paramPaging}">>></a>
+
+							</c:if></td>
+					</tr>
+				</table>
+			</c:if>
+			<!-- End vung paging -->
 		</c:when>
 		<c:otherwise>
 			<div align="center">
@@ -137,45 +189,6 @@
 			</div>
 		</c:otherwise>
 	</c:choose>
-	<!-- End vung hien thi danh sach user -->
-
-	<!-- Begin vung paging -->
-	<c:set var="paramPaging"
-		value="type=paging
-			&sortByFullName=${sortByFullName}
-			&sortByCodeLevel=${sortByCodeLevel}
-			&sortByEndDate=${sortByEndDate}
-			&sortType=${sortType}"></c:set>
-	<c:set var="totalPaging"
-		value="${DatabaseProperties.databaseProperties.get(ConstantProperties.NUMBER_PAGE_IN_PAGE) }"></c:set>
-	<c:set var="limit"
-		value="${DatabaseProperties.databaseProperties.get(ConstantProperties.LIMIT_RECORD) }"></c:set>
-	<c:if test="${not empty listPaging}">
-		<table>
-			<tr>
-				<td class="lbl_paging"><c:if
-						test="${currentPage > totalPaging}">
-						<a href="listUser.do?page=${listPaging.get(0) - 1}&${paramPaging}"><<</a>&nbsp;
-			</c:if> <c:forEach var="item" items="${listPaging}">
-						<c:choose>
-							<c:when test="${item == currentPage }">
-							${item} &nbsp;
-						</c:when>
-							<c:otherwise>
-								<a href="listUser.do?page=${item}&${paramPaging}">${item}</a> &nbsp;
-						</c:otherwise>
-						</c:choose>
-
-					</c:forEach> <c:if
-						test="${listPaging.get(listPaging.size() - 1) % totalPaging == 0 &&  totalUser > listPaging.get(listPaging.size() - 1) * limit}">
-						<a
-							href="listUser.do?page=${listPaging.get(listPaging.size() - 1) + 1}&${paramPaging}">>></a>
-
-					</c:if></td>
-			</tr>
-		</table>
-	</c:if>
-	<!-- End vung paging -->
 	<jsp:include page="footer.jsp" />
 </body>
 </html>

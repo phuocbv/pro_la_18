@@ -33,8 +33,6 @@ public class DatabaseProperties {
 		map.put(ConstantProperties.URL, properties.getProperty(ConstantProperties.URL));
 		map.put(ConstantProperties.USERNAME, properties.getProperty(ConstantProperties.USERNAME));
 		map.put(ConstantProperties.PASSWORD, properties.getProperty(ConstantProperties.PASSWORD));
-		map.put(ConstantProperties.NUMBER_PAGE_IN_PAGE, properties.getProperty(ConstantProperties.NUMBER_PAGE_IN_PAGE));
-		map.put(ConstantProperties.LIMIT_RECORD, properties.getProperty(ConstantProperties.LIMIT_RECORD));
 		return map;
 	}
 }

@@ -27,7 +27,7 @@ import logic.MstGroupLogic;
 import logic.TblUserLogic;
 import logic.impl.MstGroupLogicImpl;
 import logic.impl.TblUserLogicImpl;
-import properties.DatabaseProperties;
+import properties.ConfigProperties;
 
 /**
  * list user controller
@@ -96,7 +96,6 @@ public class ListUserController extends HttpServlet {
 				dataSession.put(Constant.GROUP_ID, groupId);
 			} else if (Constant.TYPE_SORT.equals(type)) {// click into sort
 				String sortType = request.getParameter(Constant.SORT_TYPE);
-
 				dataSession.put(Constant.SORT_TYPE, sortType);
 				if (Constant.SORT_BY_FULL_NAME.equals(sortType)) {// if is sort by fullName
 					String sortByFullName = request.getParameter(Constant.SORT_BY_FULL_NAME);
@@ -120,7 +119,7 @@ public class ListUserController extends HttpServlet {
 					dataSession.get(Constant.FULL_NAME));// get total user
 			if (totalUser != 0) {//check total user
 				// get limit in page
-				int limit = Common.parseInt(DatabaseProperties.databaseProperties.get(ConstantProperties.LIMIT_RECORD),
+				int limit = Common.parseInt(ConfigProperties.configProperties.get(ConstantProperties.LIMIT_RECORD),
 						Constant.DEFAULT_LIMIT);
 				page = Common.parseInt(dataSession.get(Constant.PAGE), 1);// get current page
 				List<Integer> listPaging = Common.getListPaging(totalUser, limit, page);// get list paging
@@ -131,7 +130,7 @@ public class ListUserController extends HttpServlet {
 						(String) dataSession.get(Constant.SORT_BY_FULL_NAME),
 						(String) dataSession.get(Constant.SORT_BY_CODE_LEVEL),
 						(String) dataSession.get(Constant.SORT_BY_END_DATE)); // get listUser
-				ArrayList<MstGroup> listGroup = mstGroupLogic.getListGroups();// get list group
+				ArrayList<MstGroup> listGroup = mstGroupLogic.getAllListGroups();// get list group
 				request.setAttribute("totalUser", totalUser);
 				request.setAttribute("listUser", listUser);
 				request.setAttribute("listGroup", listGroup);

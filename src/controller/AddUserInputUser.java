@@ -80,7 +80,7 @@ public class AddUserInputUser extends HttpServlet {
 	 */
 	private void setDataLogic(HttpServletRequest req, HttpServletResponse resp) {
 		ArrayList<MstJapan> listJapan = mstJapanLogic.getAllMstJapan();
-		ArrayList<MstGroup> listGroup = mstGroupLogic.getListGroups();
+		ArrayList<MstGroup> listGroup = mstGroupLogic.getAllListGroups();
 		List<Integer> listYear = Common.getListYear();
 		List<Integer> listMonth = Common.getListMonth();
 		List<Integer> listDay = Common.getListDay();

@@ -19,7 +19,7 @@ public class ConstantProperties {
 
 	//public static final String ER016 = "ER016";
 
-	// attribute database properties
+	// attribute config properties
 	public static final String LIMIT_RECORD = "LIMIT_RECORD";
 	public static final String NUMBER_PAGE_IN_PAGE = "NUMBER_PAGE_IN_PAGE";
 
