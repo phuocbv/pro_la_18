@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entity.MstJapan;
@@ -16,5 +17,5 @@ public interface MstJapanDAO {
 	 * 
 	 * @return ArrayList<MstJapan> : store list level japan
 	 */
-	public ArrayList<MstJapan> getAllMstJapan();
+	public ArrayList<MstJapan> getAllMstJapan() throws ClassNotFoundException, SQLException ;
 }

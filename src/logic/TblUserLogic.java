@@ -4,6 +4,7 @@
  */
 package logic;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entity.UserInfor;
@@ -37,7 +38,8 @@ public interface TblUserLogic {
 	 * @return ArrayList<UserInfor> : store list object UserInfor for view on screen
 	 */
 	public ArrayList<UserInfor> getListUsers(int offset, int limit, String groupId, String fullName, String sortType,
-			String sortByFullName, String sortByCodeLevel, String sortByEndDate);
+			String sortByFullName, String sortByCodeLevel, String sortByEndDate)
+			throws ClassNotFoundException, SQLException;
 
 	/**
 	 * get total user
@@ -48,5 +50,5 @@ public interface TblUserLogic {
 	 *            : field full_name in table tbl_user
 	 * @return int : total user with condition input
 	 */
-	public int getTotalUsers(String groupId, String fullName);
+	public int getTotalUsers(String groupId, String fullName) throws ClassNotFoundException, SQLException;
 }

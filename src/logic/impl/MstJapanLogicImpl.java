@@ -1,5 +1,6 @@
 package logic.impl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dao.MstJapanDAO;
@@ -20,7 +21,7 @@ public class MstJapanLogicImpl implements MstJapanLogic {
 	 * @return ArrayList<MstJapan> : store list level japan
 	 */
 	@Override
-	public ArrayList<MstJapan> getAllMstJapan() {
+	public ArrayList<MstJapan> getAllMstJapan() throws ClassNotFoundException, SQLException {
 		return mstJapanDAO.getAllMstJapan();
 	}
 }

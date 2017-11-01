@@ -4,6 +4,7 @@
  */
 package logic;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entity.MstGroup;
@@ -20,5 +21,5 @@ public interface MstGroupLogic {
 	 * 
 	 * @return ArrayList<MstGroup> : store list all group
 	 */
-	public ArrayList<MstGroup> getAllListGroups();
+	public ArrayList<MstGroup> getAllListGroups() throws ClassNotFoundException, SQLException ;
 }

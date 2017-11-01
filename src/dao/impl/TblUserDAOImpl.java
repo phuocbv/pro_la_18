@@ -57,7 +57,8 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 */
 	@Override
 	public ArrayList<UserInfor> getListUsers(int offset, int limit, String groupId, String fullName, String sortType,
-			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
+			String sortByFullName, String sortByCodeLevel, String sortByEndDate)
+			throws ClassNotFoundException, SQLException {
 		ArrayList<UserInfor> listUser = new ArrayList<>();
 		try {
 			connection = getConnection();// get connection
@@ -84,10 +85,6 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 				user.setTotal(resultSet.getInt(UserInfor.TOTAL));
 				listUser.add(user);
 			}
-		} catch (ClassNotFoundException e) {
-			return listUser;
-		} catch (SQLException e) {
-			return listUser;
 		} finally {
 			closeConnect();
 		}
@@ -104,7 +101,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 * @return int : total user with condition input
 	 */
 	@Override
-	public int getTotalUsers(String groupId, String fullName) {
+	public int getTotalUsers(String groupId, String fullName) throws ClassNotFoundException, SQLException {
 		int totalUser = 0;
 		try {
 			connection = getConnection();// get connection
@@ -116,10 +113,6 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			resultSet = pstm.executeQuery();// execute sql
 			resultSet.next();
 			totalUser = resultSet.getInt(UserInfor.TOTAL_USER);// read total user
-		} catch (ClassNotFoundException e) {
-			return totalUser;
-		} catch (SQLException e) {
-			return totalUser;
 		} finally {
 			closeConnect();
 		}

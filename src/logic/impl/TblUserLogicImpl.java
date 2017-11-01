@@ -4,6 +4,7 @@
  */
 package logic.impl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dao.TblUserDAO;
@@ -49,8 +50,9 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @return ArrayList<UserInfor> : store list object UserInfor for view on screen
 	 */
 	public ArrayList<UserInfor> getListUsers(int offset, int limit, String groupId, String fullName, String sortType,
-			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
-		//fullName = Common.filterString(fullName);
+			String sortByFullName, String sortByCodeLevel, String sortByEndDate)
+			throws ClassNotFoundException, SQLException {
+		// fullName = Common.filterString(fullName);
 		return userDao.getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName, sortByCodeLevel,
 				sortByEndDate);
 	}
@@ -64,8 +66,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 *            : field full_name in table tbl_user
 	 * @return int : total user with condition input
 	 */
-	public int getTotalUsers(String groupId, String fullName) {
-		//fullName = Common.filterString(fullName);
+	public int getTotalUsers(String groupId, String fullName) throws ClassNotFoundException, SQLException {
+		// fullName = Common.filterString(fullName);
 		return userDao.getTotalUsers(groupId, fullName);
 	}
 }

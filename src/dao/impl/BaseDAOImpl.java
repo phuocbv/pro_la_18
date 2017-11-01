@@ -53,26 +53,23 @@ public class BaseDAOImpl implements BaseDAO {
 		return conn;
 	}
 
-
 	/**
 	 * close connection
 	 * 
-	 * @param 
+	 * @param
 	 * @return
+	 * @throws SQLException 
 	 */
 	@Override
-	public void closeConnect() {
-		try {
-			if (resultSet != null) {
-				resultSet.close();
-			}
-			if (pstm != null) {
-				pstm.close();
-			}
-			if (connection != null) {
-				connection.close();
-			}
-		} catch (SQLException e) {
+	public void closeConnect() throws SQLException {
+		if (resultSet != null) {
+			resultSet.close();
+		}
+		if (pstm != null) {
+			pstm.close();
+		}
+		if (connection != null) {
+			connection.close();
 		}
 	}
 }

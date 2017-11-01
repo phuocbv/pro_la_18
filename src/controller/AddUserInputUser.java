@@ -5,6 +5,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,10 +54,19 @@ public class AddUserInputUser extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		setDataLogic(req, resp);
-		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM003);
-		dispatcher.forward(req, resp);// forward đến trang jsp
+		try {
+			setDataLogic(req, resp);
+			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM003);
+			dispatcher.forward(req, resp);// forward đến trang jsp
+		} catch (Exception e) {
+			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+			try {
+				// in case have error then send redirect to view error
+				resp.sendRedirect(stringBuffer.append(Constant.URL_VIEW_EROR).toString());
+			} catch (IOException e1) {
+
+			}
+		}
 	}
 
 	/*
@@ -77,8 +87,11 @@ public class AddUserInputUser extends HttpServlet {
 	 * 
 	 * @param req
 	 * @param resp
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
 	 */
-	private void setDataLogic(HttpServletRequest req, HttpServletResponse resp) {
+	private void setDataLogic(HttpServletRequest req, HttpServletResponse resp)
+			throws ClassNotFoundException, SQLException {
 		ArrayList<MstJapan> listJapan = mstJapanLogic.getAllMstJapan();
 		ArrayList<MstGroup> listGroup = mstGroupLogic.getAllListGroups();
 		List<Integer> listYear = Common.getListYear();

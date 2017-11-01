@@ -19,7 +19,7 @@ public class MstJapanDAOImpl extends BaseDAOImpl implements MstJapanDAO {
 	 * 
 	 * @return ArrayList<MstJapan> : store list level japan
 	 */
-	public ArrayList<MstJapan> getAllMstJapan() {
+	public ArrayList<MstJapan> getAllMstJapan() throws ClassNotFoundException, SQLException {
 		ArrayList<MstJapan> listJapan = new ArrayList<>();
 		try {
 			connection = getConnection();// get connection
@@ -36,10 +36,6 @@ public class MstJapanDAOImpl extends BaseDAOImpl implements MstJapanDAO {
 				japan.setNameLevel(resultSet.getString(MstJapan.NAME_LEVEL));
 				listJapan.add(japan);
 			}
-		} catch (ClassNotFoundException e) {
-			return listJapan;
-		} catch (SQLException e) {
-			return listJapan;
 		} finally {
 			closeConnect();
 		}

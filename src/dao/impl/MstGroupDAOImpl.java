@@ -25,9 +25,11 @@ public class MstGroupDAOImpl extends BaseDAOImpl implements MstGroupDAO {
 	 * get all group
 	 * 
 	 * @return ArrayList<MstGroup> : store list all group
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	@Override
-	public ArrayList<MstGroup> getAllListGroups() {
+	public ArrayList<MstGroup> getAllListGroups() throws ClassNotFoundException, SQLException {
 		ArrayList<MstGroup> listGroup = new ArrayList<>();
 		try {
 			connection = getConnection();// get connection
@@ -44,10 +46,6 @@ public class MstGroupDAOImpl extends BaseDAOImpl implements MstGroupDAO {
 				group.setGroupName(resultSet.getString(MstGroup.GROUP_NAME));
 				listGroup.add(group);
 			}
-		} catch (ClassNotFoundException e) {
-			return listGroup;
-		} catch (SQLException e) {
-			return listGroup;
 		} finally {
 			closeConnect();
 		}
