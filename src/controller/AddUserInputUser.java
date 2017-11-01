@@ -94,7 +94,9 @@ public class AddUserInputUser extends HttpServlet {
 			throws ClassNotFoundException, SQLException {
 		ArrayList<MstJapan> listJapan = mstJapanLogic.getAllMstJapan();
 		ArrayList<MstGroup> listGroup = mstGroupLogic.getAllListGroups();
-		List<Integer> listYear = Common.getListYear();
+		
+		
+		List<Integer> listYear = Common.getListYear(1980, 2017);
 		List<Integer> listMonth = Common.getListMonth();
 		List<Integer> listDay = Common.getListDay();
 		req.setAttribute("listYear", listYear);

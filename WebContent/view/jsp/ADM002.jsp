@@ -65,7 +65,7 @@
 
 							function redirectAddUser() {
 								window.location
-										.replace("http://localhost:8080/pro_manageuser_14_buivanphuoc/addUserInput.do");
+										.replace('${pageContext.request.contextPath}${Constant.URL_ADD_USER_INPUT}');
 							}
 						</script>
 					</table>

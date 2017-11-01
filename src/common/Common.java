@@ -90,8 +90,7 @@ public class Common {
 			return list;
 		}
 		// read total paging in config
-		int numberPageInPage = parseInt(
-				ConfigProperties.configProperties.get(ConstantProperties.NUMBER_PAGE_IN_PAGE),
+		int numberPageInPage = parseInt(ConfigProperties.configProperties.get(ConstantProperties.NUMBER_PAGE_IN_PAGE),
 				Constant.DEFAULT_NUMBER_PAGE_IN_PAGE);
 		// total page follow limit
 		int totalPage = totalPage(totalRecords, limit);// (int) Math.ceil((float) totalRecords / limit);
@@ -214,13 +213,20 @@ public class Common {
 	 * 
 	 * @return List<Integer> list year 1980 - current year
 	 */
-	public static List<Integer> getListYear() {
+	public static List<Integer> getListYear(int startYear, int endYear) {
 		List<Integer> listYear = new ArrayList<>();
-		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		for (int i = Constant.START_YEAR; i <= currentYear; i++) {
+		for (int i = startYear; i <= endYear; i++) {
 			listYear.add(i);
 		}
 		return listYear;
+	}
+
+	/**
+	 * get current year
+	 * @return int : current year
+	 */
+	public static int getCurrentYear() {
+		return Calendar.getInstance().get(Calendar.YEAR);
 	}
 
 	/**
