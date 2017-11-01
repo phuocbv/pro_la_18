@@ -74,7 +74,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			resultSet = pstm.executeQuery();// execute sql
 			while (resultSet.next()) {// lặp từng bản ghi lấy ra và thêm vào list
 				UserInfor user = new UserInfor();
-				user.setUserId(resultSet.getInt(UserInfor.USER_ID));
+				/*user.setUserId(resultSet.getInt(UserInfor.USER_ID));
 				user.setFullName(resultSet.getString(UserInfor.FULL_NAME));
 				user.setBirthday(resultSet.getDate(UserInfor.BIRTHDAY));
 				user.setGroupName(resultSet.getString(UserInfor.GROUP_NAME));
@@ -82,7 +82,16 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 				user.setTel(resultSet.getString(UserInfor.TEL));
 				user.setNameLevel(resultSet.getString(UserInfor.NAME_LEVEL));
 				user.setEndDate(resultSet.getDate(UserInfor.END_DATE));
-				user.setTotal(resultSet.getInt(UserInfor.TOTAL));
+				user.setTotal(resultSet.getInt(UserInfor.TOTAL));*/
+				user.setUserId(resultSet.getInt(1));
+				user.setFullName(resultSet.getString(2));
+				user.setBirthday(resultSet.getDate(3));
+				user.setGroupName(resultSet.getString(4));
+				user.setEmail(resultSet.getString(5));
+				user.setTel(resultSet.getString(6));
+				user.setNameLevel(resultSet.getString(7));
+				user.setEndDate(resultSet.getDate(8));
+				user.setTotal(resultSet.getInt(9));
 				listUser.add(user);
 			}
 		} finally {
@@ -112,7 +121,8 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			setParam(sql, groupId, fullName);// set param into pstm
 			resultSet = pstm.executeQuery();// execute sql
 			resultSet.next();
-			totalUser = resultSet.getInt(UserInfor.TOTAL_USER);// read total user
+//			totalUser = resultSet.getInt(UserInfor.TOTAL_USER);// read total user
+			totalUser = resultSet.getInt(1);// read total user
 		} finally {
 			closeConnect();
 		}

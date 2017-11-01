@@ -48,6 +48,7 @@ public class Constant {
 	// session
 	public static final String SESSION_LOGGINED_USER = "LOGINED_USER";
 	public static final String SESSION_CONDITION_STORE = "CONDITION_STORE";
+	public static final String SESSION_USER_INFOR = "USER_INFOR";
 
 	// part file jsp
 	public static final String ADM001 = "/view/jsp/ADM001.jsp";
@@ -62,13 +63,21 @@ public class Constant {
 	public static final String URL_LOGOUT = "/logout";
 	public static final String URL_LIST_USER = "/listUser.do";
 	public static final String URL_ADD_USER_INPUT = "/addUserInput.do";
+	public static final String URL_ADD_USER_CONFIRM = "/addUserConfirm.do";
 	public static final String URL_VIEW_EROR = "/viewError.do";
 
 	// url filter
 	public static final String URL_FILTER = "/*";
 	
-	//start year
+	//start - end time
 	public static final int START_YEAR = 1980;
+	public static final int START_DAY = 1;
+	public static final int END_DAY = 31;
+	public static final int START_MONTH = 1;
+	public static final int END_MONTH = 12;
+	
+	//format date
+	public static final String FORMAT_DATE = "yyyy/MM/dd";
 	
 	//paging
 	public static final String PAGE = "page";

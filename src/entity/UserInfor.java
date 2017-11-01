@@ -23,24 +23,55 @@ public class UserInfor {
 	private Date endDate;
 	private int total;
 
+	private String loginName;
+	private String groupId;
+	private String fullNameKana;
+	private String password;
+	private String confirmPassword;
+	private String codeLevel;
+	private Date startDate;
+
 	// field name in ADM002 of database
-	public static final String USER_ID = "user_id";
+	// public static final String USER_ID = "user_id";
 	public static final String FULL_NAME = "full_name";
-	public static final String BIRTHDAY = "birthday";
+	// public static final String BIRTHDAY = "birthday";
 	public static final String EMAIL = "email";
 	public static final String TEL = "tel";
-	public static final String GROUP_NAME = "group_name";
-	public static final String NAME_LEVEL = "name_level";
+	// public static final String GROUP_NAME = "group_name";
+	// public static final String NAME_LEVEL = "name_level";
+	// public static final String END_DATE = "end_date";
+	// public static final String TOTAL = "total";
+	public static final String FULL_NAME_KANA = "full_name_kana";
+
+	// japan
+	public static final String CODE_LEVEL = "code_level";
+
+	// param
+	public static final String LOGIN_NAME = "login_name";
+	public static final String PASSWORD = "password";
+	public static final String CONFIRM_PASSWORD = "confirm_password";
+	public static final String GROUP_ID = "group_id";
+	public static final String START_DATE = "start_date";
 	public static final String END_DATE = "end_date";
 	public static final String TOTAL = "total";
 
-	//param
-	public static final String LOGIN_NAME = "login_name";
-	public static final String PASSWORD = "password";
-	public static final String GROUP_ID = "group_id";
-	
+	// birthday
+	public static final String BIRTHDAY_YEAR = "birthday_year";
+	public static final String BIRTHDAY_MONTH = "birthday_month";
+	public static final String BIRTHDAY_DAY = "birthday_day";
+
+	// start date
+	public static final String START_YEAR = "start_year";
+	public static final String START_MONTH = "start_month";
+	public static final String START_DAY = "start_day";
+
+	// end date
+	public static final String END_YEAR = "end_year";
+	public static final String END_MONTH = "end_month";
+	public static final String END_DAY = "end_day";
+
 	// total user
-	public static final String TOTAL_USER = "total_user";
+	// public static final String TOTAL_USER = "total_user";
 
 	/**
 	 * @return the userId
@@ -175,6 +206,111 @@ public class UserInfor {
 	 */
 	public void setTotal(int total) {
 		this.total = total;
+	}
+
+	/**
+	 * @return the loginName
+	 */
+	public String getLoginName() {
+		return loginName;
+	}
+
+	/**
+	 * @param loginName
+	 *            the loginName to set
+	 */
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+
+	/**
+	 * @return the groupId
+	 */
+	public String getGroupId() {
+		return groupId;
+	}
+
+	/**
+	 * @param groupId
+	 *            the groupId to set
+	 */
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+
+	/**
+	 * @return the fullNameKana
+	 */
+	public String getFullNameKana() {
+		return fullNameKana;
+	}
+
+	/**
+	 * @param fullNameKana
+	 *            the fullNameKana to set
+	 */
+	public void setFullNameKana(String fullNameKana) {
+		this.fullNameKana = fullNameKana;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password
+	 *            the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @return the codeLevel
+	 */
+	public String getCodeLevel() {
+		return codeLevel;
+	}
+
+	/**
+	 * @param codeLevel
+	 *            the codeLevel to set
+	 */
+	public void setCodeLevel(String codeLevel) {
+		this.codeLevel = codeLevel;
+	}
+
+	/**
+	 * @return the startDate
+	 */
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	/**
+	 * @param startDate
+	 *            the startDate to set
+	 */
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	/**
+	 * @return the confirmPassword
+	 */
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	/**
+	 * @param confirmPassword
+	 *            the confirmPassword to set
+	 */
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 }

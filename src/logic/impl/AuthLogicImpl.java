@@ -12,7 +12,7 @@ import common.ConstantProperties;
 import logic.AuthLogic;
 import properties.AdminProperties;
 import properties.MessageErrorProperties;
-import validate.LoginValidate;
+import validate.ValidateLogin;
 
 /**
  * process logic login, logout
@@ -33,7 +33,7 @@ public class AuthLogicImpl implements AuthLogic {
 	 */
 	@Override
 	public List<String> validateAdmin(String loginName, String password) {
-		LoginValidate loginValidate = new LoginValidate();
+		ValidateLogin loginValidate = new ValidateLogin();
 		// validate data
 		List<String> listMessage = loginValidate.validate(loginName, password);
 		// if message different empty then return list message

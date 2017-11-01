@@ -8,8 +8,11 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -223,6 +226,7 @@ public class Common {
 
 	/**
 	 * get current year
+	 * 
 	 * @return int : current year
 	 */
 	public static int getCurrentYear() {
@@ -230,13 +234,31 @@ public class Common {
 	}
 
 	/**
+	 * get current month
+	 * 
+	 * @return int current month
+	 */
+	public static int getCurrentMonth() {
+		return Calendar.getInstance().get(Calendar.MONTH) + 1;
+	}
+
+	/**
+	 * get current date
+	 * 
+	 * @return current day
+	 */
+	public static int getCurrentDay() {
+		return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+	}
+
+	/**
 	 * get list month
 	 * 
-	 * @return List<Integer> list month 1 - 12
+	 * @return List<Integer> list month
 	 */
 	public static List<Integer> getListMonth() {
 		List<Integer> listMonth = new ArrayList<>();
-		for (int i = 1; i <= 12; i++) {
+		for (int i = Constant.START_MONTH; i <= Constant.END_MONTH; i++) {
 			listMonth.add(i);
 		}
 		return listMonth;
@@ -245,14 +267,38 @@ public class Common {
 	/**
 	 * get list day
 	 * 
-	 * @return List<Integer> list day 1 - 31
+	 * @return List<Integer> list day
 	 */
 	public static List<Integer> getListDay() {
 		List<Integer> listDay = new ArrayList<>();
-		for (int i = 1; i <= 31; i++) {
+		for (int i = Constant.START_DAY; i <= Constant.END_DAY; i++) {
 			listDay.add(i);
 		}
 		return listDay;
+	}
+
+	/**
+	 * new date from year, month, day
+	 * 
+	 * @param year
+	 *            : year create date
+	 * @param month
+	 *            : month create date
+	 * @param day
+	 *            : day create date
+	 * @return date : create date from year, month, day
+	 */
+	public static Date toDate(String year, String month, String day) {
+		SimpleDateFormat formatter = new SimpleDateFormat(Constant.FORMAT_DATE);
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(year).append("/").append(month).append("/").append(day);
+		Date date = null;
+		try {
+			date = formatter.parse(stringBuffer.toString());
+		} catch (ParseException e) {
+			date = new Date();
+		}
+		return date;
 	}
 
 	/**

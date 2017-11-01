@@ -16,7 +16,7 @@ import properties.MessageErrorProperties;
  * @author da
  *
  */
-public class LoginValidate {
+public class ValidateLogin {
 	/**
 	 * method validate data
 	 * 
