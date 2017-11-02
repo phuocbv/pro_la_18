@@ -45,9 +45,9 @@ public class BaseDAOImpl implements BaseDAO {
 	 * @throws ClassNotFoundException
 	 */
 	private Connection getMySQLConnection() throws SQLException, ClassNotFoundException {
-		String connectionURL = DatabaseProperties.databaseProperties.get(ConstantProperties.URL);
-		String userName = DatabaseProperties.databaseProperties.get(ConstantProperties.USERNAME);
-		String password = DatabaseProperties.databaseProperties.get(ConstantProperties.PASSWORD);
+		String connectionURL = DatabaseProperties.getValue(ConstantProperties.URL);
+		String userName = DatabaseProperties.getValue(ConstantProperties.USERNAME);
+		String password = DatabaseProperties.getValue(ConstantProperties.PASSWORD);
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn = DriverManager.getConnection(connectionURL, userName, password);
 		return conn;
@@ -58,7 +58,7 @@ public class BaseDAOImpl implements BaseDAO {
 	 * 
 	 * @param
 	 * @return
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	@Override
 	public void closeConnect() throws SQLException {

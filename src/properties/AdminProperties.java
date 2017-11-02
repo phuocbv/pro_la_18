@@ -4,6 +4,8 @@
  */
 package properties;
 
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -18,20 +20,40 @@ import common.Constant;
  *
  */
 public class AdminProperties {
-	public static Map<String, String> adminProperties = getAdminProperties();
+	static private Map<String, String> adminProperties = new HashMap<String, String>();
 
 	/**
-	 * get map properties of admin
-	 * 
-	 * @return Map<String, String> : store account of admin
+	 * read propeties
 	 */
-	public static Map<String, String> getAdminProperties() {
-		Map<String, String> map = new HashMap<String, String>();
-		//get properties by path
-		Properties properties = Common.getProperties(Constant.PATH_FILE_ADMIN_PROPERTIES);
-		map.put(Constant.LOGIN_NAME, properties.getProperty(Constant.LOGIN_NAME));
-		map.put(Constant.PASSWORD, properties.getProperty(Constant.PASSWORD));
-		map.put(Constant.SALT_ADMIN, properties.getProperty(Constant.SALT_ADMIN));
-		return map;
+	static {
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		Properties prop = new Properties();
+		try {
+			prop.load(classLoader.getResourceAsStream(Constant.PATH_FILE_ADMIN_PROPERTIES));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Enumeration<String> en = (Enumeration<String>) prop.propertyNames();
+		while (en.hasMoreElements()) {
+			String key = (String) en.nextElement();
+			adminProperties.put(key, prop.getProperty(key));
+		}
 	}
+
+	/**
+	 * return value by key
+	 * 
+	 * @param key
+	 *            config
+	 * @return value
+	 */
+	static public String getValue(String key) {
+		String value = "";
+		if (adminProperties.containsKey(key)) {
+			value = adminProperties.get(key);
+		}
+		return value;
+	}
+	
+	
 }

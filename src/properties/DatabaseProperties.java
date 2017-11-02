@@ -4,13 +4,13 @@
  */
 package properties;
 
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import common.Common;
 import common.Constant;
-import common.ConstantProperties;
 
 /**
  * store config database
@@ -19,20 +19,38 @@ import common.ConstantProperties;
  *
  */
 public class DatabaseProperties {
-	public static Map<String, String> databaseProperties = getDatabaseProperties();
+	static private Map<String, String> databaseProperties = new HashMap<String, String>();
 
 	/**
-	 * get map properties of database
-	 * 
-	 * @return Map<String, String> store config database
+	 * read propeties
 	 */
-	public static Map<String, String> getDatabaseProperties() {
-		Map<String, String> map = new HashMap<String, String>();
-		//get properties by path
-		Properties properties = Common.getProperties(Constant.PATH_FILE_DATABASE_PROPERTIES);
-		map.put(ConstantProperties.URL, properties.getProperty(ConstantProperties.URL));
-		map.put(ConstantProperties.USERNAME, properties.getProperty(ConstantProperties.USERNAME));
-		map.put(ConstantProperties.PASSWORD, properties.getProperty(ConstantProperties.PASSWORD));
-		return map;
+	static {
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		Properties prop = new Properties();
+		try {
+			prop.load(classLoader.getResourceAsStream(Constant.PATH_FILE_DATABASE_PROPERTIES));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Enumeration<String> en = (Enumeration<String>) prop.propertyNames();
+		while (en.hasMoreElements()) {
+			String key = (String) en.nextElement();
+			databaseProperties.put(key, prop.getProperty(key));
+		}
+	}
+
+	/**
+	 * return value by key
+	 * 
+	 * @param key
+	 *            config
+	 * @return value
+	 */
+	static public String getValue(String key) {
+		String value = "";
+		if (databaseProperties.containsKey(key)) {
+			value = databaseProperties.get(key);
+		}
+		return value;
 	}
 }

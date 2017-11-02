@@ -30,6 +30,14 @@ public class UserInfor {
 	private String confirmPassword;
 	private String codeLevel;
 	private Date startDate;
+	
+	
+//	private String birthdayYear;
+//	private String birthdayMonth;
+//	private String birthdayDay;
+//	
+//	private String startYear;
+//	private String startMonth;
 
 	// field name in ADM002 of database
 	// public static final String USER_ID = "user_id";

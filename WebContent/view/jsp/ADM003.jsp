@@ -113,10 +113,12 @@
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
+							<!-- level japannes -->
 							<tr>
-								<th align="left" colspan="2"><a href="javascript:void(0)">日本語能力</a></th>
+								<th align="left" colspan="2"><a href="javascript:void(0)"
+									id="linkLevelJapannes">日本語能力</a></th>
 							</tr>
-							<tr>
+							<tr class="fieldToggle">
 								<td class="lbl_left">資格:</td>
 								<td align="left"><select name="${UserInfor.CODE_LEVEL }">
 										<option value="0">選択してください資格</option>
@@ -125,7 +127,7 @@
 										</c:forEach>
 								</select></td>
 							</tr>
-							<tr>
+							<tr class="fieldToggle">
 								<td class="lbl_left">資格交付日:</td>
 								<td align="left"><select name="${UserInfor.START_YEAR }">
 										<c:forEach var="item" items="${listYear}">
@@ -141,13 +143,15 @@
 										</c:forEach>
 								</select>日</td>
 							</tr>
-							<tr>
+							<tr class="fieldToggle">
 								<td class="lbl_left">失効日:</td>
 								<td align="left"><select name="${UserInfor.END_YEAR }">
 										<c:forEach var="item" items="${listYear}">
 											<option value="${item}">${item}</option>
 										</c:forEach>
-										<option value="${listYear.get(listYear.size() - 1) + 1}">${listYear.get(listYear.size() - 1) + 1}</option>
+										<c:if test="${not empty listYear }">
+											<option value="${listYear.get(listYear.size() - 1) + 1}">${listYear.get(listYear.size() - 1) + 1}</option>
+										</c:if>
 								</select>年 <select name="${UserInfor.END_MONTH }">
 										<c:forEach var="item" items="${listMonth }">
 											<option value="${item}">${item}</option>
@@ -158,7 +162,7 @@
 										</c:forEach>
 								</select>日</td>
 							</tr>
-							<tr>
+							<tr class="fieldToggle">
 								<td class="lbl_left">点数:</td>
 								<td align="left"><input class="txBox" type="text"
 									name="${UserInfor.TOTAL }" value="${userInfor.total }" size="5"
@@ -187,15 +191,23 @@
 	<!-- End vung input -->
 	<script>
 		var btnBackListUser = document.getElementById('btnBackListUser');
+		var linkLevelJapannes = document.getElementById('linkLevelJapannes');
 		btnBackListUser.addEventListener('click', redirectListUser);
+		linkLevelJapannes.addEventListener('click', formLevelJapan);
 
 		function redirectListUser() {
 			window.location
-					.replace('${pageContext.request.contextPath}${Constant.URL_LIST_USER}');
+					.replace('${pageContext.request.contextPath}${Constant.URL_LIST_USER}'
+							+ '?type=back');
+		}
+
+		function formLevelJapan() {
+
 		}
 	</script>
 	<!-- Begin vung footer -->
 	<jsp:include page="footer.jsp" />
 	<!-- End vung footer -->
+	<script type="text/javascript" src="view/js/user.js"></script>
 </body>
 </html>

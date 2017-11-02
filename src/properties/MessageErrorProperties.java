@@ -4,6 +4,8 @@
  */
 package properties;
 
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -19,29 +21,38 @@ import common.ConstantProperties;
  *
  */
 public class MessageErrorProperties {
-	public static Map<String, String> messageErrorProperties = getMessageErrorProperties();
+	static private Map<String, String> messageErrorProperties = new HashMap<String, String>();
 
 	/**
-	 * get Message Error Properties
-	 * 
-	 * @return Map<String, String> store message error
+	 * read propeties
 	 */
-	public static Map<String, String> getMessageErrorProperties() {
-		Map<String, String> listError = new HashMap<String, String>();
-		// get Properties from path
-		Properties properties = Common.getProperties(Constant.PATH_FILE_MESSAGE_ERROR_PROPERTIES);
-		listError.put(ConstantProperties.ER001, Common.getJapanes(properties.getProperty(ConstantProperties.ER001)));
-		listError.put(ConstantProperties.ER001_LOGIN_NAME,
-				Common.getJapanes(properties.getProperty(ConstantProperties.ER001_LOGIN_NAME)));
-		listError.put(ConstantProperties.ER001_PASSWORD,
-				Common.getJapanes(properties.getProperty(ConstantProperties.ER001_PASSWORD)));
-		listError.put(ConstantProperties.ER001_LOGIN_NAME_AND_PASSWORD,
-				Common.getJapanes(properties.getProperty(ConstantProperties.ER001_LOGIN_NAME_AND_PASSWORD)));
-		listError.put(ConstantProperties.ER016, Common.getJapanes(properties.getProperty(ConstantProperties.ER016)));
-		return listError;
+	static {
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		Properties prop = new Properties();
+		try {
+			prop.load(classLoader.getResourceAsStream(Constant.PATH_FILE_MESSAGE_ERROR_PROPERTIES));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Enumeration<String> en = (Enumeration<String>) prop.propertyNames();
+		while (en.hasMoreElements()) {
+			String key = (String) en.nextElement();
+			messageErrorProperties.put(key, Common.getJapanes(prop.getProperty(key)));
+		}
 	}
 
-	public static void main(String[] args) {
-		System.out.println(messageErrorProperties.get(ConstantProperties.ER001_LOGIN_NAME));
+	/**
+	 * return value by key
+	 * 
+	 * @param key
+	 *            config
+	 * @return value
+	 */
+	static public String getValue(String key) {
+		String value = "";
+		if (messageErrorProperties.containsKey(key)) {
+			value = messageErrorProperties.get(key);
+		}
+		return value;
 	}
 }

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 import javax.servlet.http.HttpSession;
 
@@ -93,7 +92,7 @@ public class Common {
 			return list;
 		}
 		// read total paging in config
-		int numberPageInPage = parseInt(ConfigProperties.configProperties.get(ConstantProperties.NUMBER_PAGE_IN_PAGE),
+		int numberPageInPage = parseInt(ConfigProperties.getValue(ConstantProperties.NUMBER_PAGE_IN_PAGE),
 				Constant.DEFAULT_NUMBER_PAGE_IN_PAGE);
 		// total page follow limit
 		int totalPage = totalPage(totalRecords, limit);// (int) Math.ceil((float) totalRecords / limit);
@@ -360,14 +359,14 @@ public class Common {
 	 * 
 	 * @return Properties : object Properties for read file .properties
 	 */
-	public static Properties getProperties(String fileName) {
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		Properties prop = new Properties();
-		try {
-			prop.load(classLoader.getResourceAsStream(fileName));
-		} catch (Exception e) {
-			return null;
-		}
-		return prop;
-	}
+	// public static Properties getProperties(String fileName) {
+	// ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+	// Properties prop = new Properties();
+	// try {
+	// prop.load(classLoader.getResourceAsStream(fileName));
+	// } catch (Exception e) {
+	// return null;
+	// }
+	// return prop;
+	// }
 }

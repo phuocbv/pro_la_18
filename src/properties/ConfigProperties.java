@@ -4,6 +4,8 @@
  */
 package properties;
 
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -19,19 +21,38 @@ import common.ConstantProperties;
  *
  */
 public class ConfigProperties {
-	public static Map<String, String> configProperties = getConfigProperties();
+	static private Map<String, String> configProperties = new HashMap<String, String>();
 
 	/**
-	 * get map properties of config
-	 * 
-	 * @return Map<String, String> store config
+	 * read propeties
 	 */
-	public static Map<String, String> getConfigProperties() {
-		Map<String, String> map = new HashMap<String, String>();
-		//get properties by path
-		Properties properties = Common.getProperties(Constant.PATH_FILE_CONFIG_PROPERTIES);
-		map.put(ConstantProperties.NUMBER_PAGE_IN_PAGE, properties.getProperty(ConstantProperties.NUMBER_PAGE_IN_PAGE));
-		map.put(ConstantProperties.LIMIT_RECORD, properties.getProperty(ConstantProperties.LIMIT_RECORD));
-		return map;
+	static {
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		Properties prop = new Properties();
+		try {
+			prop.load(classLoader.getResourceAsStream(Constant.PATH_FILE_CONFIG_PROPERTIES));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Enumeration<String> en = (Enumeration<String>) prop.propertyNames();
+		while (en.hasMoreElements()) {
+			String key = (String) en.nextElement();
+			configProperties.put(key, prop.getProperty(key));
+		}
+	}
+
+	/**
+	 * return value by key
+	 * 
+	 * @param key
+	 *            mã các trường config
+	 * @return value
+	 */
+	static public String getValue(String key) {
+		String value = "";
+		if (configProperties.containsKey(key)) {
+			value = configProperties.get(key);
+		}
+		return value;
 	}
 }

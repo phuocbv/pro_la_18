@@ -117,9 +117,9 @@ public class ListUserController extends HttpServlet {
 			dataSession.put(Constant.PAGE, String.valueOf(page));
 			int totalUser = tblUserLogic.getTotalUsers(dataSession.get(Constant.GROUP_ID),
 					dataSession.get(Constant.FULL_NAME));// get total user
-			if (totalUser != 0) {//check total user
+			if (totalUser != 0) {// check total user
 				// get limit in page
-				int limit = Common.parseInt(ConfigProperties.configProperties.get(ConstantProperties.LIMIT_RECORD),
+				int limit = Common.parseInt(ConfigProperties.getValue(ConstantProperties.LIMIT_RECORD),
 						Constant.DEFAULT_LIMIT);
 				page = Common.parseInt(dataSession.get(Constant.PAGE), 1);// get current page
 				List<Integer> listPaging = Common.getListPaging(totalUser, limit, page);// get list paging
@@ -137,7 +137,7 @@ public class ListUserController extends HttpServlet {
 				request.setAttribute("listPaging", listPaging);
 			}
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM002);
-			dispatcher.forward(request, response);// forward đến trang jsp
+			dispatcher.forward(request, response);// forward to page jsp
 		} catch (Exception e) {
 			StringBuffer stringBuffer = new StringBuffer(request.getContextPath());
 			try {

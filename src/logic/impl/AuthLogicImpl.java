@@ -44,15 +44,15 @@ public class AuthLogicImpl implements AuthLogic {
 		// if LOGIN_NAME in adminProperties different loginName input then return
 		// listMessage
 		// case different compare LOGIN_NAME
-		if (!AdminProperties.adminProperties.get(Constant.LOGIN_NAME).equals(loginName)) {
-			listMessage.add(MessageErrorProperties.messageErrorProperties.get(ConstantProperties.ER016));
+		if (!AdminProperties.getValue(Constant.LOGIN_NAME).equals(loginName)) {
+			listMessage.add(MessageErrorProperties.getValue(ConstantProperties.ER016));
 			return listMessage;
 		}
 		// md5 password
-		String inputPassword = Common.MD5(password, AdminProperties.adminProperties.get(Constant.SALT_ADMIN));
+		String inputPassword = Common.MD5(password, AdminProperties.getValue(Constant.SALT_ADMIN));
 		// compare password
-		if (!AdminProperties.adminProperties.get(Constant.PASSWORD).equals(inputPassword)) {
-			listMessage.add(MessageErrorProperties.messageErrorProperties.get(ConstantProperties.ER016));
+		if (!AdminProperties.getValue(Constant.PASSWORD).equals(inputPassword)) {
+			listMessage.add(MessageErrorProperties.getValue(ConstantProperties.ER016));
 			return listMessage;
 		}
 		return listMessage;

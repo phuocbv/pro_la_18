@@ -152,9 +152,9 @@
 			&sortByEndDate=${sortByEndDate}
 			&sortType=${sortType}"></c:set>
 			<c:set var="totalPaging"
-				value="${ConfigProperties.configProperties.get(ConstantProperties.NUMBER_PAGE_IN_PAGE) }"></c:set>
+				value="${ConfigProperties.getValue(ConstantProperties.NUMBER_PAGE_IN_PAGE) }"></c:set>
 			<c:set var="limit"
-				value="${ConfigProperties.configProperties.get(ConstantProperties.LIMIT_RECORD) }"></c:set>
+				value="${ConfigProperties.getValue(ConstantProperties.LIMIT_RECORD) }"></c:set>
 			<c:if test="${not empty listPaging}">
 				<table>
 					<tr>
@@ -185,8 +185,7 @@
 		</c:when>
 		<c:otherwise>
 			<div align="center">
-				${MessageProperties.messageProperties.get(ConstantProperties.MSG005)}
-			</div>
+				${MessageProperties.getValue(ConstantProperties.MSG005)}</div>
 		</c:otherwise>
 	</c:choose>
 	<jsp:include page="footer.jsp" />

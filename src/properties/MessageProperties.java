@@ -4,13 +4,14 @@
  */
 package properties;
 
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
 import common.Common;
 import common.Constant;
-import common.ConstantProperties;
 
 /**
  * class store message properties
@@ -19,22 +20,38 @@ import common.ConstantProperties;
  *
  */
 public class MessageProperties {
-	public static Map<String, String> messageProperties = getMessageProperties();
+	static private Map<String, String> messageProperties = new HashMap<String, String>();
 
 	/**
-	 * get map properties of message
-	 * 
-	 * @return Map<String, String> : store message
+	 * read propeties
 	 */
-	public static Map<String, String> getMessageProperties() {
-		Map<String, String> map = new HashMap<String, String>();
-		//get properties by path
-		Properties properties = Common.getProperties(Constant.PATH_FILE_MESSAGE_PROPERTIES);
-		map.put(ConstantProperties.MSG001, Common.getJapanes(properties.getProperty(ConstantProperties.MSG001)));
-		map.put(ConstantProperties.MSG002, Common.getJapanes(properties.getProperty(ConstantProperties.MSG002)));
-		map.put(ConstantProperties.MSG003, Common.getJapanes(properties.getProperty(ConstantProperties.MSG003)));
-		map.put(ConstantProperties.MSG004, Common.getJapanes(properties.getProperty(ConstantProperties.MSG004)));
-		map.put(ConstantProperties.MSG005, Common.getJapanes(properties.getProperty(ConstantProperties.MSG005)));
-		return map;
+	static {
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		Properties prop = new Properties();
+		try {
+			prop.load(classLoader.getResourceAsStream(Constant.PATH_FILE_MESSAGE_PROPERTIES));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Enumeration<String> en = (Enumeration<String>) prop.propertyNames();
+		while (en.hasMoreElements()) {
+			String key = (String) en.nextElement();
+			messageProperties.put(key, Common.getJapanes(prop.getProperty(key)));
+		}
+	}
+
+	/**
+	 * return value by key
+	 * 
+	 * @param key
+	 *            config
+	 * @return value
+	 */
+	static public String getValue(String key) {
+		String value = "";
+		if (messageProperties.containsKey(key)) {
+			value = messageProperties.get(key);
+		}
+		return value;
 	}
 }
