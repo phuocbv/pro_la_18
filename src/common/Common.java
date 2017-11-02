@@ -8,7 +8,6 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -211,6 +210,69 @@ public class Common {
 	}
 
 	/**
+	 * get current year
+	 * 
+	 * @return int : current year
+	 */
+	public static int getYearNow() {
+		return Calendar.getInstance().get(Calendar.YEAR);
+	}
+
+	/**
+	 * get current month
+	 * 
+	 * @return int current month
+	 */
+	public static int getMonthNow() {
+		return Calendar.getInstance().get(Calendar.MONTH) + 1;
+	}
+
+	/**
+	 * get current date
+	 * 
+	 * @return current day
+	 */
+	public static int getDayNow() {
+		return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+	}
+
+	/**
+	 * get expired day
+	 * 
+	 * @return int
+	 */
+	public static int getExpireDay() {
+		Calendar now = Calendar.getInstance();
+		int expireYear = parseInt(ConfigProperties.getValue(ConstantProperties.EXPIRE_NUMBER_YEAR), 1);
+		now.add(Calendar.YEAR, expireYear);
+		return now.get(Calendar.DAY_OF_MONTH);
+	}
+
+	/**
+	 * get expire year
+	 * 
+	 * @return
+	 */
+	public static int getExpireYear() {
+		Calendar now = Calendar.getInstance();
+		int expireYear = parseInt(ConfigProperties.getValue(ConstantProperties.EXPIRE_NUMBER_YEAR), 1);
+		now.add(Calendar.YEAR, expireYear);
+		return now.get(Calendar.YEAR);
+	}
+
+	/**
+	 * get expire month
+	 * 
+	 * @return int : expire month
+	 */
+	public static int getExpireMonth() {
+		Calendar now = Calendar.getInstance();
+		int expireYear = parseInt(ConfigProperties.getValue(ConstantProperties.EXPIRE_NUMBER_YEAR), 1);
+		now.add(Calendar.YEAR, expireYear);
+		return now.get(Calendar.MONTH) + 1;
+	}
+
+	/**
 	 * get list year
 	 * 
 	 * @return List<Integer> list year 1980 - current year
@@ -221,33 +283,6 @@ public class Common {
 			listYear.add(i);
 		}
 		return listYear;
-	}
-
-	/**
-	 * get current year
-	 * 
-	 * @return int : current year
-	 */
-	public static int getCurrentYear() {
-		return Calendar.getInstance().get(Calendar.YEAR);
-	}
-
-	/**
-	 * get current month
-	 * 
-	 * @return int current month
-	 */
-	public static int getCurrentMonth() {
-		return Calendar.getInstance().get(Calendar.MONTH) + 1;
-	}
-
-	/**
-	 * get current date
-	 * 
-	 * @return current day
-	 */
-	public static int getCurrentDay() {
-		return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 	}
 
 	/**
@@ -287,17 +322,29 @@ public class Common {
 	 *            : day create date
 	 * @return date : create date from year, month, day
 	 */
-	public static Date toDate(String year, String month, String day) {
+	public static Date toDate(int year, int month, int day) {
+		Calendar now = Calendar.getInstance();
+		now.set(year, month, day);
+		return now.getTime();
+	}
+
+	/**
+	 * format date
+	 * 
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return string
+	 */
+	public static String convertToString(int year, int month, int day) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(year, month, day);
 		SimpleDateFormat formatter = new SimpleDateFormat(Constant.FORMAT_DATE);
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append(year).append("/").append(month).append("/").append(day);
-		Date date = null;
-		try {
-			date = formatter.parse(stringBuffer.toString());
-		} catch (ParseException e) {
-			date = new Date();
-		}
-		return date;
+		return formatter.format(calendar.getTime());
+	}
+
+	public static void main(String[] args) {
+		System.out.println(toDate(2017, 1, 29));
 	}
 
 	/**
@@ -353,20 +400,4 @@ public class Common {
 		}
 		return result;
 	}
-
-	/**
-	 * get object properties
-	 * 
-	 * @return Properties : object Properties for read file .properties
-	 */
-	// public static Properties getProperties(String fileName) {
-	// ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-	// Properties prop = new Properties();
-	// try {
-	// prop.load(classLoader.getResourceAsStream(fileName));
-	// } catch (Exception e) {
-	// return null;
-	// }
-	// return prop;
-	// }
 }

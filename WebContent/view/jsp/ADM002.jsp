@@ -64,8 +64,9 @@
 									redirectAddUser);
 
 							function redirectAddUser() {
-								window.location
-										.replace('${pageContext.request.contextPath}${Constant.URL_ADD_USER_INPUT}');
+								/* window.location
+										.replace('${pageContext.request.contextPath}${Constant.URL_ADD_USER_INPUT}'); */
+								window.location = '${pageContext.request.contextPath}${Constant.URL_ADD_USER_INPUT}';
 							}
 						</script>
 					</table>

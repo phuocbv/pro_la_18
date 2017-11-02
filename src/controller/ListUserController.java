@@ -98,13 +98,13 @@ public class ListUserController extends HttpServlet {
 				String sortType = request.getParameter(Constant.SORT_TYPE);
 				dataSession.put(Constant.SORT_TYPE, sortType);
 				if (Constant.SORT_BY_FULL_NAME.equals(sortType)) {// if is sort by fullName
-					String sortByFullName = request.getParameter(Constant.SORT_BY_FULL_NAME);
+					String sortByFullName = Common.checkSort(request.getParameter(Constant.SORT_BY_FULL_NAME));
 					dataSession.put((Constant.SORT_BY_FULL_NAME), sortByFullName);
 				} else if (Constant.SORT_BY_CODE_LEVEL.equals(sortType)) {// if is sort by codeLevel
-					String sortByCodeLevel = request.getParameter(Constant.SORT_BY_CODE_LEVEL);
+					String sortByCodeLevel = Common.checkSort(request.getParameter(Constant.SORT_BY_CODE_LEVEL));
 					dataSession.put((Constant.SORT_BY_CODE_LEVEL), sortByCodeLevel);
 				} else if (Constant.SORT_BY_END_DATE.equals(sortType)) {// if is sort by endDate
-					String sortByEndDate = request.getParameter(Constant.SORT_BY_END_DATE);
+					String sortByEndDate = Common.checkSort(request.getParameter(Constant.SORT_BY_END_DATE));
 					dataSession.put((Constant.SORT_BY_END_DATE), sortByEndDate);
 				}
 			} else if (Constant.TYPE_PAGING.equals(type)) {// paging

@@ -62,25 +62,34 @@ public class LoginController extends HttpServlet {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// get param
-		String loginName = request.getParameter(UserInfor.LOGIN_NAME);
-		String password = request.getParameter(UserInfor.PASSWORD);
-		// validate admin login
-		List<String> listMessage = authLogic.validateAdmin(loginName, password);
-		StringBuffer stringBuffer = new StringBuffer(request.getContextPath());
-		// if listMessage empty then redirect to list user else then forward to login
-		if (listMessage.isEmpty()) {//if listMessage empty then login success
-			HttpSession session = request.getSession();
-			Common.storeSession(session, Constant.SESSION_LOGGINED_USER, loginName);
-			stringBuffer.append(Constant.URL_LIST_USER);
-			response.sendRedirect(stringBuffer.toString());
-		} else {//if listMessage not empty then login not success
-			request.setAttribute("loginName", loginName);
-			request.setAttribute("listMessage", listMessage);
-			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM001);
-			dispatcher.forward(request, response);// forward to page jsp
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			// get param
+			String loginName = request.getParameter(UserInfor.LOGIN_NAME);
+			String password = request.getParameter(UserInfor.PASSWORD);
+			// validate admin login
+			List<String> listMessage = authLogic.validateAdmin(loginName, password);
+			StringBuffer stringBuffer = new StringBuffer(request.getContextPath());
+			// if listMessage empty then redirect to list user else then forward to login
+			if (listMessage.isEmpty()) {// if listMessage empty then login success
+				HttpSession session = request.getSession();
+				Common.storeSession(session, Constant.SESSION_LOGGINED_USER, loginName);
+				stringBuffer.append(Constant.URL_LIST_USER);
+				response.sendRedirect(stringBuffer.toString());
+			} else {// if listMessage not empty then login not success
+				request.setAttribute("loginName", loginName);
+				request.setAttribute("listMessage", listMessage);
+				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM001);
+				dispatcher.forward(request, response);// forward to page jsp
+			}
+		} catch (Exception e) {
+			try {
+				// in case have error then send redirect to view error
+				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.VIEW_ERROR);
+				dispatcher.forward(request, response);
+			} catch (ServletException | IOException e1) {
+
+			}
 		}
 	}
 }

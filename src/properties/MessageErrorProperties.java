@@ -12,7 +12,6 @@ import java.util.Properties;
 
 import common.Common;
 import common.Constant;
-import common.ConstantProperties;
 
 /**
  * class store message error properties

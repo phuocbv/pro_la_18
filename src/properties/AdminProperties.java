@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import common.Common;
 import common.Constant;
 
 /**
@@ -20,7 +19,7 @@ import common.Constant;
  *
  */
 public class AdminProperties {
-	static private Map<String, String> adminProperties = new HashMap<String, String>();
+	private static Map<String, String> adminProperties = new HashMap<String, String>();
 
 	/**
 	 * read propeties
@@ -54,6 +53,5 @@ public class AdminProperties {
 		}
 		return value;
 	}
-	
-	
+
 }

@@ -72,15 +72,18 @@
 								<td class="lbl_left"><font color="red">*</font> 生年月日:</td>
 								<td align="left"><select name="${UserInfor.BIRTHDAY_YEAR }">
 										<c:forEach var="item" items="${listYear}">
-											<option value="${item}">${item}</option>
+											<option value="${item}"
+												${item == currentYear ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>年 <select name="${UserInfor.BIRTHDAY_MONTH }">
 										<c:forEach var="item" items="${listMonth }">
-											<option value="${item}">${item}</option>
+											<option value="${item}"
+												${item == currentMonth ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>月 <select name="${UserInfor.BIRTHDAY_DAY }">
 										<c:forEach var="item" items="${listDay }">
-											<option value="${item}">${item}</option>
+											<option value="${item}"
+												${item == currentDay ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>
@@ -131,15 +134,18 @@
 								<td class="lbl_left">資格交付日:</td>
 								<td align="left"><select name="${UserInfor.START_YEAR }">
 										<c:forEach var="item" items="${listYear}">
-											<option value="${item}">${item}</option>
+											<option value="${item}"
+												${item == currentYear ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>年 <select name="${UserInfor.START_MONTH }">
 										<c:forEach var="item" items="${listMonth }">
-											<option value="${item}">${item}</option>
+											<option value="${item}"
+												${item == currentMonth ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>月 <select name="${UserInfor.START_DAY }">
 										<c:forEach var="item" items="${listDay }">
-											<option value="${item}">${item}</option>
+											<option value="${item}"
+												${item == currentDay ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>
@@ -149,16 +155,16 @@
 										<c:forEach var="item" items="${listYear}">
 											<option value="${item}">${item}</option>
 										</c:forEach>
-										<c:if test="${not empty listYear }">
-											<option value="${listYear.get(listYear.size() - 1) + 1}">${listYear.get(listYear.size() - 1) + 1}</option>
-										</c:if>
+										<option value="${expireYear}" selected>${expireYear}</option>
 								</select>年 <select name="${UserInfor.END_MONTH }">
 										<c:forEach var="item" items="${listMonth }">
-											<option value="${item}">${item}</option>
+											<option value="${item}"
+												${item == expireMonth ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>月 <select name="${UserInfor.END_DAY }">
 										<c:forEach var="item" items="${listDay }">
-											<option value="${item}">${item}</option>
+											<option value="${item}"
+												${item == expireDay ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>
@@ -196,9 +202,11 @@
 		linkLevelJapannes.addEventListener('click', formLevelJapan);
 
 		function redirectListUser() {
-			window.location
-					.replace('${pageContext.request.contextPath}${Constant.URL_LIST_USER}'
-							+ '?type=back');
+			/* 			window.location
+			 .replace('${pageContext.request.contextPath}${Constant.URL_LIST_USER}'
+			 + '?type=back'); */
+			window.location = '${pageContext.request.contextPath}${Constant.URL_LIST_USER}'
+					+ '?type=back';
 		}
 
 		function formLevelJapan() {

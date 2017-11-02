@@ -6,6 +6,7 @@ package controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,12 +35,21 @@ public class LogoutController extends HttpServlet {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		Common.remoteSession(session, Constant.SESSION_LOGGINED_USER);//remote session
-		StringBuffer stringBuffer = new StringBuffer(request.getContextPath());
-		stringBuffer.append(Constant.URL_LOGIN);
-		response.sendRedirect(stringBuffer.toString());
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			HttpSession session = request.getSession();
+			Common.remoteSession(session, Constant.SESSION_LOGGINED_USER);// remote session
+			StringBuffer stringBuffer = new StringBuffer(request.getContextPath());
+			stringBuffer.append(Constant.URL_LOGIN);
+			response.sendRedirect(stringBuffer.toString());
+		} catch (Exception e) {
+			try {
+				// in case have error then send redirect to view error
+				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.VIEW_ERROR);
+				dispatcher.forward(request, response);
+			} catch (ServletException | IOException e1) {
+
+			}
+		}
 	}
 }

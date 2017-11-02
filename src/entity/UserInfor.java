@@ -32,12 +32,18 @@ public class UserInfor {
 	private Date startDate;
 	
 	
-//	private String birthdayYear;
-//	private String birthdayMonth;
-//	private String birthdayDay;
-//	
-//	private String startYear;
-//	private String startMonth;
+	private String birthdayYear;
+	private String birthdayMonth;
+	private String birthdayDay;
+	
+	private String startYear;
+	private String startMonth;
+	private String startDay;
+	
+	private String endYear;
+	private String endMonth;
+	private String endDay;
+	
 
 	// field name in ADM002 of database
 	// public static final String USER_ID = "user_id";

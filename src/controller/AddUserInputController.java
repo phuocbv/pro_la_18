@@ -16,9 +16,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.apache.catalina.User;
 
 import common.Common;
 import common.Constant;
@@ -38,7 +35,7 @@ import validate.ValidateUser;
  *
  */
 @WebServlet(urlPatterns = Constant.URL_ADD_USER_INPUT)
-public class AddUserInputUser extends HttpServlet {
+public class AddUserInputController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MstJapanLogic mstJapanLogic;
 	private MstGroupLogic mstGroupLogic;
@@ -46,7 +43,7 @@ public class AddUserInputUser extends HttpServlet {
 	/**
 	 * contructer
 	 */
-	public AddUserInputUser() {
+	public AddUserInputController() {
 		mstJapanLogic = new MstJapanLogicImpl();
 		mstGroupLogic = new MstGroupLogicImpl();
 	}
@@ -64,7 +61,7 @@ public class AddUserInputUser extends HttpServlet {
 			setDataLogic(req, resp);
 			setDefaultValue(req, resp);
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM003);
-			dispatcher.forward(req, resp);// forward đến trang jsp
+			dispatcher.forward(req, resp);// forward to page jsp
 		} catch (Exception e) {
 			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
 			try {
@@ -84,45 +81,52 @@ public class AddUserInputUser extends HttpServlet {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			setDataLogic(req, resp);
 			setDefaultValue(req, resp);
 			UserInfor userInfor = new UserInfor();
 			userInfor.setLoginName(req.getParameter(UserInfor.LOGIN_NAME));
-			userInfor.setGroupId(req.getParameter(UserInfor.LOGIN_NAME));
+			userInfor.setGroupId(req.getParameter(UserInfor.GROUP_ID));
+
+			System.out.println(userInfor.getLoginName() + " - " + userInfor.getGroupId());
+
 			userInfor.setFullName(req.getParameter(UserInfor.FULL_NAME));
 			userInfor.setFullNameKana(req.getParameter(UserInfor.FULL_NAME));
 			userInfor.setEmail(req.getParameter(UserInfor.EMAIL));
 			userInfor.setTel(req.getParameter(UserInfor.TEL));
 			userInfor.setPassword(req.getParameter(UserInfor.PASSWORD));
 			userInfor.setConfirmPassword(req.getParameter(UserInfor.CONFIRM_PASSWORD));
-			Date birthday = Common.toDate(req.getParameter(UserInfor.BIRTHDAY_YEAR),
-					req.getParameter(UserInfor.BIRTHDAY_MONTH), req.getParameter(UserInfor.BIRTHDAY_DAY));
-			userInfor.setBirthday(birthday);
+			// Date birthday = Common.toDate(req.getParameter(UserInfor.BIRTHDAY_YEAR),
+			// req.getParameter(UserInfor.BIRTHDAY_MONTH),
+			// req.getParameter(UserInfor.BIRTHDAY_DAY));
+			// userInfor.setBirthday(birthday);
 			String codeLevel = req.getParameter(UserInfor.CODE_LEVEL);
-			//in case have code level japan
+			// in case have code level japan
 			if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
 				userInfor.setCodeLevel(codeLevel);
-				Date startDate = Common.toDate(req.getParameter(UserInfor.START_YEAR),
-						req.getParameter(UserInfor.START_MONTH), req.getParameter(UserInfor.START_DAY));
-				Date endDate = Common.toDate(req.getParameter(UserInfor.END_YEAR),
-						req.getParameter(UserInfor.END_MONTH), req.getParameter(UserInfor.END_DAY));
-				userInfor.setStartDate(startDate);
-				userInfor.setEndDate(endDate);
+				// Date startDate = Common.toDate(req.getParameter(UserInfor.START_YEAR),
+				// req.getParameter(UserInfor.START_MONTH),
+				// req.getParameter(UserInfor.START_DAY));
+				// Date endDate = Common.toDate(req.getParameter(UserInfor.END_YEAR),
+				// req.getParameter(UserInfor.END_MONTH), req.getParameter(UserInfor.END_DAY));
+				// userInfor.setStartDate(startDate);
+				// userInfor.setEndDate(endDate);
 				int total = Common.parseInt(req.getParameter(UserInfor.TOTAL), 0);
 				userInfor.setTotal(total);
 			}
-			ValidateUser validateUser = new ValidateUser();
-			List<String> listError = validateUser.validateUserInfor(userInfor);//validate user
+			 ValidateUser validateUser = new ValidateUser();
+			 List<String> listError = validateUser.validateUserInfor(userInfor);//
+			// validate user
+			//List<String> listError = new ArrayList<>();
 			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
 			if (listError.isEmpty()) {
 				stringBuffer.append(Constant.URL_ADD_USER_CONFIRM);
 				resp.sendRedirect(stringBuffer.toString());
 			} else {
 				req.setAttribute("listError", listError);
-				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.VIEW_ERROR);
-				dispatcher.forward(req, resp);// forward đến trang jsp
+				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM003);
+				dispatcher.forward(req, resp);// forward to page jsp
 			}
 		} catch (Exception e) {
 			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
@@ -152,13 +156,19 @@ public class AddUserInputUser extends HttpServlet {
 			throws ClassNotFoundException, SQLException {
 		ArrayList<MstJapan> listJapan = mstJapanLogic.getAllMstJapan();
 		ArrayList<MstGroup> listGroup = mstGroupLogic.getAllListGroups();
-		int currentYear = Common.getCurrentYear();
-		int currentMonth = Common.getCurrentMonth();
-		int currentDay = Common.getCurrentDay();
+		int currentYear = Common.getYearNow();
+		int currentMonth = Common.getMonthNow();
+		int currentDay = Common.getDayNow();
+		// String type = req.getParameter("type");
 		List<Integer> listYear = Common.getListYear(Constant.START_YEAR, currentYear);
 		List<Integer> listMonth = Common.getListMonth();
 		List<Integer> listDay = Common.getListDay();
+		req.setAttribute("expireYear", Common.getExpireYear());
+		req.setAttribute("expireMonth", Common.getExpireMonth());
+		req.setAttribute("expireDay", Common.getExpireDay());
 		req.setAttribute("currentYear", currentYear);
+		req.setAttribute("currentMonth", currentMonth);
+		req.setAttribute("currentDay", currentDay);
 		req.setAttribute("listYear", listYear);
 		req.setAttribute("listMonth", listMonth);
 		req.setAttribute("listDay", listDay);

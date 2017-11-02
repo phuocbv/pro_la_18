@@ -19,9 +19,16 @@ public class ConstantProperties {
 
 	//public static final String ER016 = "ER016";
 
+	//error ADM003
+	public static final String ER002_GROUP = "ER002_GROUP";
+	public static final String ER007_LOGIN_NAME = "ER007_LOGIN_NAME";
+	public static final String ER007_FULL_NAME = "ER007_FULL_NAME";
+	public static final String ER007_FULL_NAME_KANA = "ER007_FULL_NAME_KANA";
+	
 	// attribute config properties
 	public static final String LIMIT_RECORD = "LIMIT_RECORD";
 	public static final String NUMBER_PAGE_IN_PAGE = "NUMBER_PAGE_IN_PAGE";
+	public static final String EXPIRE_NUMBER_YEAR = "EXPIRE_NUMBER_YEAR";
 
 	// attribute database properties
 	public static final String URL = "URL";
