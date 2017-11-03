@@ -66,7 +66,7 @@
 							function redirectAddUser() {
 								/* window.location
 										.replace('${pageContext.request.contextPath}${Constant.URL_ADD_USER_INPUT}'); */
-								window.location = '${pageContext.request.contextPath}${Constant.URL_ADD_USER_INPUT}';
+								window.location.href = 'http://localhost:8080/pro_manageuser_14_buivanphuoc/addUserInput.do';
 							}
 						</script>
 					</table>

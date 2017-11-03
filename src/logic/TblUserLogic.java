@@ -51,4 +51,14 @@ public interface TblUserLogic {
 	 * @return int : total user with condition input
 	 */
 	public int getTotalUsers(String groupId, String fullName) throws ClassNotFoundException, SQLException;
+
+	/**
+	 * function check loginName exist
+	 * 
+	 * @param loginName
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public boolean checkLoginNameExist(String loginName) throws ClassNotFoundException, SQLException;
 }

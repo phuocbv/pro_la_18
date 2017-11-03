@@ -17,14 +17,20 @@ public class ConstantProperties {
 	public static final String ER001_PASSWORD = "ER001_PASSWORD";
 	public static final String ER001_LOGIN_NAME_AND_PASSWORD = "ER001_LOGIN_NAME_AND_PASSWORD";
 
-	//public static final String ER016 = "ER016";
+	// public static final String ER016 = "ER016";
 
-	//error ADM003
+	// error ADM003
+	public static final String ER001_FULL_NAME = "ER001_FULL_NAME";
+	public static final String ER001_FULL_NAME_KANA = "ER001_FULL_NAME_KANA";
 	public static final String ER002_GROUP = "ER002_GROUP";
+	public static final String ER003_LOGIN_NAME = "ER003_LOGIN_NAME";
+	public static final String ER005_LOGIN_NAME = "ER005_LOGIN_NAME";
+	public static final String ER006_FULL_NAME = "ER006_FULL_NAME";
+	public static final String ER006_FULL_NAME_KANA = "ER006_FULL_NAME_KANA";
 	public static final String ER007_LOGIN_NAME = "ER007_LOGIN_NAME";
 	public static final String ER007_FULL_NAME = "ER007_FULL_NAME";
 	public static final String ER007_FULL_NAME_KANA = "ER007_FULL_NAME_KANA";
-	
+
 	// attribute config properties
 	public static final String LIMIT_RECORD = "LIMIT_RECORD";
 	public static final String NUMBER_PAGE_IN_PAGE = "NUMBER_PAGE_IN_PAGE";
@@ -41,7 +47,7 @@ public class ConstantProperties {
 	public static final String MSG003 = "MSG003";
 	public static final String MSG004 = "MSG004";
 	public static final String MSG005 = "MSG005";
-	
+
 	// message error
 	public static final String ER001 = "ER001";
 	public static final String ER002 = "ER002";

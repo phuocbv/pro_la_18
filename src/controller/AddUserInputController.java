@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.User;
+
 import common.Common;
 import common.Constant;
 import entity.MstGroup;
@@ -80,50 +82,20 @@ public class AddUserInputController extends HttpServlet {
 	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
 	 * javax.servlet.http.HttpServletResponse)
 	 */
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 		try {
-			setDataLogic(req, resp);
-			setDefaultValue(req, resp);
-			UserInfor userInfor = new UserInfor();
-			userInfor.setLoginName(req.getParameter(UserInfor.LOGIN_NAME));
-			userInfor.setGroupId(req.getParameter(UserInfor.GROUP_ID));
-
-			System.out.println(userInfor.getLoginName() + " - " + userInfor.getGroupId());
-
-			userInfor.setFullName(req.getParameter(UserInfor.FULL_NAME));
-			userInfor.setFullNameKana(req.getParameter(UserInfor.FULL_NAME));
-			userInfor.setEmail(req.getParameter(UserInfor.EMAIL));
-			userInfor.setTel(req.getParameter(UserInfor.TEL));
-			userInfor.setPassword(req.getParameter(UserInfor.PASSWORD));
-			userInfor.setConfirmPassword(req.getParameter(UserInfor.CONFIRM_PASSWORD));
-			// Date birthday = Common.toDate(req.getParameter(UserInfor.BIRTHDAY_YEAR),
-			// req.getParameter(UserInfor.BIRTHDAY_MONTH),
-			// req.getParameter(UserInfor.BIRTHDAY_DAY));
-			// userInfor.setBirthday(birthday);
-			String codeLevel = req.getParameter(UserInfor.CODE_LEVEL);
-			// in case have code level japan
-			if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
-				userInfor.setCodeLevel(codeLevel);
-				// Date startDate = Common.toDate(req.getParameter(UserInfor.START_YEAR),
-				// req.getParameter(UserInfor.START_MONTH),
-				// req.getParameter(UserInfor.START_DAY));
-				// Date endDate = Common.toDate(req.getParameter(UserInfor.END_YEAR),
-				// req.getParameter(UserInfor.END_MONTH), req.getParameter(UserInfor.END_DAY));
-				// userInfor.setStartDate(startDate);
-				// userInfor.setEndDate(endDate);
-				int total = Common.parseInt(req.getParameter(UserInfor.TOTAL), 0);
-				userInfor.setTotal(total);
-			}
-			 ValidateUser validateUser = new ValidateUser();
-			 List<String> listError = validateUser.validateUserInfor(userInfor);//
-			// validate user
-			//List<String> listError = new ArrayList<>();
+			UserInfor userInfor = setDefaultValue(req, resp);
+			ValidateUser validateUser = new ValidateUser();
+			List<String> listError = validateUser.validateUserInfor(userInfor);// validate user
 			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
 			if (listError.isEmpty()) {
 				stringBuffer.append(Constant.URL_ADD_USER_CONFIRM);
 				resp.sendRedirect(stringBuffer.toString());
 			} else {
+				setDataLogic(req, resp);
+				req.setAttribute("userInfor", userInfor);
 				req.setAttribute("listError", listError);
 				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM003);
 				dispatcher.forward(req, resp);// forward to page jsp
@@ -159,13 +131,16 @@ public class AddUserInputController extends HttpServlet {
 		int currentYear = Common.getYearNow();
 		int currentMonth = Common.getMonthNow();
 		int currentDay = Common.getDayNow();
+		int expireYear = Common.getExpireYear();
 		// String type = req.getParameter("type");
 		List<Integer> listYear = Common.getListYear(Constant.START_YEAR, currentYear);
 		List<Integer> listMonth = Common.getListMonth();
 		List<Integer> listDay = Common.getListDay();
-		req.setAttribute("expireYear", Common.getExpireYear());
+		List<Integer> listExpireYear = Common.getListYear(Constant.START_YEAR, expireYear);
 		req.setAttribute("expireMonth", Common.getExpireMonth());
 		req.setAttribute("expireDay", Common.getExpireDay());
+		req.setAttribute("expireYear", expireYear);
+		req.setAttribute("listExpireYear", listExpireYear);
 		req.setAttribute("currentYear", currentYear);
 		req.setAttribute("currentMonth", currentMonth);
 		req.setAttribute("currentDay", currentDay);
@@ -184,12 +159,38 @@ public class AddUserInputController extends HttpServlet {
 	 * @param resp
 	 *            : object response
 	 */
-	private void setDefaultValue(HttpServletRequest req, HttpServletResponse resp) {
-		// get user infor in session
-		UserInfor userInfor = (UserInfor) req.getSession().getAttribute(Constant.SESSION_USER_INFOR);
-		if (userInfor == null) {
-			userInfor = new UserInfor();
+	private UserInfor setDefaultValue(HttpServletRequest req, HttpServletResponse resp) {
+		UserInfor userInfor = new UserInfor();
+		userInfor.setLoginName(req.getParameter(UserInfor.LOGIN_NAME));
+		userInfor.setGroupId(req.getParameter(UserInfor.GROUP_ID));
+		userInfor.setFullName(req.getParameter(UserInfor.FULL_NAME));
+		userInfor.setFullNameKana(req.getParameter(UserInfor.FULL_NAME_KANA));
+		// set birthday
+		userInfor.setBirthdayYear(req.getParameter(UserInfor.BIRTHDAY_YEAR));
+		userInfor.setBirthdayMonth(req.getParameter(UserInfor.BIRTHDAY_MONTH));
+		userInfor.setBirthdayDay(req.getParameter(UserInfor.BIRTHDAY_DAY));
+
+		userInfor.setEmail(req.getParameter(UserInfor.EMAIL));
+		userInfor.setTel(req.getParameter(UserInfor.TEL));
+		userInfor.setPassword(req.getParameter(UserInfor.PASSWORD));
+		userInfor.setConfirmPassword(req.getParameter(UserInfor.CONFIRM_PASSWORD));
+
+		String codeLevel = req.getParameter(UserInfor.CODE_LEVEL);
+		// in case have code level japan
+		if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
+			userInfor.setCodeLevel(codeLevel);
+			// set start date
+			userInfor.setStartYear(req.getParameter(UserInfor.START_YEAR));
+			userInfor.setStartMonth(req.getParameter(UserInfor.START_MONTH));
+			userInfor.setStartDay(req.getParameter(UserInfor.START_DAY));
+			// set end date
+			userInfor.setStartYear(req.getParameter(UserInfor.START_YEAR));
+			userInfor.setStartMonth(req.getParameter(UserInfor.START_MONTH));
+			userInfor.setStartDay(req.getParameter(UserInfor.START_DAY));
+
+			int total = Common.parseInt(req.getParameter(UserInfor.TOTAL), 0);
+			userInfor.setTotal(total);
 		}
-		req.setAttribute("userInfor", userInfor);
+		return userInfor;
 	}
 }

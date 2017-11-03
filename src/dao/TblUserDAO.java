@@ -7,6 +7,7 @@ package dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import entity.TblUser;
 import entity.UserInfor;
 
 /**
@@ -51,4 +52,13 @@ public interface TblUserDAO {
 	 * @return int : total user with condition input
 	 */
 	public int getTotalUsers(String groupId, String fullName) throws ClassNotFoundException, SQLException;
+
+	/**
+	 * get count tbl user by loginName
+	 * 
+	 * @param loginName
+	 * @return int count tbluser
+	 */
+	public int countTblUserByLoginName(String loginName) throws ClassNotFoundException, SQLException;
+
 }

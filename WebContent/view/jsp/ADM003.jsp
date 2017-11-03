@@ -152,10 +152,10 @@
 							<tr class="fieldToggle">
 								<td class="lbl_left">失効日:</td>
 								<td align="left"><select name="${UserInfor.END_YEAR }">
-										<c:forEach var="item" items="${listYear}">
-											<option value="${item}">${item}</option>
+										<c:forEach var="item" items="${listExpireYear}">
+											<option value="${item}"
+												${item == expireYear ? 'selected' : '' }>${item}</option>
 										</c:forEach>
-										<option value="${expireYear}" selected>${expireYear}</option>
 								</select>年 <select name="${UserInfor.END_MONTH }">
 										<c:forEach var="item" items="${listMonth }">
 											<option value="${item}"

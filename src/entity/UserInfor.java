@@ -30,20 +30,18 @@ public class UserInfor {
 	private String confirmPassword;
 	private String codeLevel;
 	private Date startDate;
-	
-	
+
 	private String birthdayYear;
 	private String birthdayMonth;
 	private String birthdayDay;
-	
+
 	private String startYear;
 	private String startMonth;
 	private String startDay;
-	
+
 	private String endYear;
 	private String endMonth;
 	private String endDay;
-	
 
 	// field name in ADM002 of database
 	// public static final String USER_ID = "user_id";
@@ -325,6 +323,141 @@ public class UserInfor {
 	 */
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
+	}
+
+	/**
+	 * @return the birthdayYear
+	 */
+	public String getBirthdayYear() {
+		return birthdayYear;
+	}
+
+	/**
+	 * @param birthdayYear
+	 *            the birthdayYear to set
+	 */
+	public void setBirthdayYear(String birthdayYear) {
+		this.birthdayYear = birthdayYear;
+	}
+
+	/**
+	 * @return the birthdayMonth
+	 */
+	public String getBirthdayMonth() {
+		return birthdayMonth;
+	}
+
+	/**
+	 * @param birthdayMonth
+	 *            the birthdayMonth to set
+	 */
+	public void setBirthdayMonth(String birthdayMonth) {
+		this.birthdayMonth = birthdayMonth;
+	}
+
+	/**
+	 * @return the birthdayDay
+	 */
+	public String getBirthdayDay() {
+		return birthdayDay;
+	}
+
+	/**
+	 * @param birthdayDay
+	 *            the birthdayDay to set
+	 */
+	public void setBirthdayDay(String birthdayDay) {
+		this.birthdayDay = birthdayDay;
+	}
+
+	/**
+	 * @return the startYear
+	 */
+	public String getStartYear() {
+		return startYear;
+	}
+
+	/**
+	 * @param startYear
+	 *            the startYear to set
+	 */
+	public void setStartYear(String startYear) {
+		this.startYear = startYear;
+	}
+
+	/**
+	 * @return the startMonth
+	 */
+	public String getStartMonth() {
+		return startMonth;
+	}
+
+	/**
+	 * @param startMonth
+	 *            the startMonth to set
+	 */
+	public void setStartMonth(String startMonth) {
+		this.startMonth = startMonth;
+	}
+
+	/**
+	 * @return the startDay
+	 */
+	public String getStartDay() {
+		return startDay;
+	}
+
+	/**
+	 * @param startDay
+	 *            the startDay to set
+	 */
+	public void setStartDay(String startDay) {
+		this.startDay = startDay;
+	}
+
+	/**
+	 * @return the endYear
+	 */
+	public String getEndYear() {
+		return endYear;
+	}
+
+	/**
+	 * @param endYear
+	 *            the endYear to set
+	 */
+	public void setEndYear(String endYear) {
+		this.endYear = endYear;
+	}
+
+	/**
+	 * @return the endMonth
+	 */
+	public String getEndMonth() {
+		return endMonth;
+	}
+
+	/**
+	 * @param endMonth
+	 *            the endMonth to set
+	 */
+	public void setEndMonth(String endMonth) {
+		this.endMonth = endMonth;
+	}
+
+	/**
+	 * @return the endDay
+	 */
+	public String getEndDay() {
+		return endDay;
+	}
+
+	/**
+	 * @param endDay
+	 *            the endDay to set
+	 */
+	public void setEndDay(String endDay) {
+		this.endDay = endDay;
 	}
 
 }

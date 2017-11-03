@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import common.Constant;
 import dao.TblUserDAO;
+import entity.TblUser;
 import entity.UserInfor;
 
 /**
@@ -74,15 +75,17 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			resultSet = pstm.executeQuery();// execute sql
 			while (resultSet.next()) {// lặp từng bản ghi lấy ra và thêm vào list
 				UserInfor user = new UserInfor();
-				/*user.setUserId(resultSet.getInt(UserInfor.USER_ID));
-				user.setFullName(resultSet.getString(UserInfor.FULL_NAME));
-				user.setBirthday(resultSet.getDate(UserInfor.BIRTHDAY));
-				user.setGroupName(resultSet.getString(UserInfor.GROUP_NAME));
-				user.setEmail(resultSet.getString(UserInfor.EMAIL));
-				user.setTel(resultSet.getString(UserInfor.TEL));
-				user.setNameLevel(resultSet.getString(UserInfor.NAME_LEVEL));
-				user.setEndDate(resultSet.getDate(UserInfor.END_DATE));
-				user.setTotal(resultSet.getInt(UserInfor.TOTAL));*/
+				/*
+				 * user.setUserId(resultSet.getInt(UserInfor.USER_ID));
+				 * user.setFullName(resultSet.getString(UserInfor.FULL_NAME));
+				 * user.setBirthday(resultSet.getDate(UserInfor.BIRTHDAY));
+				 * user.setGroupName(resultSet.getString(UserInfor.GROUP_NAME));
+				 * user.setEmail(resultSet.getString(UserInfor.EMAIL));
+				 * user.setTel(resultSet.getString(UserInfor.TEL));
+				 * user.setNameLevel(resultSet.getString(UserInfor.NAME_LEVEL));
+				 * user.setEndDate(resultSet.getDate(UserInfor.END_DATE));
+				 * user.setTotal(resultSet.getInt(UserInfor.TOTAL));
+				 */
 				user.setUserId(resultSet.getInt(1));
 				user.setFullName(resultSet.getString(2));
 				user.setBirthday(resultSet.getDate(3));
@@ -121,7 +124,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			setParam(sql, groupId, fullName);// set param into pstm
 			resultSet = pstm.executeQuery();// execute sql
 			resultSet.next();
-//			totalUser = resultSet.getInt(UserInfor.TOTAL_USER);// read total user
+			// totalUser = resultSet.getInt(UserInfor.TOTAL_USER);// read total user
 			totalUser = resultSet.getInt(1);// read total user
 		} finally {
 			closeConnect();
@@ -233,6 +236,29 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			stringBuffer.append(" offset ").append(offset);
 		}
 		return stringBuffer.toString();
+	}
+
+	/**
+	 * get count tbl user by loginName
+	 * 
+	 * @param loginName
+	 * @return int count tbluser
+	 */
+	@Override
+	public int countTblUserByLoginName(String loginName) throws ClassNotFoundException, SQLException {
+		int result = 0;
+		try {
+			connection = getConnection();// get connection
+			String sql = "SELECT count(*) FROM tbl_user WHERE tbl_user.login_name = ?";// get SQL
+			pstm = connection.prepareStatement(sql);
+			pstm.setString(1, loginName);
+			resultSet = pstm.executeQuery();// execute sql
+			resultSet.next();
+			result = resultSet.getInt(1);// read total user
+		} finally {
+			closeConnect();
+		}
+		return result;
 	}
 
 }

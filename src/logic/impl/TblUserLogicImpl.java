@@ -49,6 +49,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 *            : sort follow field end_date
 	 * @return ArrayList<UserInfor> : store list object UserInfor for view on screen
 	 */
+	@Override
 	public ArrayList<UserInfor> getListUsers(int offset, int limit, String groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate)
 			throws ClassNotFoundException, SQLException {
@@ -66,8 +67,26 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 *            : field full_name in table tbl_user
 	 * @return int : total user with condition input
 	 */
+	@Override
 	public int getTotalUsers(String groupId, String fullName) throws ClassNotFoundException, SQLException {
 		// fullName = Common.filterString(fullName);
 		return userDao.getTotalUsers(groupId, fullName);
+	}
+
+	/**
+	 * function check loginName exist
+	 * 
+	 * @param loginName
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	@Override
+	public boolean checkLoginNameExist(String loginName) throws ClassNotFoundException, SQLException {
+		int numberTblUser = userDao.countTblUserByLoginName(loginName);
+		if (numberTblUser > 0) {
+			return true;
+		}
+		return false;
 	}
 }
