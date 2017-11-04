@@ -39,7 +39,8 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> アカウント名:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="${UserInfor.LOGIN_NAME }" value="${userInfor.loginName }"
+									name="${UserInfor.LOGIN_NAME }"
+									value="<c:out value="${userInfor.loginName }" escapeXml="true" />"
 									size="15" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
@@ -71,19 +72,25 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> 生年月日:</td>
 								<td align="left"><select name="${UserInfor.BIRTHDAY_YEAR }">
+										<c:set var="birthdayYear"
+											value="${userInfor.birthdayYear != null ? userInfor.birthdayYear : currentYear}"></c:set>
 										<c:forEach var="item" items="${listYear}">
 											<option value="${item}"
-												${item == currentYear ? 'selected' : '' }>${item}</option>
+												${item == birthdayYear ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>年 <select name="${UserInfor.BIRTHDAY_MONTH }">
+										<c:set var="birthdayMonth"
+											value="${userInfor.birthdayMonth != null ? userInfor.birthdayMonth : currentMonth }"></c:set>
 										<c:forEach var="item" items="${listMonth }">
 											<option value="${item}"
-												${item == currentMonth ? 'selected' : '' }>${item}</option>
+												${item == birthdayMonth ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>月 <select name="${UserInfor.BIRTHDAY_DAY }">
+										<c:set var="birthdayDay"
+											value="${userInfor.birthdayDay != null ? userInfor.birthdayDay : currentDay}"></c:set>
 										<c:forEach var="item" items="${listDay }">
 											<option value="${item}"
-												${item == currentDay ? 'selected' : '' }>${item}</option>
+												${item == birthdayDay ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>
@@ -104,15 +111,14 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> パスワード:</td>
 								<td align="left"><input class="txBox" type="password"
-									name="${UserInfor.PASSWORD }" value="${userInfor.password }"
-									size="30" onfocus="this.style.borderColor='#0066ff';"
+									name="${UserInfor.PASSWORD }" size="30"
+									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left">パスワード（確認）:</td>
 								<td align="left"><input class="txBox" type="password"
-									name="${UserInfor.CONFIRM_PASSWORD }"
-									value="${userInfor.confirmPassword }" size="30"
+									name="${UserInfor.CONFIRM_PASSWORD }" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
@@ -121,16 +127,21 @@
 								<th align="left" colspan="2"><a href="javascript:void(0)"
 									id="linkLevelJapannes">日本語能力</a></th>
 							</tr>
-							<tr class="fieldToggle">
+							<tr class="fieldToggle"
+								style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
 								<td class="lbl_left">資格:</td>
-								<td align="left"><select name="${UserInfor.CODE_LEVEL }">
+
+								<td align="left"><select name="${UserInfor.CODE_LEVEL }"
+									id="selectCodeLevel">
 										<option value="0">選択してください資格</option>
 										<c:forEach var="item" items="${listJapan}">
-											<option value="${item.codeLevel}">${item.nameLevel}</option>
+											<option value="${item.codeLevel}"
+												${item.codeLevel == userInfor.codeLevel ? 'selected' : '' }>${item.nameLevel}</option>
 										</c:forEach>
 								</select></td>
 							</tr>
-							<tr class="fieldToggle">
+							<tr class="fieldToggle"
+								style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
 								<td class="lbl_left">資格交付日:</td>
 								<td align="left"><select name="${UserInfor.START_YEAR }">
 										<c:forEach var="item" items="${listYear}">
@@ -149,7 +160,8 @@
 										</c:forEach>
 								</select>日</td>
 							</tr>
-							<tr class="fieldToggle">
+							<tr class="fieldToggle"
+								style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
 								<td class="lbl_left">失効日:</td>
 								<td align="left"><select name="${UserInfor.END_YEAR }">
 										<c:forEach var="item" items="${listExpireYear}">
@@ -168,7 +180,8 @@
 										</c:forEach>
 								</select>日</td>
 							</tr>
-							<tr class="fieldToggle">
+							<tr class="fieldToggle"
+								style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
 								<td class="lbl_left">点数:</td>
 								<td align="left"><input class="txBox" type="text"
 									name="${UserInfor.TOTAL }" value="${userInfor.total }" size="5"

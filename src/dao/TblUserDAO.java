@@ -59,6 +59,6 @@ public interface TblUserDAO {
 	 * @param loginName
 	 * @return int count tbluser
 	 */
-	public int countTblUserByLoginName(String loginName) throws ClassNotFoundException, SQLException;
+	public int checkExistedLoginName(String loginName) throws ClassNotFoundException, SQLException;
 
 }

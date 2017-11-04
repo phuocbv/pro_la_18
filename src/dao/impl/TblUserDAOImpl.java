@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import common.Constant;
 import dao.TblUserDAO;
-import entity.TblUser;
 import entity.UserInfor;
 
 /**
@@ -245,7 +244,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 * @return int count tbluser
 	 */
 	@Override
-	public int countTblUserByLoginName(String loginName) throws ClassNotFoundException, SQLException {
+	public int checkExistedLoginName(String loginName) throws ClassNotFoundException, SQLException {
 		int result = 0;
 		try {
 			connection = getConnection();// get connection

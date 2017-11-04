@@ -83,7 +83,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean checkLoginNameExist(String loginName) throws ClassNotFoundException, SQLException {
-		int numberTblUser = userDao.countTblUserByLoginName(loginName);
+		int numberTblUser = userDao.checkExistedLoginName(loginName);
 		if (numberTblUser > 0) {
 			return true;
 		}

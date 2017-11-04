@@ -320,12 +320,17 @@ public class Common {
 	 *            : month create date
 	 * @param day
 	 *            : day create date
-	 * @return date : create date from year, month, day
+	 * @return date : create exist date from year, month, day
 	 */
 	public static Date toDate(int year, int month, int day) {
 		Calendar now = Calendar.getInstance();
-		now.set(year, month, day);
-		return now.getTime();
+		now.setLenient(false);
+		now.set(year, month - 1, day);
+		try {
+			return now.getTime();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	/**
@@ -343,8 +348,34 @@ public class Common {
 		return formatter.format(calendar.getTime());
 	}
 
+	/**
+	 * check birthday
+	 * 
+	 * @param yearInput
+	 *            : year validate
+	 * @param monthInput
+	 *            : month validate
+	 * @param dayInput
+	 *            : day validate
+	 * @return boolean : exist date
+	 */
+	public static boolean checkBirthday(String yearInput, String monthInput, String dayInput) {
+		int year = parseInt(yearInput, 0);
+		int month = parseInt(monthInput, 0);
+		int day = parseInt(dayInput, 0);
+		Date date = toDate(year, month, day);
+		if (date == null) {
+			return false;
+		}
+		// if birthday >= current date then return false
+		if ((new Date()).compareTo(date) <= 0) {
+			return false;
+		}
+		return true;
+	}
+	
 	public static void main(String[] args) {
-		System.out.println(toDate(2017, 1, 29));
+		System.out.println(checkBirthday(null, null, null));
 	}
 
 	/**

@@ -104,4 +104,13 @@ public class Constant {
 	public static final int DEFAULT_NUMBER_PAGE_IN_PAGE = 3;
 	public static final int DEFAULT_LIMIT = 5;
 	public static final int DEFAULT_PAGE = 1;
+	
+	//min - max length
+	public static final int MIN_LENGTH_LOGIN_NAME = 4;
+	public static final int MAX_LENGTH_LOGIN_NAME = 15;
+	public static final int MAX_LENGTH_FULL_NAME_KANA = 255;
+	public static final int MAX_LENGTH_FULL_NAME = 255;
+	public static final int MIN_LENGTH_PASSWORD = 6;
+	public static final int MAX_LENGTH_PASSWORD = 15;
+	public static final int MAX_LENGTH_TEL = 14;
 }

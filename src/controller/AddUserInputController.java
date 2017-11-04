@@ -101,6 +101,7 @@ public class AddUserInputController extends HttpServlet {
 				dispatcher.forward(req, resp);// forward to page jsp
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
 			try {
 				// in case have error then send redirect to view error

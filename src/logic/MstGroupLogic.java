@@ -21,5 +21,14 @@ public interface MstGroupLogic {
 	 * 
 	 * @return ArrayList<MstGroup> : store list all group
 	 */
-	public ArrayList<MstGroup> getAllListGroups() throws ClassNotFoundException, SQLException ;
+	public ArrayList<MstGroup> getAllListGroups() throws ClassNotFoundException, SQLException;
+
+	/**
+	 * check exist group
+	 * 
+	 * @param groupId
+	 *            : id of table mst_group
+	 * @return MstGroup : exist group
+	 */
+	public boolean checkExistGroup(String groupId) throws ClassNotFoundException, SQLException;
 }
