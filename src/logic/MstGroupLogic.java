@@ -31,4 +31,15 @@ public interface MstGroupLogic {
 	 * @return MstGroup : exist group
 	 */
 	public boolean checkExistGroup(String groupId) throws ClassNotFoundException, SQLException;
+
+	/**
+	 * get group by id
+	 * 
+	 * @param groupId
+	 *            : group_id in table mst_group
+	 * @return MstGroup
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	public MstGroup getGroupById(String groupId) throws ClassNotFoundException, SQLException;
 }

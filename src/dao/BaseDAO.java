@@ -30,4 +30,21 @@ public interface BaseDAO {
 	 * @throws ClassNotFoundException
 	 */
 	public Connection getConnection() throws SQLException, ClassNotFoundException;
+
+	/**
+	 * fuction set auto commit
+	 * 
+	 * @param value
+	 *            : set auto commit
+	 */
+	public void setAutoCommit(boolean value) throws SQLException;
+
+	// public void executeUpdate() throws SQLException;
+
+	/**
+	 * commit database
+	 * 
+	 * @throws SQLException
+	 */
+	public void commit() throws SQLException;
 }

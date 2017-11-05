@@ -30,5 +30,5 @@ public interface MstGroupDAO {
 	 *            : id of table mst_group
 	 * @return MstGroup : exist group
 	 */
-	public MstGroup checkExistGroup(int groupId) throws ClassNotFoundException, SQLException;
+	public MstGroup getGroupById(int groupId) throws ClassNotFoundException, SQLException;
 }

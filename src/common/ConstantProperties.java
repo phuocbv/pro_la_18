@@ -24,9 +24,12 @@ public class ConstantProperties {
 	public static final String ER001_FULL_NAME_KANA = "ER001_FULL_NAME_KANA";
 	public static final String ER001_EMAIL = "ER001_EMAIL";
 	public static final String ER001_TEL = "ER001_TEL";
+	public static final String ER001_TOTAL = "ER001_TOTAL";
 	public static final String ER002_GROUP = "ER002_GROUP";
 	public static final String ER003_LOGIN_NAME = "ER003_LOGIN_NAME";
+	public static final String ER003_EMAIL = "ER003_EMAIL";
 	public static final String ER004_GROUP = "ER004_GROUP";
+	public static final String ER004_CODE_LEVEL = "ER004_CODE_LEVEL";
 	public static final String ER005_LOGIN_NAME = "ER005_LOGIN_NAME";
 	public static final String ER005_EMAIL = "ER005_EMAIL";
 	public static final String ER005_TEL = "ER005_TEL";
@@ -38,11 +41,13 @@ public class ConstantProperties {
 	public static final String ER007_FULL_NAME = "ER007_FULL_NAME";
 	public static final String ER007_FULL_NAME_KANA = "ER007_FULL_NAME_KANA";
 	public static final String ER007_PASSWORD = "ER007_PASSWORD";
+	public static final String ER008_PASSWORD = "ER008_PASSWORD";
 	public static final String ER009_FULL_NAME_KANA = "ER009_FULL_NAME_KANA";
 	public static final String ER011_BIRTHDAY = "ER011_BIRTHDAY";
 	public static final String ER011_START_DATE = "ER011_START_DATE";
 	public static final String ER011_END_DATE = "ER011_END_DATE";
-	
+	public static final String ER018_TOTAL = "ER018_TOTAL";
+
 	// attribute config properties
 	public static final String LIMIT_RECORD = "LIMIT_RECORD";
 	public static final String NUMBER_PAGE_IN_PAGE = "NUMBER_PAGE_IN_PAGE";

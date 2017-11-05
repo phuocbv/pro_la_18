@@ -59,7 +59,7 @@ public class MstGroupDAOImpl extends BaseDAOImpl implements MstGroupDAO {
 	 * @return MstGroup : exist group
 	 */
 	@Override
-	public MstGroup checkExistGroup(int groupId) throws ClassNotFoundException, SQLException {
+	public MstGroup getGroupById(int groupId) throws ClassNotFoundException, SQLException {
 		MstGroup mstGroup = null;
 		try {
 			connection = getConnection();// get connection
@@ -68,14 +68,14 @@ public class MstGroupDAOImpl extends BaseDAOImpl implements MstGroupDAO {
 				return null;
 			}
 			pstm = connection.prepareStatement(SQL_GET_GROUP_BY_GROUP_ID);// use PrepareStatement
-			pstm.setString(1, String.valueOf(groupId));
+			pstm.setInt(1, groupId);
 			resultSet = pstm.executeQuery();// execute sql
 			System.out.println(pstm.toString());
-			// repeat record get and add to list
+			// reader record
 			while (resultSet.next()) {
 				mstGroup = new MstGroup();
-				mstGroup.setGroupId(resultSet.getInt(MstGroup.GROUP_ID));
-				mstGroup.setGroupName(resultSet.getString(MstGroup.GROUP_NAME));
+				mstGroup.setGroupId(resultSet.getInt(1));
+				mstGroup.setGroupName(resultSet.getString(2));
 			}
 		} finally {
 			closeConnect();

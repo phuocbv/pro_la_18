@@ -21,7 +21,7 @@ public class UserInfor {
 	private String tel;
 	private String nameLevel;
 	private Date endDate;
-	private int total;
+	private String total;
 
 	private String loginName;
 	private String groupId;
@@ -81,9 +81,6 @@ public class UserInfor {
 	public static final String END_YEAR = "end_year";
 	public static final String END_MONTH = "end_month";
 	public static final String END_DAY = "end_day";
-
-	// total user
-	// public static final String TOTAL_USER = "total_user";
 
 	/**
 	 * @return the userId
@@ -208,7 +205,7 @@ public class UserInfor {
 	/**
 	 * @return the total
 	 */
-	public int getTotal() {
+	public String getTotal() {
 		return total;
 	}
 
@@ -216,7 +213,7 @@ public class UserInfor {
 	 * @param total
 	 *            the total to set
 	 */
-	public void setTotal(int total) {
+	public void setTotal(String total) {
 		this.total = total;
 	}
 

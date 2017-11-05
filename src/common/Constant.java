@@ -63,7 +63,8 @@ public class Constant {
 	public static final String URL_LOGOUT = "/logout";
 	public static final String URL_LIST_USER = "/listUser.do";
 	public static final String URL_ADD_USER_INPUT = "/addUserInput.do";
-	public static final String URL_ADD_USER_CONFIRM = "/addUserConfirm.do";
+	public static final String URL_ADD_USER_VALIDATE = "/addUserValidate.do";
+	public static final String URL_ADD_USER_OK = "/addUserOK.do";
 	public static final String URL_VIEW_EROR = "/viewError.do";
 
 	// url filter

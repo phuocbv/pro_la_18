@@ -7,7 +7,6 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -16,8 +15,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.catalina.User;
 
 import common.Common;
 import common.Constant;
@@ -36,7 +33,7 @@ import validate.ValidateUser;
  * @author da
  *
  */
-@WebServlet(urlPatterns = Constant.URL_ADD_USER_INPUT)
+@WebServlet(urlPatterns = { Constant.URL_ADD_USER_INPUT, Constant.URL_ADD_USER_VALIDATE })
 public class AddUserInputController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MstJapanLogic mstJapanLogic;
@@ -61,7 +58,8 @@ public class AddUserInputController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			setDataLogic(req, resp);
-			setDefaultValue(req, resp);
+			UserInfor userInfor = setDefaultValue(req, resp);
+			req.setAttribute("userInfor", userInfor);
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM003);
 			dispatcher.forward(req, resp);// forward to page jsp
 		} catch (Exception e) {
@@ -90,10 +88,12 @@ public class AddUserInputController extends HttpServlet {
 			ValidateUser validateUser = new ValidateUser();
 			List<String> listError = validateUser.validateUserInfor(userInfor);// validate user
 			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+			// case haven't error
 			if (listError.isEmpty()) {
-				stringBuffer.append(Constant.URL_ADD_USER_CONFIRM);
+				req.getSession().setAttribute(Constant.SESSION_USER_INFOR, userInfor);
+				stringBuffer.append(Constant.URL_ADD_USER_OK);
 				resp.sendRedirect(stringBuffer.toString());
-			} else {
+			} else {// case validate have error then back ADM003
 				setDataLogic(req, resp);
 				req.setAttribute("userInfor", userInfor);
 				req.setAttribute("listError", listError);
@@ -161,7 +161,13 @@ public class AddUserInputController extends HttpServlet {
 	 *            : object response
 	 */
 	private UserInfor setDefaultValue(HttpServletRequest req, HttpServletResponse resp) {
-		UserInfor userInfor = new UserInfor();
+		UserInfor userInfor = null;
+		userInfor = (UserInfor) req.getSession().getAttribute(Constant.SESSION_USER_INFOR);
+		if (userInfor != null) {
+			req.getSession().removeAttribute(Constant.SESSION_USER_INFOR);
+			return userInfor;
+		}
+		userInfor = new UserInfor();
 		userInfor.setLoginName(req.getParameter(UserInfor.LOGIN_NAME));
 		userInfor.setGroupId(req.getParameter(UserInfor.GROUP_ID));
 		userInfor.setFullName(req.getParameter(UserInfor.FULL_NAME));
@@ -185,12 +191,11 @@ public class AddUserInputController extends HttpServlet {
 			userInfor.setStartMonth(req.getParameter(UserInfor.START_MONTH));
 			userInfor.setStartDay(req.getParameter(UserInfor.START_DAY));
 			// set end date
-			userInfor.setStartYear(req.getParameter(UserInfor.START_YEAR));
-			userInfor.setStartMonth(req.getParameter(UserInfor.START_MONTH));
-			userInfor.setStartDay(req.getParameter(UserInfor.START_DAY));
+			userInfor.setEndYear(req.getParameter(UserInfor.END_YEAR));
+			userInfor.setEndMonth(req.getParameter(UserInfor.END_MONTH));
+			userInfor.setEndDay(req.getParameter(UserInfor.END_DAY));
 
-			int total = Common.parseInt(req.getParameter(UserInfor.TOTAL), 0);
-			userInfor.setTotal(total);
+			userInfor.setTotal(req.getParameter(UserInfor.TOTAL));
 		}
 		return userInfor;
 	}

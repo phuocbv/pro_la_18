@@ -8,6 +8,4 @@ function formLevelJapan() {
 		fieldToggles[i].style.display = fieldToggles[i].style.display == 'table-row' ? 'none'
 				: 'table-row';
 	}
-
-	fieldToggles[0].value = 0;
 }

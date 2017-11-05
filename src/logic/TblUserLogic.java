@@ -60,5 +60,7 @@ public interface TblUserLogic {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public boolean checkLoginNameExist(String loginName) throws ClassNotFoundException, SQLException;
+	public boolean checkExistedLoginName(Integer userId, String loginName) throws ClassNotFoundException, SQLException;
+
+	public boolean checkExistedEmail(Integer userId, String email) throws ClassNotFoundException, SQLException;
 }

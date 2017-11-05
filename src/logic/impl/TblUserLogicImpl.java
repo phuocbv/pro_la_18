@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import dao.TblUserDAO;
 import dao.impl.TblUserDAOImpl;
+import entity.TblUser;
 import entity.UserInfor;
 import logic.TblUserLogic;
 
@@ -82,11 +83,20 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @throws SQLException
 	 */
 	@Override
-	public boolean checkLoginNameExist(String loginName) throws ClassNotFoundException, SQLException {
-		int numberTblUser = userDao.checkExistedLoginName(loginName);
-		if (numberTblUser > 0) {
-			return true;
+	public boolean checkExistedLoginName(Integer userId, String loginName) throws ClassNotFoundException, SQLException {
+		TblUser tblUser = userDao.getUserByLoginName(userId, loginName);
+		if (tblUser == null) {
+			return false;
 		}
-		return false;
+		return true;
+	}
+
+	@Override
+	public boolean checkExistedEmail(Integer userId, String email) throws ClassNotFoundException, SQLException {
+		TblUser tblUser = userDao.getUserByEmail(userId, email);
+		if (tblUser == null) {
+			return false;
+		}
+		return true;
 	}
 }

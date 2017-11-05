@@ -24,4 +24,34 @@ public class MstJapanLogicImpl implements MstJapanLogic {
 	public ArrayList<MstJapan> getAllMstJapan() throws ClassNotFoundException, SQLException {
 		return mstJapanDAO.getAllMstJapan();
 	}
+
+	/**
+	 * get mstJapan by code level
+	 * 
+	 * @param codeLevel
+	 *            : code_level of mst japan
+	 * @return MstJapan
+	 */
+	@Override
+	public MstJapan getMstJapanByCodeLevel(String codeLevel) throws ClassNotFoundException, SQLException {
+		return mstJapanDAO.getMstJapanByCodeLevel(codeLevel);
+	}
+
+	/**
+	 * check exist japan
+	 * 
+	 * @param codeLevel
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	@Override
+	public boolean checkExistJapan(String codeLevel) throws ClassNotFoundException, SQLException {
+		MstJapan mstJapan = mstJapanDAO.getMstJapanByCodeLevel(codeLevel);
+		if (mstJapan == null) {
+			return false;
+		}
+		return true;
+	}
+
 }

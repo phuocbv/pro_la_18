@@ -72,4 +72,31 @@ public class BaseDAOImpl implements BaseDAO {
 			connection.close();
 		}
 	}
+
+	/**
+	 * fuction set auto commit
+	 * 
+	 * @param value
+	 *            : set auto commit
+	 * @throws SQLException
+	 */
+	@Override
+	public void setAutoCommit(boolean value) throws SQLException {
+		if (connection != null) {
+			connection.setAutoCommit(value);
+		}
+	}
+
+	/**
+	 * commit database
+	 * 
+	 * @throws SQLException
+	 */
+	@Override
+	public void commit() throws SQLException {
+		//pstm.executeUpdate();
+		if (connection != null) {
+			connection.commit();
+		}
+	}
 }

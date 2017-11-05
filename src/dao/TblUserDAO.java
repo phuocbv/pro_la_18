@@ -54,11 +54,25 @@ public interface TblUserDAO {
 	public int getTotalUsers(String groupId, String fullName) throws ClassNotFoundException, SQLException;
 
 	/**
-	 * get count tbl user by loginName
 	 * 
+	 * @param userId
 	 * @param loginName
-	 * @return int count tbluser
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
 	 */
-	public int checkExistedLoginName(String loginName) throws ClassNotFoundException, SQLException;
+	public TblUser getUserByLoginName(Integer userId, String loginName) throws ClassNotFoundException, SQLException;
+	
+	/**
+	 * 
+	 * @param userId
+	 * @param email
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public TblUser getUserByEmail(Integer userId, String email) throws ClassNotFoundException, SQLException;
+	
+	public boolean insertUser(TblUser tblUser) throws ClassNotFoundException, SQLException;
 
 }

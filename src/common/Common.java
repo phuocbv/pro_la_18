@@ -343,7 +343,7 @@ public class Common {
 	 */
 	public static String convertToString(int year, int month, int day) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(year, month, day);
+		calendar.set(year, month - 1, day);
 		SimpleDateFormat formatter = new SimpleDateFormat(Constant.FORMAT_DATE);
 		return formatter.format(calendar.getTime());
 	}
@@ -373,7 +373,7 @@ public class Common {
 		}
 		return true;
 	}
-	
+
 	public static void main(String[] args) {
 		System.out.println(checkBirthday(null, null, null));
 	}

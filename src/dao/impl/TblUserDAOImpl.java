@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import common.Constant;
 import dao.TblUserDAO;
+import entity.TblUser;
 import entity.UserInfor;
 
 /**
@@ -33,6 +34,11 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	// sql get total user
 	private StringBuffer sqlGetTotaluser = new StringBuffer().append(" SELECT count(*) as total_user ")
 			.append(sqlJoin.toString());
+
+	private StringBuffer sqlGetTblUser = new StringBuffer()
+			.append(" SELECT tbl_user.user_id, tbl_user.group_id, tbl_user.login_name, tbl_user.password, ")
+			.append(" tbl_user.full_name, tbl_user.full_name_kana, tbl_user.email, tbl_user.tel, tbl_user.birthday, tbl_user.salt ")
+			.append(" FROM tbl_user ");
 
 	/**
 	 * get list user
@@ -72,28 +78,19 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			setParam(sql, groupId, fullName);
 			System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
+			int i;
 			while (resultSet.next()) {// lặp từng bản ghi lấy ra và thêm vào list
+				i = 0;
 				UserInfor user = new UserInfor();
-				/*
-				 * user.setUserId(resultSet.getInt(UserInfor.USER_ID));
-				 * user.setFullName(resultSet.getString(UserInfor.FULL_NAME));
-				 * user.setBirthday(resultSet.getDate(UserInfor.BIRTHDAY));
-				 * user.setGroupName(resultSet.getString(UserInfor.GROUP_NAME));
-				 * user.setEmail(resultSet.getString(UserInfor.EMAIL));
-				 * user.setTel(resultSet.getString(UserInfor.TEL));
-				 * user.setNameLevel(resultSet.getString(UserInfor.NAME_LEVEL));
-				 * user.setEndDate(resultSet.getDate(UserInfor.END_DATE));
-				 * user.setTotal(resultSet.getInt(UserInfor.TOTAL));
-				 */
-				user.setUserId(resultSet.getInt(1));
-				user.setFullName(resultSet.getString(2));
-				user.setBirthday(resultSet.getDate(3));
-				user.setGroupName(resultSet.getString(4));
-				user.setEmail(resultSet.getString(5));
-				user.setTel(resultSet.getString(6));
-				user.setNameLevel(resultSet.getString(7));
-				user.setEndDate(resultSet.getDate(8));
-				user.setTotal(resultSet.getInt(9));
+				user.setUserId(resultSet.getInt(++i));
+				user.setFullName(resultSet.getString(++i));
+				user.setBirthday(resultSet.getDate(++i));
+				user.setGroupName(resultSet.getString(++i));
+				user.setEmail(resultSet.getString(++i));
+				user.setTel(resultSet.getString(++i));
+				user.setNameLevel(resultSet.getString(++i));
+				user.setEndDate(resultSet.getDate(++i));
+				user.setTotal(resultSet.getString(++i));
 				listUser.add(user);
 			}
 		} finally {
@@ -244,20 +241,80 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 * @return int count tbluser
 	 */
 	@Override
-	public int checkExistedLoginName(String loginName) throws ClassNotFoundException, SQLException {
-		int result = 0;
+	public TblUser getUserByLoginName(Integer userId, String loginName) throws ClassNotFoundException, SQLException {
+		TblUser tblUser = null;
 		try {
 			connection = getConnection();// get connection
-			String sql = "SELECT count(*) FROM tbl_user WHERE tbl_user.login_name = ?";// get SQL
-			pstm = connection.prepareStatement(sql);
+			StringBuffer sql = new StringBuffer(sqlGetTblUser.toString()).append(" WHERE tbl_user.login_name = ?  ");
+			pstm = connection.prepareStatement(sql.toString());
 			pstm.setString(1, loginName);
+			System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
-			resultSet.next();
-			result = resultSet.getInt(1);// read total user
+			int i;
+			// repeat record get and add to list
+			while (resultSet.next()) {
+				i = 0;
+				tblUser = new TblUser();
+				tblUser.setUserId(resultSet.getInt(++i));
+				tblUser.setGroupId(resultSet.getInt(++i));
+				tblUser.setLoginName(resultSet.getString(++i));
+				tblUser.setPassword(resultSet.getString(++i));
+				tblUser.setFullName(resultSet.getString(++i));
+				tblUser.setFullNameKana(resultSet.getString(++i));
+				tblUser.setEmail(resultSet.getString(++i));
+				tblUser.setTel(resultSet.getString(++i));
+				tblUser.setBirthday(resultSet.getDate(++i));
+				tblUser.setSalt(resultSet.getString(++i));
+			}
 		} finally {
 			closeConnect();
 		}
-		return result;
+		return tblUser;
+	}
+
+	@Override
+	public TblUser getUserByEmail(Integer userId, String email) throws ClassNotFoundException, SQLException {
+		TblUser tblUser = null;
+		try {
+			connection = getConnection();// get connection
+			StringBuffer sql = new StringBuffer(sqlGetTblUser.toString()).append(" WHERE tbl_user.email = ? ");
+			pstm = connection.prepareStatement(sql.toString());
+			pstm.setString(1, email);
+			System.out.println(pstm.toString());
+			resultSet = pstm.executeQuery();// execute sql
+			int i;
+			// repeat record get and add to list
+			while (resultSet.next()) {
+				i = 0;
+				tblUser = new TblUser();
+				tblUser.setUserId(resultSet.getInt(++i));
+				tblUser.setGroupId(resultSet.getInt(++i));
+				tblUser.setLoginName(resultSet.getString(++i));
+				tblUser.setPassword(resultSet.getString(++i));
+				tblUser.setFullName(resultSet.getString(++i));
+				tblUser.setFullNameKana(resultSet.getString(++i));
+				tblUser.setEmail(resultSet.getString(++i));
+				tblUser.setTel(resultSet.getString(++i));
+				tblUser.setBirthday(resultSet.getDate(++i));
+				tblUser.setSalt(resultSet.getString(++i));
+			}
+		} finally {
+			closeConnect();
+		}
+		return tblUser;
+	}
+
+	@Override
+	public boolean insertUser(TblUser tblUser) throws ClassNotFoundException, SQLException {
+		boolean b = false;
+		String sql = "";
+		connection = getConnection();
+		int i = 0;
+		pstm = connection.prepareStatement(sql);
+		pstm.setString(++i, tblUser.getLoginName());
+		pstm.executeUpdate();
+		
+		return false;
 	}
 
 }

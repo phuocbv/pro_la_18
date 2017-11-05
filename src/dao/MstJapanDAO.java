@@ -17,5 +17,13 @@ public interface MstJapanDAO {
 	 * 
 	 * @return ArrayList<MstJapan> : store list level japan
 	 */
-	public ArrayList<MstJapan> getAllMstJapan() throws ClassNotFoundException, SQLException ;
+	public ArrayList<MstJapan> getAllMstJapan() throws ClassNotFoundException, SQLException;
+
+	/**
+	 * get mstJapan by code level
+	 * 
+	 * @param codeLevel : code_level of mst japan
+	 * @return MstJapan 
+	 */
+	public MstJapan getMstJapanByCodeLevel(String codeLevel) throws ClassNotFoundException, SQLException;
 }

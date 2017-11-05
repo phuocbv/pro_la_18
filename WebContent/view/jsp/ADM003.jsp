@@ -15,7 +15,7 @@
 	<jsp:include page="header.jsp" />
 	<!-- Begin vung input-->
 	<form
-		action="${pageContext.request.contextPath}${Constant.URL_ADD_USER_INPUT }"
+		action="${pageContext.request.contextPath}${Constant.URL_ADD_USER_VALIDATE }"
 		method="post" name="inputform">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
@@ -57,7 +57,8 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> 氏名:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="${UserInfor.FULL_NAME }" value="${userInfor.fullName }"
+									name="${UserInfor.FULL_NAME }"
+									value="<c:out value="${userInfor.fullName }" escapeXml="true" />"
 									size="30" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
@@ -65,8 +66,8 @@
 								<td class="lbl_left">カタカナ氏名:</td>
 								<td align="left"><input class="txBox" type="text"
 									name="${UserInfor.FULL_NAME_KANA }"
-									value="${userInfor.fullNameKana }" size="30"
-									onfocus="this.style.borderColor='#0066ff';"
+									value="<c:out value="${userInfor.fullNameKana }" escapeXml="true"/>"
+									size="30" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
@@ -97,15 +98,17 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> メールアドレス:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="${UserInfor.EMAIL }" value="${userInfor.email }"
+									name="${UserInfor.EMAIL }"
+									value="<c:out value="${userInfor.email }" escapeXml="true"/>"
 									size="30" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left"><font color="red">*</font>電話番号:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="${UserInfor.TEL }" value="${userInfor.tel }" size="30"
-									onfocus="this.style.borderColor='#0066ff';"
+									name="${UserInfor.TEL }"
+									value="<c:out value="${userInfor.tel }" escapeXml="true"/>"
+									size="30" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
@@ -130,7 +133,6 @@
 							<tr class="fieldToggle"
 								style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
 								<td class="lbl_left">資格:</td>
-
 								<td align="left"><select name="${UserInfor.CODE_LEVEL }"
 									id="selectCodeLevel">
 										<option value="0">選択してください資格</option>
@@ -144,19 +146,25 @@
 								style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
 								<td class="lbl_left">資格交付日:</td>
 								<td align="left"><select name="${UserInfor.START_YEAR }">
+										<c:set var="startYear"
+											value="${userInfor.startYear != null ? userInfor.startYear : currentYear}"></c:set>
 										<c:forEach var="item" items="${listYear}">
 											<option value="${item}"
-												${item == currentYear ? 'selected' : '' }>${item}</option>
+												${item == startYear ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>年 <select name="${UserInfor.START_MONTH }">
+										<c:set var="startMonth"
+											value="${userInfor.startMonth != null ? userInfor.startMonth : currentMonth}"></c:set>
 										<c:forEach var="item" items="${listMonth }">
 											<option value="${item}"
-												${item == currentMonth ? 'selected' : '' }>${item}</option>
+												${item == startMonth ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>月 <select name="${UserInfor.START_DAY }">
+										<c:set var="startDay"
+											value="${userInfor.startDay != null ? userInfor.startDay : currentDay}"></c:set>
 										<c:forEach var="item" items="${listDay }">
 											<option value="${item}"
-												${item == currentDay ? 'selected' : '' }>${item}</option>
+												${item == startDay ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>
@@ -164,19 +172,23 @@
 								style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
 								<td class="lbl_left">失効日:</td>
 								<td align="left"><select name="${UserInfor.END_YEAR }">
+										<c:set var="endYear"
+											value="${userInfor.endYear != null ? userInfor.endYear : expireYear}"></c:set>
 										<c:forEach var="item" items="${listExpireYear}">
-											<option value="${item}"
-												${item == expireYear ? 'selected' : '' }>${item}</option>
+											<option value="${item}" ${item == endYear ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>年 <select name="${UserInfor.END_MONTH }">
+										<c:set var="endMonth"
+											value="${userInfor.endMonth != null ? userInfor.endMonth : expireMonth}"></c:set>
 										<c:forEach var="item" items="${listMonth }">
 											<option value="${item}"
-												${item == expireMonth ? 'selected' : '' }>${item}</option>
+												${item == endMonth ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>月 <select name="${UserInfor.END_DAY }">
+										<c:set var="endDay"
+											value="${userInfor.endDay != null ? userInfor.endDay : expireDay}"></c:set>
 										<c:forEach var="item" items="${listDay }">
-											<option value="${item}"
-												${item == expireDay ? 'selected' : '' }>${item}</option>
+											<option value="${item}" ${item == endDay ? 'selected' : '' }>${item}</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>
@@ -184,7 +196,7 @@
 								style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
 								<td class="lbl_left">点数:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="${UserInfor.TOTAL }" value="${userInfor.total }" size="5"
+									name="${UserInfor.TOTAL }" value="<c:out value="${userInfor.total }" escapeXml="true" />" size="5"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>

@@ -46,12 +46,28 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	 *            : id of table mst_group
 	 * @return MstGroup : exist group
 	 */
+	@Override
 	public boolean checkExistGroup(String groupId) throws ClassNotFoundException, SQLException {
 		int id = Common.parseInt(groupId, 0);
-		MstGroup mstGroup = mstGroupDAO.checkExistGroup(id);
+		MstGroup mstGroup = mstGroupDAO.getGroupById(id);
 		if (mstGroup == null) {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * get group by id
+	 * 
+	 * @param groupId
+	 *            : group_id in table mst_group
+	 * @return MstGroup
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	@Override
+	public MstGroup getGroupById(String groupId) throws ClassNotFoundException, SQLException {
+		int id = Common.parseInt(groupId, 0);
+		return mstGroupDAO.getGroupById(id);
 	}
 }
