@@ -94,7 +94,7 @@
 					<th align="left">生年月日</th>
 					<th align="left">グループ</th>
 					<th align="left">メールアドレス</th>
-					<th align="left" width="70px">電話番号</th>
+					<th align="left" width="150px">電話番号</th>
 					<th align="left">日本語能力 <a
 						href="listUser.do?${paramSort}
 				&sortByFullName=${sortByFullName}

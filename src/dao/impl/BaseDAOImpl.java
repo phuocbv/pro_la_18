@@ -21,9 +21,9 @@ import properties.DatabaseProperties;
  *
  */
 public class BaseDAOImpl implements BaseDAO {
-	protected Connection connection = null;// connection to database
-	protected PreparedStatement pstm = null;// prepared statement
-	protected ResultSet resultSet = null;
+	protected static Connection connection = null;// connection to database
+	protected static PreparedStatement pstm = null;// prepared statement
+	protected static ResultSet resultSet = null;
 
 	/**
 	 * function return connection
@@ -74,6 +74,19 @@ public class BaseDAOImpl implements BaseDAO {
 	}
 
 	/**
+	 * function call connection
+	 * 
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 * 
+	 */
+	@Override
+	public void dbConnection() throws SQLException, ClassNotFoundException {
+		connection = getConnection();
+		System.out.println(connection);
+	}
+
+	/**
 	 * fuction set auto commit
 	 * 
 	 * @param value
@@ -94,9 +107,16 @@ public class BaseDAOImpl implements BaseDAO {
 	 */
 	@Override
 	public void commit() throws SQLException {
-		//pstm.executeUpdate();
+		// pstm.executeUpdate();
 		if (connection != null) {
 			connection.commit();
+		}
+	}
+
+	@Override
+	public void rollBack() throws SQLException, ClassNotFoundException {
+		if (connection != null) {
+			connection.rollback();
 		}
 	}
 }

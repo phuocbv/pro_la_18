@@ -72,8 +72,7 @@ public class LoginController extends HttpServlet {
 			StringBuffer stringBuffer = new StringBuffer(request.getContextPath());
 			// if listMessage empty then redirect to list user else then forward to login
 			if (listMessage.isEmpty()) {// if listMessage empty then login success
-				HttpSession session = request.getSession();
-				Common.storeSession(session, Constant.SESSION_LOGGINED_USER, loginName);
+				request.getSession().setAttribute(Constant.SESSION_LOGGINED_USER, loginName);
 				stringBuffer.append(Constant.URL_LIST_USER);
 				response.sendRedirect(stringBuffer.toString());
 			} else {// if listMessage not empty then login not success

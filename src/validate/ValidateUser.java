@@ -98,6 +98,12 @@ public class ValidateUser {
 		if (!Common.checkBirthday(userInfor.getBirthdayYear(), userInfor.getBirthdayMonth(),
 				userInfor.getBirthdayDay())) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER011_BIRTHDAY));
+		} else { // in case haven't error then add to birthday
+			int birthdayYear = Common.parseInt(userInfor.getBirthdayYear(), 0);
+			int birthdayMonth = Common.parseInt(userInfor.getBirthdayMonth(), 0);
+			int birthdayDay = Common.parseInt(userInfor.getBirthdayDay(), 0);
+			Date birthday = Common.toDate(birthdayYear, birthdayMonth, birthdayDay);
+			userInfor.setBirthday(birthday);
 		}
 
 		// check email (4)
@@ -156,6 +162,8 @@ public class ValidateUser {
 			// check start date (1)
 			if (startDate == null) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER011_START_DATE));
+			} else { // in case haven't error then add to startdate
+				userInfor.setStartDate(startDate);
 			}
 			int endYear = Common.parseInt(userInfor.getEndYear(), 0);
 			int endMonth = Common.parseInt(userInfor.getEndMonth(), 0);
@@ -167,6 +175,8 @@ public class ValidateUser {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER011_END_DATE));
 			} else if (endDate.compareTo(startDate) <= 0) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER012));
+			} else { // in case haven't error then add to enddate
+				userInfor.setEndDate(endDate);
 			}
 
 			// check total (2)

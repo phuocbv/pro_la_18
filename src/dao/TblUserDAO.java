@@ -16,7 +16,7 @@ import entity.UserInfor;
  * @author da
  *
  */
-public interface TblUserDAO {
+public interface TblUserDAO{
 	/**
 	 * get list user
 	 * 
@@ -87,6 +87,6 @@ public interface TblUserDAO {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public boolean insertUser(TblUser tblUser) throws ClassNotFoundException, SQLException;
+	public int insertUser(TblUser tblUser) throws ClassNotFoundException, SQLException;
 
 }

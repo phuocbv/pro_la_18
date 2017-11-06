@@ -226,14 +226,10 @@
 			window.location.href = '${pageContext.request.contextPath}${Constant.URL_LIST_USER}'
 					+ '?type=back';
 		}
-
-		function formLevelJapan() {
-
-		}
 	</script>
 	<!-- Begin vung footer -->
 	<jsp:include page="footer.jsp" />
 	<!-- End vung footer -->
-	<script type="text/javascript" src="view/js/user.js"></script>
+	<script type="text/javascript" src="view/js/js.js"></script>
 </body>
 </html>

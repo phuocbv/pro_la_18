@@ -374,10 +374,6 @@ public class Common {
 		return true;
 	}
 
-	public static void main(String[] args) {
-		System.out.println(checkBirthday(null, null, null));
-	}
-
 	/**
 	 * store object in session
 	 * 
@@ -388,32 +384,32 @@ public class Common {
 	 * @param object
 	 *            : value session
 	 */
-	public static void storeSession(HttpSession session, String key, Object object) {
-		session.setAttribute(key, object);
-	}
-
-	/**
-	 * get session by key
-	 * 
-	 * @param session
-	 *            : object session
-	 * @param key
-	 *            : key session
-	 * @return Object : value session get by key
-	 */
-	public static Object getSession(HttpSession session, String key) {
-		return session.getAttribute(key);
-	}
-
-	/**
-	 * remote session by key
-	 * 
-	 * @param session
-	 *            : object session
-	 */
-	public static void remoteSession(HttpSession session, String key) {
-		session.removeAttribute(key);
-	}
+//	public static void storeSession(HttpSession session, String key, Object object) {
+//		session.setAttribute(key, object);
+//	}
+//
+//	/**
+//	 * get session by key
+//	 * 
+//	 * @param session
+//	 *            : object session
+//	 * @param key
+//	 *            : key session
+//	 * @return Object : value session get by key
+//	 */
+//	public static Object getSession(HttpSession session, String key) {
+//		return session.getAttribute(key);
+//	}
+//
+//	/**
+//	 * remote session by key
+//	 * 
+//	 * @param session
+//	 *            : object session
+//	 */
+//	public static void remoteSession(HttpSession session, String key) {
+//		session.removeAttribute(key);
+//	}
 
 	/**
 	 * format japanese

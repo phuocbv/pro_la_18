@@ -19,8 +19,10 @@ import entity.MstJapan;
 import entity.UserInfor;
 import logic.MstGroupLogic;
 import logic.MstJapanLogic;
+import logic.TblUserLogic;
 import logic.impl.MstGroupLogicImpl;
 import logic.impl.MstJapanLogicImpl;
+import logic.impl.TblUserLogicImpl;
 
 /**
  * class add user ok
@@ -28,11 +30,12 @@ import logic.impl.MstJapanLogicImpl;
  * @author LA-AM
  *
  */
-@WebServlet(urlPatterns = { Constant.URL_ADD_USER_OK })
+@WebServlet(urlPatterns = { Constant.URL_ADD_USER_OK, Constant.URL_ADD_USER_CONFIRM })
 public class AddUserConfirmController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MstGroupLogic mstGroupLogic;
 	private MstJapanLogic mstJapanLogic;
+	private TblUserLogic tblUserLogic;
 
 	/**
 	 * contructer
@@ -40,6 +43,7 @@ public class AddUserConfirmController extends HttpServlet {
 	public AddUserConfirmController() {
 		mstJapanLogic = new MstJapanLogicImpl();
 		mstGroupLogic = new MstGroupLogicImpl();
+		tblUserLogic = new TblUserLogicImpl();
 	}
 
 	/*
@@ -88,8 +92,25 @@ public class AddUserConfirmController extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
+		try {
+			String keySession = req.getParameter(Constant.KEY_SESSION);
+			UserInfor userInfor = (UserInfor) req.getSession().getAttribute(keySession);
+			if (userInfor != null) {
+				tblUserLogic.createUser(userInfor);
+				req.getSession().removeAttribute(Constant.KEY_SESSION);
+			}
+			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM001);
+			dispatcher.forward(req, resp);// forward to page jsp
+		} catch (Exception e) {
+			e.printStackTrace();
+			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+			try {
+				// in case have error then send redirect to view error
+				resp.sendRedirect(stringBuffer.append(Constant.URL_VIEW_EROR).toString());
+			} catch (IOException e1) {
+
+			}
+		}
 	}
 
 }

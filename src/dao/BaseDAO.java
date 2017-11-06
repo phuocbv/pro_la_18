@@ -47,4 +47,15 @@ public interface BaseDAO {
 	 * @throws SQLException
 	 */
 	public void commit() throws SQLException;
+	
+	/**
+	 * function call connection
+	 * 
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 * 
+	 */
+	public void dbConnection() throws SQLException, ClassNotFoundException;
+	
+	public void rollBack() throws SQLException, ClassNotFoundException;
 }

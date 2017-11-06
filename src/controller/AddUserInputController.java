@@ -92,7 +92,7 @@ public class AddUserInputController extends HttpServlet {
 			if (listError.isEmpty()) {
 				stringBuffer.append(req.getContextPath());
 				String keySession = Common.MD5(Common.randomString());
-				stringBuffer.append(Constant.URL_ADD_USER_OK);
+				stringBuffer.append(Constant.URL_ADD_USER_CONFIRM);
 				stringBuffer.append("?");
 				stringBuffer.append(Constant.KEY_SESSION);
 				stringBuffer.append("=");
@@ -107,7 +107,6 @@ public class AddUserInputController extends HttpServlet {
 				dispatcher.forward(req, resp);// forward to page jsp
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
 			try {
 				// in case have error then send redirect to view error
@@ -115,9 +114,6 @@ public class AddUserInputController extends HttpServlet {
 			} catch (IOException e1) {
 
 			}
-			// RequestDispatcher dispatcher =
-			// this.getServletContext().getRequestDispatcher(Constant.VIEW_ERROR);
-			// dispatcher.forward(req, resp);// forward đến trang jsp
 		}
 	}
 

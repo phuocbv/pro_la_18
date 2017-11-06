@@ -4,9 +4,12 @@
  */
 package dao.impl;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
+import common.Common;
 import common.Constant;
 import dao.TblUserDAO;
 import entity.TblUser;
@@ -321,16 +324,33 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	}
 
 	@Override
-	public boolean insertUser(TblUser tblUser) throws ClassNotFoundException, SQLException {
-		// boolean b = false;
-		String sql = "";
-		connection = getConnection();
+	public int insertUser(TblUser tblUser) throws ClassNotFoundException, SQLException {
+		int userId = 0;
+		String sql = " INSERT INTO tbl_user (group_id, login_name, password, full_name, full_name_kana, email, tel, birthday, salt) "
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 		int i = 0;
-		pstm = connection.prepareStatement(sql);
-		pstm.setString(++i, tblUser.getLoginName());
-		pstm.executeUpdate();
-
-		return false;
+		try {
+			if (connection == null) {
+				return userId;
+			}
+			pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstm.setInt(++i, tblUser.getGroupId());
+			pstm.setString(++i, tblUser.getLoginName());
+			pstm.setString(++i, tblUser.getPassword());
+			pstm.setString(++i, tblUser.getFullName());
+			pstm.setString(++i, tblUser.getFullNameKana());
+			pstm.setString(++i, tblUser.getEmail());
+			pstm.setString(++i, tblUser.getTel());
+			pstm.setDate(++i, new Date(tblUser.getBirthday().getTime()));
+			pstm.setString(++i, tblUser.getSalt());
+			pstm.executeUpdate();
+			resultSet = pstm.getGeneratedKeys();
+			if (resultSet.next()) {
+				userId = resultSet.getInt(1);
+			}
+		} catch (SQLException e) {
+			userId = 0;
+		}
+		return userId;
 	}
-
 }

@@ -14,15 +14,18 @@
 <body>
 	<jsp:include page="header.jsp" />
 	<c:if test="${userInfor != null }">
-		<form action="ADM006.html" method="post" name="inputform">
+		<form
+			action="${pageContext.request.contextPath}${Constant.URL_ADD_USER_OK }"
+			method="post" name="inputform">
 			<table class="tbl_input" border="0" width="75%" cellpadding="0"
 				cellspacing="0">
 				<tr>
 					<th align="left">
 						<div style="padding-left: 100px;">
-							情報確認<br> 入力された情報をＯＫボタンクリックでＤＢへ保存してください 
+							情報確認 <br>入力された情報をＯＫボタンクリックでＤＢへ保存してください 
 						</div>
 						<div style="padding-left: 100px;">&nbsp;</div>
+						<input type="hidden" value="${keySession}" name="${Constant.KEY_SESSION }"/>
 					</th>
 				</tr>
 				<tr>
@@ -67,27 +70,32 @@
 											escapeXml="true"></c:out></td>
 								</tr>
 								<tr>
-									<th colspan="2"><a href="javascript:void(0)">日本語能力</a></th>
+									<th colspan="2"><a href="javascript:void(0)"
+										onclick="formLevelJapan()">日本語能力</a></th>
 								</tr>
-								<tr>
+								<tr class="fieldToggle"
+									style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
 									<td class="lbl_left">資格:</td>
 									<td align="left"><c:out
 											value="${mstJapan != null ? mstJapan.nameLevel : ''}"
 											escapeXml="true"></c:out></td>
 								</tr>
-								<tr>
+								<tr class="fieldToggle"
+									style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
 									<td class="lbl_left">資格交付日:</td>
 									<td align="left"><c:out
 											value="${mstJapan != null ? Common.convertToString(userInfor.startYear, userInfor.startMonth, userInfor.startDay) : ''}"
 											escapeXml="true"></c:out></td>
 								</tr>
-								<tr>
+								<tr class="fieldToggle"
+									style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
 									<td class="lbl_left">失効日:</td>
 									<td align="left"><c:out
 											value="${mstJapan != null ? Common.convertToString(userInfor.endYear, userInfor.endMonth, userInfor.endDay) : ''}"
 											escapeXml="true"></c:out></td>
 								</tr>
-								<tr>
+								<tr class="fieldToggle"
+									style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
 									<td class="lbl_left">点数:</td>
 									<td align="left"><c:out
 											value="${mstJapan != null ? userInfor.total : ''}"
@@ -110,7 +118,8 @@
 							id="btnBackADM003" onclick="backAddUser()" /></td>
 					</tr>
 				</table>
-				<!-- End vung button -->
+			</div>
+			<!-- End vung button -->
 		</form>
 	</c:if>
 	<!-- End vung input -->
@@ -121,5 +130,6 @@
 					+ '?type=${Constant.TYPE_ADM004}&key=${keySession}';
 		}
 	</script>
+	<script type="text/javascript" src="view/js/js.js"></script>
 </body>
 </html>

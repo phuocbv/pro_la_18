@@ -1,3 +1,7 @@
+/**
+ * Copyright(C) 2017  Luvina
+ * MstJapanDAO.java, 20/10/2017 phuocbv
+ */
 package dao;
 
 import java.sql.SQLException;

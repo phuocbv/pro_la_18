@@ -78,17 +78,17 @@ public class ListUserController extends HttpServlet {
 			if (type == null) {
 
 			}
-			Map<String, String> dataSession = (HashMap<String, String>) Common.getSession(session,
-					Constant.SESSION_CONDITION_STORE);// get condition get user in session
+			Map<String, String> dataSession = (HashMap<String, String>) session
+					.getAttribute(Constant.SESSION_CONDITION_STORE);// get condition get user in session
 			int page = 1;// default page
 			if (type == null) {// first request then set params sort and default sort type
-				Common.remoteSession(session, Constant.SESSION_CONDITION_STORE);// remote session
+				session.removeAttribute(Constant.SESSION_CONDITION_STORE);// remote session
 				dataSession = new HashMap<>();
 				dataSession.put(Constant.SORT_TYPE, Constant.SORT_BY_FULL_NAME);
 				dataSession.put(Constant.SORT_BY_FULL_NAME, Constant.ASC);
 				dataSession.put(Constant.SORT_BY_CODE_LEVEL, Constant.ASC);
 				dataSession.put(Constant.SORT_BY_END_DATE, Constant.DESC);
-				Common.storeSession(session, Constant.SESSION_CONDITION_STORE, dataSession);
+				session.setAttribute(Constant.SESSION_CONDITION_STORE, dataSession);
 			} else if (Constant.TYPE_SEARCH.equals(type)) {// in case submit form search
 				String fullName = request.getParameter(UserInfor.FULL_NAME);// get param fullName
 				String groupId = request.getParameter(UserInfor.GROUP_ID);// get param groupId
@@ -139,6 +139,7 @@ public class ListUserController extends HttpServlet {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM002);
 			dispatcher.forward(request, response);// forward to page jsp
 		} catch (Exception e) {
+			e.printStackTrace();
 			StringBuffer stringBuffer = new StringBuffer(request.getContextPath());
 			try {
 				// in case have error then send redirect to view error

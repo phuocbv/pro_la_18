@@ -18,7 +18,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import common.Common;
 import common.Constant;
 
 /**
@@ -56,7 +55,7 @@ public class LoginFilter implements Filter {
 		// get relative path
 		String path = req.getRequestURI().substring(req.getContextPath().length());
 		// get session admin
-		String loginName = (String) Common.getSession(req.getSession(), Constant.SESSION_LOGGINED_USER);
+		String loginName = (String) req.getSession().getAttribute(Constant.SESSION_LOGGINED_USER);
 		StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
 
 		// if path is /login
@@ -106,6 +105,7 @@ public class LoginFilter implements Filter {
 		listUrlAllow.add(Constant.URL_VIEW_EROR);
 		listUrlAllow.add(Constant.URL_ADD_USER_INPUT);
 		listUrlAllow.add(Constant.URL_ADD_USER_VALIDATE);
+		listUrlAllow.add(Constant.URL_ADD_USER_CONFIRM);
 		listUrlAllow.add(Constant.URL_ADD_USER_OK);
 	}
 

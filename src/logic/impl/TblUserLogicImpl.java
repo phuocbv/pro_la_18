@@ -6,9 +6,12 @@ package logic.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
-import dao.TblUserDAO;
-import dao.impl.TblUserDAOImpl;
+import common.Common;
+import dao.*;
+import dao.impl.*;
+import entity.TblDetailUserJapan;
 import entity.TblUser;
 import entity.UserInfor;
 import logic.TblUserLogic;
@@ -20,13 +23,17 @@ import logic.TblUserLogic;
  *
  */
 public class TblUserLogicImpl implements TblUserLogic {
-	private TblUserDAO userDao;
+	private TblUserDAO tblUserDAO;
+	private TblDeatilUserJapanDAO tblDeatilUserJapanDAO;
+	private BaseDAO baseDAO;
 
 	/**
 	 * contructer
 	 */
 	public TblUserLogicImpl() {
-		userDao = new TblUserDAOImpl();
+		baseDAO = new BaseDAOImpl();
+		tblUserDAO = new TblUserDAOImpl();
+		tblDeatilUserJapanDAO = new TblDetailUserJapanDAOImpl();
 	}
 
 	/**
@@ -55,7 +62,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate)
 			throws ClassNotFoundException, SQLException {
 		// fullName = Common.filterString(fullName);
-		return userDao.getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName, sortByCodeLevel,
+		return tblUserDAO.getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName, sortByCodeLevel,
 				sortByEndDate);
 	}
 
@@ -71,7 +78,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	@Override
 	public int getTotalUsers(String groupId, String fullName) throws ClassNotFoundException, SQLException {
 		// fullName = Common.filterString(fullName);
-		return userDao.getTotalUsers(groupId, fullName);
+		return tblUserDAO.getTotalUsers(groupId, fullName);
 	}
 
 	/**
@@ -84,7 +91,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean checkExistedLoginName(Integer userId, String loginName) throws ClassNotFoundException, SQLException {
-		TblUser tblUser = userDao.getUserByLoginName(userId, loginName);
+		TblUser tblUser = tblUserDAO.getUserByLoginName(userId, loginName);
 		if (tblUser == null) {
 			return false;
 		}
@@ -93,9 +100,55 @@ public class TblUserLogicImpl implements TblUserLogic {
 
 	@Override
 	public boolean checkExistedEmail(Integer userId, String email) throws ClassNotFoundException, SQLException {
-		TblUser tblUser = userDao.getUserByEmail(userId, email);
+		TblUser tblUser = tblUserDAO.getUserByEmail(userId, email);
 		if (tblUser == null) {
 			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean createUser(UserInfor userInfor) throws ClassNotFoundException, SQLException {
+		int groupId = Common.parseInt(userInfor.getGroupId(), 0);
+		String salt = Common.MD5(Common.randomString());
+		String password = Common.MD5(userInfor.getPassword(), salt);
+		TblUser tblUser = new TblUser();
+		tblUser.setGroupId(groupId);
+		tblUser.setLoginName(userInfor.getLoginName());
+		tblUser.setPassword(password);
+		tblUser.setFullName(userInfor.getFullName());
+		tblUser.setFullNameKana(userInfor.getFullNameKana());
+		tblUser.setEmail(userInfor.getEmail());
+		tblUser.setTel(userInfor.getTel());
+		tblUser.setBirthday(userInfor.getBirthday());
+		tblUser.setSalt(salt);
+		try {
+			baseDAO.dbConnection();
+			baseDAO.setAutoCommit(false);
+			int userId = tblUserDAO.insertUser(tblUser);
+			if (userId == 0) {
+				baseDAO.rollBack();
+				return false;
+			}
+			int total = Common.parseInt(userInfor.getTotal(), 0);
+			TblDetailUserJapan tblDetailUserJapan = new TblDetailUserJapan();
+			tblDetailUserJapan.setUserId(userId);
+			tblDetailUserJapan.setCodeLevel(userInfor.getCodeLevel());
+			tblDetailUserJapan.setStartDate(userInfor.getStartDate());
+			tblDetailUserJapan.setEndDate(userInfor.getEndDate());
+			tblDetailUserJapan.setTotal(total);
+			boolean check = tblDeatilUserJapanDAO.insertDetailUserJapan(tblDetailUserJapan);
+			if (!check) {
+				baseDAO.rollBack();
+				return false;
+			}
+			baseDAO.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			baseDAO.rollBack();
+			return false;
+		} finally {
+			baseDAO.closeConnect();
 		}
 		return true;
 	}
