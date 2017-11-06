@@ -107,7 +107,7 @@
 						<th width="200px" align="center">&nbsp;</th>
 						<td><input class="btn" type="submit" value="OK" /></td>
 						<td><input class="btn" type="button" value="戻る"
-							id="btnBackADM003" /></td>
+							id="btnBackADM003" onclick="backAddUser()" /></td>
 					</tr>
 				</table>
 				<!-- End vung button -->
@@ -116,11 +116,9 @@
 	<!-- End vung input -->
 	<jsp:include page="footer.jsp" />
 	<script>
-		var btnBackADM003 = document.getElementById('btnBackADM003');
-		btnBackADM003.addEventListener('click', redirectListUser);
-
-		function redirectListUser() {
-			window.location = '${pageContext.request.contextPath}${Constant.URL_ADD_USER_INPUT}';
+		function backAddUser() {
+			window.location.href = '${pageContext.request.contextPath}${Constant.URL_ADD_USER_INPUT}'
+					+ '?type=${Constant.TYPE_ADM004}&key=${keySession}';
 		}
 	</script>
 </body>

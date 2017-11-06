@@ -12,7 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import common.Constant;
 import entity.MstGroup;
@@ -24,12 +23,12 @@ import logic.impl.MstGroupLogicImpl;
 import logic.impl.MstJapanLogicImpl;
 
 /**
- * class add user
+ * class add user ok
  * 
  * @author LA-AM
  *
  */
-@WebServlet(urlPatterns = {Constant.URL_ADD_USER_OK})
+@WebServlet(urlPatterns = { Constant.URL_ADD_USER_OK })
 public class AddUserConfirmController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MstGroupLogic mstGroupLogic;
@@ -53,17 +52,20 @@ public class AddUserConfirmController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			HttpSession session = req.getSession();
-			UserInfor userInfor = (UserInfor) session.getAttribute(Constant.SESSION_USER_INFOR);
-			MstGroup mstGroup = mstGroupLogic.getGroupById(userInfor.getGroupId());
-			//MstJapan mstJapan = null;
-			String codeLevel = userInfor.getCodeLevel();
-			if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
-				MstJapan mstJapan = mstJapanLogic.getMstJapanByCodeLevel(userInfor.getCodeLevel());
-				req.setAttribute("mstJapan", mstJapan);
+			String keySession = req.getParameter(Constant.KEY_SESSION);
+			UserInfor userInfor = (UserInfor) req.getSession().getAttribute(keySession);
+			if (userInfor != null) {
+				MstGroup mstGroup = mstGroupLogic.getGroupById(userInfor.getGroupId());
+				req.setAttribute("mstGroup", mstGroup);
+				// MstJapan mstJapan = null;
+				String codeLevel = userInfor.getCodeLevel();
+				if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
+					MstJapan mstJapan = mstJapanLogic.getMstJapanByCodeLevel(userInfor.getCodeLevel());
+					req.setAttribute("mstJapan", mstJapan);
+				}
 			}
+			req.setAttribute("keySession", keySession);
 			req.setAttribute("userInfor", userInfor);
-			req.setAttribute("mstGroup", mstGroup);
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM004);
 			dispatcher.forward(req, resp);// forward to page jsp
 		} catch (Exception e) {

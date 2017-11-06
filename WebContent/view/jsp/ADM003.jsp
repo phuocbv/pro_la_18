@@ -15,7 +15,7 @@
 	<jsp:include page="header.jsp" />
 	<!-- Begin vung input-->
 	<form
-		action="${pageContext.request.contextPath}${Constant.URL_ADD_USER_VALIDATE }"
+		action="${pageContext.request.contextPath}${Constant.URL_ADD_USER_VALIDATE }?type=${Constant.TYPE_ADM003}"
 		method="post" name="inputform">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
@@ -128,7 +128,7 @@
 							<!-- level japannes -->
 							<tr>
 								<th align="left" colspan="2"><a href="javascript:void(0)"
-									id="linkLevelJapannes">日本語能力</a></th>
+									onclick="formLevelJapan()" id="linkLevelJapannes">日本語能力</a></th>
 							</tr>
 							<tr class="fieldToggle"
 								style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
@@ -196,8 +196,9 @@
 								style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
 								<td class="lbl_left">点数:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="${UserInfor.TOTAL }" value="<c:out value="${userInfor.total }" escapeXml="true" />" size="5"
-									onfocus="this.style.borderColor='#0066ff';"
+									name="${UserInfor.TOTAL }"
+									value="<c:out value="${userInfor.total }" escapeXml="true" />"
+									size="5" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 						</table>
@@ -213,7 +214,7 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="確認" /></td>
 					<td><input class="btn" type="button" value="戻る"
-						id="btnBackListUser" /></td>
+						onclick="backListUser()" id="btnBackListUser" /></td>
 				</tr>
 			</table>
 		</div>
@@ -221,16 +222,8 @@
 	</form>
 	<!-- End vung input -->
 	<script>
-		var btnBackListUser = document.getElementById('btnBackListUser');
-		var linkLevelJapannes = document.getElementById('linkLevelJapannes');
-		btnBackListUser.addEventListener('click', redirectListUser);
-		linkLevelJapannes.addEventListener('click', formLevelJapan);
-
-		function redirectListUser() {
-			/* 			window.location
-			 .replace('${pageContext.request.contextPath}${Constant.URL_LIST_USER}'
-			 + '?type=back'); */
-			window.location = '${pageContext.request.contextPath}${Constant.URL_LIST_USER}'
+		function backListUser() {
+			window.location.href = '${pageContext.request.contextPath}${Constant.URL_LIST_USER}'
 					+ '?type=back';
 		}
 

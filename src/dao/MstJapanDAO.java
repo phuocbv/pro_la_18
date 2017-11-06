@@ -23,7 +23,7 @@ public interface MstJapanDAO {
 	 * get mstJapan by code level
 	 * 
 	 * @param codeLevel : code_level of mst japan
-	 * @return MstJapan 
+	 * @return MstJapan : object of table mst_japan
 	 */
 	public MstJapan getMstJapanByCodeLevel(String codeLevel) throws ClassNotFoundException, SQLException;
 }

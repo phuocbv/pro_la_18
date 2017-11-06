@@ -1,8 +1,5 @@
-var linkLevelJapannes = document.getElementById('linkLevelJapannes');
-var fieldToggles = document.getElementsByClassName("fieldToggle");
-linkLevelJapannes.addEventListener('click', formLevelJapan);
-
 function formLevelJapan() {
+	var fieldToggles = document.querySelectorAll(".fieldToggle");
 	var length = fieldToggles.length;
 	for (var i = 0; i < length; i++) {
 		fieldToggles[i].style.display = fieldToggles[i].style.display == 'table-row' ? 'none'

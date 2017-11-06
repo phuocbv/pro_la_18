@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import common.Common;
 import common.Constant;
@@ -47,7 +46,7 @@ public class ValidateUser {
 	public static final String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
 	public static final String TEL_PATTERN = "^[0-9]{1,4}-[0-9]{4}-[0-9]{4}$";
 	public static final String TOTAL_PATTERN = "^[1-9]{1}[0-9]{0,10}$";
-	public static final String PASSWORD_PATTERN = "^[a-zA-Z0-9!@#$%^&*()_+.,<>?;:'-=]{6,15}$";
+	public static final String PASSWORD_PATTERN = "^[a-zA-Z0-9!@#$%^&*(){}_+.,<>?;:'-=]{6,15}$";
 
 	/**
 	 * method validate user infor

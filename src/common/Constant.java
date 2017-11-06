@@ -89,6 +89,13 @@ public class Constant {
 	public static final String TYPE_SORT = "sort";
 	public static final String TYPE_PAGING = "paging";
 	
+	public static final String TYPE_ADM002 = "ADM002";
+	public static final String TYPE_ADM003 = "ADM003";
+	public static final String TYPE_ADM004 = "ADM004";
+	public static final String TYPE_ADM005 = "ADM005";
+	
+	public static final String KEY_SESSION = "key";
+	
 	//sort
 	public static final String ASC = "ASC";
 	public static final String DESC = "DESC";

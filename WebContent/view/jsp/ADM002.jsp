@@ -55,20 +55,9 @@
 							</select></td>
 							<td align="left"><input class="btn" type="submit" value="検索" />
 								<input class="btn" type="button" value="新規追加"
-								id="btnRedirectAddUser" /></td>
+								onclick="redirectAddUser()" id="btnRedirectAddUser" /></td>
 						</tr>
-						<script>
-							var btnRedirectAddUser = document
-									.getElementById('btnRedirectAddUser');
-							btnRedirectAddUser.addEventListener('click',
-									redirectAddUser);
 
-							function redirectAddUser() {
-								/* window.location
-										.replace('${pageContext.request.contextPath}${Constant.URL_ADD_USER_INPUT}'); */
-								window.location.href = 'http://localhost:8080/pro_manageuser_14_buivanphuoc/addUserInput.do';
-							}
-						</script>
 					</table>
 				</td>
 			</tr>
@@ -190,5 +179,10 @@
 		</c:otherwise>
 	</c:choose>
 	<jsp:include page="footer.jsp" />
+	<script>
+		function redirectAddUser() {
+			window.location.href = '${pageContext.request.contextPath}${Constant.URL_ADD_USER_INPUT}?type=${Constant.TYPE_ADM002}';
+		}
+	</script>
 </body>
 </html>

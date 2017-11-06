@@ -235,10 +235,15 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	}
 
 	/**
-	 * get count tbl user by loginName
+	 * get user by login name
 	 * 
+	 * @param userId
+	 *            : user_id of table mst_user
 	 * @param loginName
-	 * @return int count tbluser
+	 *            : login_name of table
+	 * @return TblUser : object TblUser
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
 	 */
 	@Override
 	public TblUser getUserByLoginName(Integer userId, String loginName) throws ClassNotFoundException, SQLException {
@@ -272,6 +277,17 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		return tblUser;
 	}
 
+	/**
+	 * get TblUser by email
+	 * 
+	 * @param userId
+	 *            : field user_id of table mst_user
+	 * @param email
+	 *            : field email of table mst_user
+	 * @return TblUser : object TblUser
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	@Override
 	public TblUser getUserByEmail(Integer userId, String email) throws ClassNotFoundException, SQLException {
 		TblUser tblUser = null;
@@ -306,14 +322,14 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 
 	@Override
 	public boolean insertUser(TblUser tblUser) throws ClassNotFoundException, SQLException {
-		boolean b = false;
+		// boolean b = false;
 		String sql = "";
 		connection = getConnection();
 		int i = 0;
 		pstm = connection.prepareStatement(sql);
 		pstm.setString(++i, tblUser.getLoginName());
 		pstm.executeUpdate();
-		
+
 		return false;
 	}
 

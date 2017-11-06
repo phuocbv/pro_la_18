@@ -87,11 +87,17 @@ public class AddUserInputController extends HttpServlet {
 			UserInfor userInfor = setDefaultValue(req, resp);
 			ValidateUser validateUser = new ValidateUser();
 			List<String> listError = validateUser.validateUserInfor(userInfor);// validate user
-			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+			StringBuffer stringBuffer = new StringBuffer();
 			// case haven't error
 			if (listError.isEmpty()) {
-				req.getSession().setAttribute(Constant.SESSION_USER_INFOR, userInfor);
+				stringBuffer.append(req.getContextPath());
+				String keySession = Common.MD5(Common.randomString());
 				stringBuffer.append(Constant.URL_ADD_USER_OK);
+				stringBuffer.append("?");
+				stringBuffer.append(Constant.KEY_SESSION);
+				stringBuffer.append("=");
+				stringBuffer.append(keySession);
+				req.getSession().setAttribute(keySession, userInfor);
 				resp.sendRedirect(stringBuffer.toString());
 			} else {// case validate have error then back ADM003
 				setDataLogic(req, resp);
@@ -161,42 +167,47 @@ public class AddUserInputController extends HttpServlet {
 	 *            : object response
 	 */
 	private UserInfor setDefaultValue(HttpServletRequest req, HttpServletResponse resp) {
+		String type = req.getParameter(Constant.TYPE);
 		UserInfor userInfor = null;
-		userInfor = (UserInfor) req.getSession().getAttribute(Constant.SESSION_USER_INFOR);
-		if (userInfor != null) {
-			req.getSession().removeAttribute(Constant.SESSION_USER_INFOR);
-			return userInfor;
+		if (type == null || Constant.TYPE_ADM002.equals(type)) {
+			userInfor = new UserInfor();
+		} else if (Constant.TYPE_ADM004.equals(type)) {
+			String keySession = req.getParameter(Constant.KEY_SESSION);
+			userInfor = (UserInfor) req.getSession().getAttribute(keySession);
+			req.getSession().removeAttribute(keySession);
+		} else if (Constant.TYPE_ADM003.equals(type)) {
+			userInfor = new UserInfor();
+			userInfor.setLoginName(req.getParameter(UserInfor.LOGIN_NAME));
+			userInfor.setGroupId(req.getParameter(UserInfor.GROUP_ID));
+			userInfor.setFullName(req.getParameter(UserInfor.FULL_NAME));
+			userInfor.setFullNameKana(req.getParameter(UserInfor.FULL_NAME_KANA));
+			// set birthday
+			userInfor.setBirthdayYear(req.getParameter(UserInfor.BIRTHDAY_YEAR));
+			userInfor.setBirthdayMonth(req.getParameter(UserInfor.BIRTHDAY_MONTH));
+			userInfor.setBirthdayDay(req.getParameter(UserInfor.BIRTHDAY_DAY));
+
+			userInfor.setEmail(req.getParameter(UserInfor.EMAIL));
+			userInfor.setTel(req.getParameter(UserInfor.TEL));
+			userInfor.setPassword(req.getParameter(UserInfor.PASSWORD));
+			userInfor.setConfirmPassword(req.getParameter(UserInfor.CONFIRM_PASSWORD));
+
+			String codeLevel = req.getParameter(UserInfor.CODE_LEVEL);
+			// in case have code level japan
+			if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
+				userInfor.setCodeLevel(codeLevel);
+				// set start date
+				userInfor.setStartYear(req.getParameter(UserInfor.START_YEAR));
+				userInfor.setStartMonth(req.getParameter(UserInfor.START_MONTH));
+				userInfor.setStartDay(req.getParameter(UserInfor.START_DAY));
+				// set end date
+				userInfor.setEndYear(req.getParameter(UserInfor.END_YEAR));
+				userInfor.setEndMonth(req.getParameter(UserInfor.END_MONTH));
+				userInfor.setEndDay(req.getParameter(UserInfor.END_DAY));
+
+				userInfor.setTotal(req.getParameter(UserInfor.TOTAL));
+			}
 		}
-		userInfor = new UserInfor();
-		userInfor.setLoginName(req.getParameter(UserInfor.LOGIN_NAME));
-		userInfor.setGroupId(req.getParameter(UserInfor.GROUP_ID));
-		userInfor.setFullName(req.getParameter(UserInfor.FULL_NAME));
-		userInfor.setFullNameKana(req.getParameter(UserInfor.FULL_NAME_KANA));
-		// set birthday
-		userInfor.setBirthdayYear(req.getParameter(UserInfor.BIRTHDAY_YEAR));
-		userInfor.setBirthdayMonth(req.getParameter(UserInfor.BIRTHDAY_MONTH));
-		userInfor.setBirthdayDay(req.getParameter(UserInfor.BIRTHDAY_DAY));
 
-		userInfor.setEmail(req.getParameter(UserInfor.EMAIL));
-		userInfor.setTel(req.getParameter(UserInfor.TEL));
-		userInfor.setPassword(req.getParameter(UserInfor.PASSWORD));
-		userInfor.setConfirmPassword(req.getParameter(UserInfor.CONFIRM_PASSWORD));
-
-		String codeLevel = req.getParameter(UserInfor.CODE_LEVEL);
-		// in case have code level japan
-		if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
-			userInfor.setCodeLevel(codeLevel);
-			// set start date
-			userInfor.setStartYear(req.getParameter(UserInfor.START_YEAR));
-			userInfor.setStartMonth(req.getParameter(UserInfor.START_MONTH));
-			userInfor.setStartDay(req.getParameter(UserInfor.START_DAY));
-			// set end date
-			userInfor.setEndYear(req.getParameter(UserInfor.END_YEAR));
-			userInfor.setEndMonth(req.getParameter(UserInfor.END_MONTH));
-			userInfor.setEndDay(req.getParameter(UserInfor.END_DAY));
-
-			userInfor.setTotal(req.getParameter(UserInfor.TOTAL));
-		}
 		return userInfor;
 	}
 }

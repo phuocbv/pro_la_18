@@ -36,7 +36,8 @@ public interface MstJapanLogic {
 	 * check exist japan
 	 * 
 	 * @param codeLevel
-	 * @return
+	 *            : code level om table mst_japan
+	 * @return boolean : check exits
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */

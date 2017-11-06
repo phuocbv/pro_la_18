@@ -51,7 +51,7 @@ public class MstJapanDAOImpl extends BaseDAOImpl implements MstJapanDAO {
 	 * 
 	 * @param codeLevel
 	 *            : code_level of mst japan
-	 * @return MstJapan
+	 * @return MstJapan : object of table mst_japan
 	 */
 	@Override
 	public MstJapan getMstJapanByCodeLevel(String codeLevel) throws ClassNotFoundException, SQLException {
