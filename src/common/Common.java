@@ -4,6 +4,7 @@
  */
 package common;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -13,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import properties.ConfigProperties;
 
@@ -387,5 +391,21 @@ public class Common {
 			result = "";
 		}
 		return result;
+	}
+
+	/**
+	 * proccess when system error
+	 * 
+	 * @param req
+	 * @param resp
+	 */
+	public static void processSystemError(HttpServletRequest req, HttpServletResponse resp) {
+		StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+		try {
+			// in case have error then send redirect to view error
+			resp.sendRedirect(stringBuffer.append(Constant.URL_SUCCESS).toString());
+		} catch (IOException e1) {
+
+		}
 	}
 }

@@ -63,13 +63,7 @@ public class AddUserInputController extends HttpServlet {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM003);
 			dispatcher.forward(req, resp);// forward to page jsp
 		} catch (Exception e) {
-			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
-			try {
-				// in case have error then send redirect to view error
-				resp.sendRedirect(stringBuffer.append(Constant.URL_VIEW_EROR).toString());
-			} catch (IOException e1) {
-
-			}
+			Common.processSystemError(req, resp);
 		}
 	}
 
@@ -107,13 +101,7 @@ public class AddUserInputController extends HttpServlet {
 				dispatcher.forward(req, resp);// forward to page jsp
 			}
 		} catch (Exception e) {
-			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
-			try {
-				// in case have error then send redirect to view error
-				resp.sendRedirect(stringBuffer.append(Constant.URL_VIEW_EROR).toString());
-			} catch (IOException e1) {
-
-			}
+			Common.processSystemError(req, resp);
 		}
 	}
 

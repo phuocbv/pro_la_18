@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import common.Common;
 import common.Constant;
 import common.ConstantProperties;
 import properties.MessageProperties;
@@ -39,22 +40,16 @@ public class SuccessController extends HttpServlet {
 		try {
 			String type = req.getParameter(Constant.TYPE);
 			String message = "";
-			if (Constant.INSERT_SUCCESS.equals(type)) {
-				message = MessageProperties.getValue(ConstantProperties.MSG001);
-			} else if (Constant.ERROR.equals(type)) {
+			if (type == null || Constant.ERROR.equals(type)) {
 				message = MessageProperties.getValue(ConstantProperties.SYSTEM_ERROR);
+			} else if (Constant.INSERT_SUCCESS.equals(type)) {
+				message = MessageProperties.getValue(ConstantProperties.MSG001);
 			}
 			req.setAttribute("message", message);
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM006);
 			dispatcher.forward(req, resp);// forward to jsp page
 		} catch (Exception e) {
-			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
-			try {
-				// in case have error then send redirect to view error
-				resp.sendRedirect(stringBuffer.append(Constant.URL_VIEW_EROR).toString());
-			} catch (IOException e1) {
-
-			}
+			Common.processSystemError(req, resp);
 		}
 
 	}

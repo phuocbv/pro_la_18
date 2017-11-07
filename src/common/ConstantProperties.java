@@ -17,8 +17,6 @@ public class ConstantProperties {
 	public static final String ER001_PASSWORD = "ER001_PASSWORD";
 	public static final String ER001_LOGIN_NAME_AND_PASSWORD = "ER001_LOGIN_NAME_AND_PASSWORD";
 
-	// public static final String ER016 = "ER016";
-
 	// error ADM003
 	public static final String ER001_FULL_NAME = "ER001_FULL_NAME";
 	public static final String ER001_FULL_NAME_KANA = "ER001_FULL_NAME_KANA";

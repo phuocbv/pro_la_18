@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import common.Common;
 import common.Constant;
 import entity.MstGroup;
 import entity.MstJapan;
@@ -73,13 +74,7 @@ public class AddUserConfirmController extends HttpServlet {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM004);
 			dispatcher.forward(req, resp);// forward to page jsp
 		} catch (Exception e) {
-			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
-			try {
-				// in case have error then send redirect to view error
-				resp.sendRedirect(stringBuffer.append(Constant.URL_VIEW_EROR).toString());
-			} catch (IOException e1) {
-
-			}
+			Common.processSystemError(req, resp);
 		}
 	}
 
@@ -113,14 +108,7 @@ public class AddUserConfirmController extends HttpServlet {
 			}
 			resp.sendRedirect(stringBuffer.toString());
 		} catch (Exception e) {
-			e.printStackTrace();
-			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
-			try {
-				// in case have error then send redirect to view error
-				resp.sendRedirect(stringBuffer.append(Constant.URL_VIEW_EROR).toString());
-			} catch (IOException e1) {
-
-			}
+			Common.processSystemError(req, resp);
 		}
 	}
 

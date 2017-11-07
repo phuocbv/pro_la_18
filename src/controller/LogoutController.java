@@ -4,16 +4,13 @@
  */
 package controller;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import common.Common;
 import common.Constant;
 
 /**
@@ -42,13 +39,7 @@ public class LogoutController extends HttpServlet {
 			stringBuffer.append(Constant.URL_LOGIN);
 			response.sendRedirect(stringBuffer.toString());
 		} catch (Exception e) {
-			try {
-				// in case have error then send redirect to view error
-				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.VIEW_ERROR);
-				dispatcher.forward(request, response);
-			} catch (ServletException | IOException e1) {
-
-			}
+			Common.processSystemError(request, response);
 		}
 	}
 }

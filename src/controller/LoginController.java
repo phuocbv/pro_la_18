@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import common.Common;
 import common.Constant;
 import entity.UserInfor;
 import logic.AuthLogic;
@@ -80,13 +81,7 @@ public class LoginController extends HttpServlet {
 				dispatcher.forward(request, response);// forward to page jsp
 			}
 		} catch (Exception e) {
-			try {
-				// in case have error then send redirect to view error
-				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.VIEW_ERROR);
-				dispatcher.forward(request, response);
-			} catch (ServletException | IOException e1) {
-
-			}
+			Common.processSystemError(request, response);
 		}
 	}
 }

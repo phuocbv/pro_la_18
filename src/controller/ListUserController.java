@@ -139,14 +139,7 @@ public class ListUserController extends HttpServlet {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM002);
 			dispatcher.forward(request, response);// forward to page jsp
 		} catch (Exception e) {
-			e.printStackTrace();
-			StringBuffer stringBuffer = new StringBuffer(request.getContextPath());
-			try {
-				// in case have error then send redirect to view error
-				response.sendRedirect(stringBuffer.append(Constant.URL_VIEW_EROR).toString());
-			} catch (IOException e1) {
-
-			}
+			Common.processSystemError(request, response);
 		}
 	}
 }
