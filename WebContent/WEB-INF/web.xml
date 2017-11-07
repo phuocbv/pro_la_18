@@ -5,6 +5,6 @@
 	id="WebApp_ID" version="3.1">
 	<display-name>pro_manageuser_14_buivanphuoc</display-name>
 	<session-config>
-		<session-timeout>5</session-timeout>
+		<session-timeout>60</session-timeout>
 	</session-config>
 </web-app>

@@ -55,6 +55,7 @@ public class Constant {
 	public static final String ADM002 = "/view/jsp/ADM002.jsp";
 	public static final String ADM003 = "/view/jsp/ADM003.jsp";
 	public static final String ADM004 = "/view/jsp/ADM004.jsp";
+	public static final String ADM005 = "/view/jsp/ADM005.jsp";
 	public static final String ADM006 = "/view/jsp/ADM006.jsp";
 	public static final String VIEW_ERROR = "/view/jsp/view_error.jsp";
 
@@ -68,6 +69,7 @@ public class Constant {
 	public static final String URL_ADD_USER_OK = "/addUserOK.do";
 	public static final String URL_ADD_USER_CONFIRM = "/addUserConfirm.do";
 	public static final String URL_SUCCESS = "/notification.do";
+	public static final String URL_SHOW_DETAIL_USER = "/showDetailUser.do";
 	public static final String URL_VIEW_EROR = "/viewError.do";
 
 	// url filter
@@ -97,6 +99,9 @@ public class Constant {
 	public static final String TYPE_ADM004 = "ADM004";
 	public static final String TYPE_ADM005 = "ADM005";
 
+	public static final String METHOD_GET = "GET";
+	public static final String METHOD_POST = "POST";
+	
 	// action
 	public static final String INSERT_SUCCESS = "insertSuccess";
 	public static final String ERROR = "error";

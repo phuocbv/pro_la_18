@@ -130,8 +130,10 @@
 								<th align="left" colspan="2"><a href="javascript:void(0)"
 									onclick="formLevelJapan()" id="linkLevelJapannes">日本語能力</a></th>
 							</tr>
+							<c:set var="checkCodeLevel"
+									value="${(userInfor.codeLevel != null && userInfor.codeLevel != '0') }"></c:set>
 							<tr class="fieldToggle"
-								style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
+								style="display: ${checkCodeLevel ? 'table-row' : 'none'}">
 								<td class="lbl_left">資格:</td>
 								<td align="left"><select name="${UserInfor.CODE_LEVEL }"
 									id="selectCodeLevel">
@@ -143,7 +145,7 @@
 								</select></td>
 							</tr>
 							<tr class="fieldToggle"
-								style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
+								style="display: ${checkCodeLevel ? 'table-row' : 'none'}">
 								<td class="lbl_left">資格交付日:</td>
 								<td align="left"><select name="${UserInfor.START_YEAR }">
 										<c:set var="startYear"
@@ -169,7 +171,7 @@
 								</select>日</td>
 							</tr>
 							<tr class="fieldToggle"
-								style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
+								style="display: ${checkCodeLevel ? 'table-row' : 'none'}">
 								<td class="lbl_left">失効日:</td>
 								<td align="left"><select name="${UserInfor.END_YEAR }">
 										<c:set var="endYear"
@@ -193,7 +195,7 @@
 								</select>日</td>
 							</tr>
 							<tr class="fieldToggle"
-								style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
+								style="display: ${checkCodeLevel ? 'table-row' : 'none'}">
 								<td class="lbl_left">点数:</td>
 								<td align="left"><input class="txBox" type="text"
 									name="${UserInfor.TOTAL }"

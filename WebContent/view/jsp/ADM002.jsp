@@ -118,17 +118,21 @@
 
 				<c:forEach var="item" items="${listUser}">
 					<tr>
-						<td align="right"><a href="ADM005.html">${item.userId}</a></td>
-						<td>${item.fullName}</td>
+						<td align="right"><a
+							href="${pageContext.request.contextPath}${Constant.URL_SHOW_DETAIL_USER}?userId=${item.userId}">
+								<c:out value="${item.userId}" escapeXml="true" />
+						</a></td>
+						<td><c:out value="${item.fullName}" escapeXml="true" /></td>
 						<td align="center"><fmt:formatDate pattern="yyyy/MM/dd"
 								value="${item.birthday}" /></td>
-						<td>${item.groupName}</td>
-						<td>${item.email}</td>
-						<td>${item.tel}</td>
-						<td>${item.nameLevel }</td>
+						<td><c:out value="${item.groupName}" escapeXml="true" /></td>
+						<td><c:out value="${item.email}" escapeXml="true" /></td>
+						<td><c:out value="${item.tel}" escapeXml="true" /></td>
+						<td><c:out value="${item.nameLevel }" escapeXml="true" /></td>
 						<td align="center"><fmt:formatDate pattern="yyyy/MM/dd"
 								value="${item.endDate}" /></td>
-						<td align="right">${item.total}</td>
+						<td align="right"><c:out value="${item.total}"
+								escapeXml="true" /></td>
 					</tr>
 				</c:forEach>
 			</table>

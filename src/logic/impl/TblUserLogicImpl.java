@@ -145,8 +145,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 		try {
 			baseDAO.dbConnection();// create connection
 			baseDAO.setAutoCommit(false);// set auto commit = false
-			int userId = tblUserDAO.insertUser(tblUser);
-			if (userId == 0) {// if insert tbl_user not success then return false
+			Integer userId = tblUserDAO.insertUser(tblUser);
+			if (userId == null) {// if insert tbl_user not success then return false
 				return false;
 			}
 			if (userInfor.getCodeLevel() != null) {
@@ -167,5 +167,11 @@ public class TblUserLogicImpl implements TblUserLogic {
 			baseDAO.closeConnect();
 		}
 		return true;
+	}
+
+	@Override
+	public UserInfor getUserById(String id) throws ClassNotFoundException, SQLException {
+		int userId = Common.parseInt(id, 0);
+		return tblUserDAO.getUserById(userId);
 	}
 }

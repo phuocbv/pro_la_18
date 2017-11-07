@@ -60,16 +60,19 @@ public class AddUserConfirmController extends HttpServlet {
 			UserInfor userInfor = (UserInfor) req.getSession().getAttribute(keySession);
 			if (userInfor != null) {
 				MstGroup mstGroup = mstGroupLogic.getGroupById(userInfor.getGroupId());
-				req.setAttribute("mstGroup", mstGroup);
-				// MstJapan mstJapan = null;
+				userInfor.setGroupName(mstGroup.getGroupName());
 				String codeLevel = userInfor.getCodeLevel();
+				//check hava level japan
 				if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
 					MstJapan mstJapan = mstJapanLogic.getMstJapanByCodeLevel(userInfor.getCodeLevel());
-					req.setAttribute("mstJapan", mstJapan);
+					userInfor.setNameLevel(mstJapan.getNameLevel());
 				}
 			}
+			StringBuffer urlSubmit = new StringBuffer().append(req.getContextPath()).append(Constant.URL_ADD_USER_OK);
+			req.setAttribute("urlSubmit", urlSubmit.toString());
 			req.setAttribute("keySession", keySession);
 			req.setAttribute("userInfor", userInfor);
+			req.setAttribute("method", Constant.METHOD_POST);
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM004);
 			dispatcher.forward(req, resp);// forward to page jsp
 		} catch (Exception e) {
