@@ -16,7 +16,7 @@ import entity.UserInfor;
  * @author da
  *
  */
-public interface TblUserDAO{
+public interface TblUserDAO {
 	/**
 	 * get list user
 	 * 
@@ -82,8 +82,9 @@ public interface TblUserDAO{
 	/**
 	 * insert tblUser in database
 	 * 
-	 * @param tblUser 
-	 * @return boolean
+	 * @param tblUser
+	 *            : object tbl_user
+	 * @return boolean : check insert success
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */

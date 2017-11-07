@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import common.Common;
 import common.Constant;
 import dao.TblUserDAO;
 import entity.TblUser;
@@ -42,6 +41,10 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			.append(" SELECT tbl_user.user_id, tbl_user.group_id, tbl_user.login_name, tbl_user.password, ")
 			.append(" tbl_user.full_name, tbl_user.full_name_kana, tbl_user.email, tbl_user.tel, tbl_user.birthday, tbl_user.salt ")
 			.append(" FROM tbl_user ");
+
+	private StringBuffer sqlInsertUser = new StringBuffer().append(
+			" INSERT INTO tbl_user (group_id, login_name, password, full_name, full_name_kana, email, tel, birthday, salt) ")
+			.append(" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 
 	/**
 	 * get list user
@@ -323,17 +326,24 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		return tblUser;
 	}
 
+	/**
+	 * insert tblUser in database
+	 * 
+	 * @param tblUser
+	 *            : object tbl_user
+	 * @return boolean : check insert success
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	@Override
 	public int insertUser(TblUser tblUser) throws ClassNotFoundException, SQLException {
 		int userId = 0;
-		String sql = " INSERT INTO tbl_user (group_id, login_name, password, full_name, full_name_kana, email, tel, birthday, salt) "
-				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 		int i = 0;
 		try {
 			if (connection == null) {
 				return userId;
 			}
-			pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstm = connection.prepareStatement(sqlInsertUser.toString(), Statement.RETURN_GENERATED_KEYS);
 			pstm.setInt(++i, tblUser.getGroupId());
 			pstm.setString(++i, tblUser.getLoginName());
 			pstm.setString(++i, tblUser.getPassword());
@@ -343,6 +353,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			pstm.setString(++i, tblUser.getTel());
 			pstm.setDate(++i, new Date(tblUser.getBirthday().getTime()));
 			pstm.setString(++i, tblUser.getSalt());
+			System.out.println(pstm.toString());
 			pstm.executeUpdate();
 			resultSet = pstm.getGeneratedKeys();
 			if (resultSet.next()) {

@@ -55,8 +55,9 @@ public class Constant {
 	public static final String ADM002 = "/view/jsp/ADM002.jsp";
 	public static final String ADM003 = "/view/jsp/ADM003.jsp";
 	public static final String ADM004 = "/view/jsp/ADM004.jsp";
+	public static final String ADM006 = "/view/jsp/ADM006.jsp";
 	public static final String VIEW_ERROR = "/view/jsp/view_error.jsp";
-	
+
 	// url
 	public static final String URL_HOME = "/";
 	public static final String URL_LOGIN = "/login";
@@ -66,55 +67,60 @@ public class Constant {
 	public static final String URL_ADD_USER_VALIDATE = "/addUserValidate.do";
 	public static final String URL_ADD_USER_OK = "/addUserOK.do";
 	public static final String URL_ADD_USER_CONFIRM = "/addUserConfirm.do";
+	public static final String URL_SUCCESS = "/notification.do";
 	public static final String URL_VIEW_EROR = "/viewError.do";
 
 	// url filter
 	public static final String URL_FILTER = "/*";
-	
-	//start - end time
+
+	// start - end time
 	public static final int START_YEAR = 1980;
 	public static final int START_DAY = 1;
 	public static final int END_DAY = 31;
 	public static final int START_MONTH = 1;
 	public static final int END_MONTH = 12;
-	
-	//format date
+
+	// format date
 	public static final String FORMAT_DATE = "yyyy/MM/dd";
-	
-	//paging
+
+	// paging
 	public static final String PAGE = "page";
-	
-	//type
+
+	// type
 	public static final String TYPE = "type";
 	public static final String TYPE_SEARCH = "search";
 	public static final String TYPE_SORT = "sort";
 	public static final String TYPE_PAGING = "paging";
-	
+
 	public static final String TYPE_ADM002 = "ADM002";
 	public static final String TYPE_ADM003 = "ADM003";
 	public static final String TYPE_ADM004 = "ADM004";
 	public static final String TYPE_ADM005 = "ADM005";
-	
+
+	// action
+	public static final String INSERT_SUCCESS = "insertSuccess";
+	public static final String ERROR = "error";
+
 	public static final String KEY_SESSION = "key";
-	
-	//sort
+
+	// sort
 	public static final String ASC = "ASC";
 	public static final String DESC = "DESC";
 	public static final String SORT_TYPE = "sortType";
 	public static final String SORT_BY_FULL_NAME = "sortByFullName";
 	public static final String SORT_BY_CODE_LEVEL = "sortByCodeLevel";
 	public static final String SORT_BY_END_DATE = "sortByEndDate";
-	
-	//search
+
+	// search
 	public static final String FULL_NAME = "fullName";
 	public static final String GROUP_ID = "groupId";
-	
-	//default value
+
+	// default value
 	public static final int DEFAULT_NUMBER_PAGE_IN_PAGE = 3;
 	public static final int DEFAULT_LIMIT = 5;
 	public static final int DEFAULT_PAGE = 1;
-	
-	//min - max length
+
+	// min - max length
 	public static final int MIN_LENGTH_LOGIN_NAME = 4;
 	public static final int MAX_LENGTH_LOGIN_NAME = 15;
 	public static final int MAX_LENGTH_FULL_NAME_KANA = 255;
@@ -122,4 +128,5 @@ public class Constant {
 	public static final int MIN_LENGTH_PASSWORD = 6;
 	public static final int MAX_LENGTH_PASSWORD = 15;
 	public static final int MAX_LENGTH_TEL = 14;
+
 }

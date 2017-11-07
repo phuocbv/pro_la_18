@@ -83,7 +83,6 @@ public class BaseDAOImpl implements BaseDAO {
 	@Override
 	public void dbConnection() throws SQLException, ClassNotFoundException {
 		connection = getConnection();
-		System.out.println(connection);
 	}
 
 	/**
@@ -113,6 +112,12 @@ public class BaseDAOImpl implements BaseDAO {
 		}
 	}
 
+	/**
+	 * function rollBack
+	 * 
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	@Override
 	public void rollBack() throws SQLException, ClassNotFoundException {
 		if (connection != null) {

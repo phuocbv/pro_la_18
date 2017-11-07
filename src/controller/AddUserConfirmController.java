@@ -95,12 +95,23 @@ public class AddUserConfirmController extends HttpServlet {
 		try {
 			String keySession = req.getParameter(Constant.KEY_SESSION);
 			UserInfor userInfor = (UserInfor) req.getSession().getAttribute(keySession);
+			boolean success = false;
 			if (userInfor != null) {
-				tblUserLogic.createUser(userInfor);
+				success = tblUserLogic.createUser(userInfor);
 				req.getSession().removeAttribute(Constant.KEY_SESSION);
+				req.getSession().removeAttribute(keySession);
 			}
-			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM001);
-			dispatcher.forward(req, resp);// forward to page jsp
+			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+			stringBuffer.append(Constant.URL_SUCCESS);
+			stringBuffer.append("?");
+			stringBuffer.append(Constant.TYPE);
+			stringBuffer.append("=");
+			if (success) {
+				stringBuffer.append(Constant.INSERT_SUCCESS);
+			} else {
+				stringBuffer.append(Constant.ERROR);
+			}
+			resp.sendRedirect(stringBuffer.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());

@@ -1,6 +1,6 @@
 /**
  * Copyright(C) 2017  Luvina
- * TblDeatilUserJapanDao.java, 20/10/2017 phuocbv
+ * TblDeatilUserJapanDAO.java, 20/10/2017 phuocbv
  */
 package dao;
 
@@ -20,6 +20,7 @@ public interface TblDeatilUserJapanDAO {
 	 * 
 	 * @param tblDeatilUserJapanDAO
 	 * @return boolean test insert success
+	 * @throws SQLException
 	 */
 	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException;
 }

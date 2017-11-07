@@ -56,7 +56,8 @@ public interface TblUserLogic {
 	 * function check loginName exist
 	 * 
 	 * @param loginName
-	 * @return
+	 *            : field login_name in table tbl_user
+	 * @return boolean : check exist login name
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
@@ -66,12 +67,23 @@ public interface TblUserLogic {
 	 * check Existed email
 	 * 
 	 * @param userId
+	 *            : field user_id in table tbl_user
 	 * @param email
-	 * @return
+	 *            : field email in table tbl_user
+	 * @return boolean : check exist email
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
 	public boolean checkExistedEmail(Integer userId, String email) throws ClassNotFoundException, SQLException;
 
+	/**
+	 * create tbl_user
+	 * 
+	 * @param userInfor
+	 *            : object userInfor
+	 * @return boolean : check create user
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public boolean createUser(UserInfor userInfor) throws ClassNotFoundException, SQLException;
 }

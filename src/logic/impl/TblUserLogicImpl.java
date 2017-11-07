@@ -6,7 +6,6 @@ package logic.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import common.Common;
 import dao.*;
@@ -24,7 +23,7 @@ import logic.TblUserLogic;
  */
 public class TblUserLogicImpl implements TblUserLogic {
 	private TblUserDAO tblUserDAO;
-	private TblDeatilUserJapanDAO tblDeatilUserJapanDAO;
+	private TblDeatilUserJapanDAO tblDetailUserJapanDAO;
 	private BaseDAO baseDAO;
 
 	/**
@@ -33,7 +32,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	public TblUserLogicImpl() {
 		baseDAO = new BaseDAOImpl();
 		tblUserDAO = new TblUserDAOImpl();
-		tblDeatilUserJapanDAO = new TblDetailUserJapanDAOImpl();
+		tblDetailUserJapanDAO = new TblDetailUserJapanDAOImpl();
 	}
 
 	/**
@@ -85,7 +84,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * function check loginName exist
 	 * 
 	 * @param loginName
-	 * @return
+	 *            : field login_name in table tbl_user
+	 * @return boolean : check exist login name
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
@@ -98,6 +98,17 @@ public class TblUserLogicImpl implements TblUserLogic {
 		return true;
 	}
 
+	/**
+	 * check Existed email
+	 * 
+	 * @param userId
+	 *            : field user_id in table tbl_user
+	 * @param email
+	 *            : field email in table tbl_user
+	 * @return boolean : check exist email
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	@Override
 	public boolean checkExistedEmail(Integer userId, String email) throws ClassNotFoundException, SQLException {
 		TblUser tblUser = tblUserDAO.getUserByEmail(userId, email);
@@ -107,6 +118,15 @@ public class TblUserLogicImpl implements TblUserLogic {
 		return true;
 	}
 
+	/**
+	 * function check loginName exist
+	 * 
+	 * @param loginName
+	 *            : field login_name in table tbl_user
+	 * @return boolean : check exist login name
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	@Override
 	public boolean createUser(UserInfor userInfor) throws ClassNotFoundException, SQLException {
 		int groupId = Common.parseInt(userInfor.getGroupId(), 0);
@@ -123,28 +143,24 @@ public class TblUserLogicImpl implements TblUserLogic {
 		tblUser.setBirthday(userInfor.getBirthday());
 		tblUser.setSalt(salt);
 		try {
-			baseDAO.dbConnection();
-			baseDAO.setAutoCommit(false);
+			baseDAO.dbConnection();// create connection
+			baseDAO.setAutoCommit(false);// set auto commit = false
 			int userId = tblUserDAO.insertUser(tblUser);
-			if (userId == 0) {
-				baseDAO.rollBack();
+			if (userId == 0) {// if insert tbl_user not success then return false
 				return false;
 			}
-			int total = Common.parseInt(userInfor.getTotal(), 0);
-			TblDetailUserJapan tblDetailUserJapan = new TblDetailUserJapan();
-			tblDetailUserJapan.setUserId(userId);
-			tblDetailUserJapan.setCodeLevel(userInfor.getCodeLevel());
-			tblDetailUserJapan.setStartDate(userInfor.getStartDate());
-			tblDetailUserJapan.setEndDate(userInfor.getEndDate());
-			tblDetailUserJapan.setTotal(total);
-			boolean check = tblDeatilUserJapanDAO.insertDetailUserJapan(tblDetailUserJapan);
-			if (!check) {
-				baseDAO.rollBack();
-				return false;
+			if (userInfor.getCodeLevel() != null) {
+				int total = Common.parseInt(userInfor.getTotal(), 0);
+				TblDetailUserJapan tblDetailUserJapan = new TblDetailUserJapan();
+				tblDetailUserJapan.setUserId(userId);
+				tblDetailUserJapan.setCodeLevel(userInfor.getCodeLevel());
+				tblDetailUserJapan.setStartDate(userInfor.getStartDate());
+				tblDetailUserJapan.setEndDate(userInfor.getEndDate());
+				tblDetailUserJapan.setTotal(total);
+				tblDetailUserJapanDAO.insertDetailUserJapan(tblDetailUserJapan);
 			}
 			baseDAO.commit();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			baseDAO.rollBack();
 			return false;
 		} finally {
