@@ -80,7 +80,7 @@ public class LoginFilter implements Filter {
 		if (loginName != null) {
 			// domain name have not in list url do then redirect to list user
 			if (!listUrlAllow.contains(path)) {
-				res.sendRedirect(stringBuffer.append(Constant.URL_LIST_USER).toString());
+				res.sendRedirect(stringBuffer.append(Constant.URL_SUCCESS).toString());
 				return;
 			}
 			chain.doFilter(request, response);
@@ -107,6 +107,7 @@ public class LoginFilter implements Filter {
 		listUrlAllow.add(Constant.URL_ADD_USER_VALIDATE);
 		listUrlAllow.add(Constant.URL_ADD_USER_CONFIRM);
 		listUrlAllow.add(Constant.URL_ADD_USER_OK);
+		listUrlAllow.add(Constant.URL_SHOW_DETAIL_USER);
 		listUrlAllow.add(Constant.URL_SUCCESS);
 	}
 

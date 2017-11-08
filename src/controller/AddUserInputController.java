@@ -23,8 +23,10 @@ import entity.MstJapan;
 import entity.UserInfor;
 import logic.MstGroupLogic;
 import logic.MstJapanLogic;
+import logic.TblUserLogic;
 import logic.impl.MstGroupLogicImpl;
 import logic.impl.MstJapanLogicImpl;
+import logic.impl.TblUserLogicImpl;
 import validate.ValidateUser;
 
 /**
@@ -38,6 +40,7 @@ public class AddUserInputController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MstJapanLogic mstJapanLogic;
 	private MstGroupLogic mstGroupLogic;
+	private TblUserLogic tblUserLogic;
 
 	/**
 	 * contructer
@@ -45,6 +48,7 @@ public class AddUserInputController extends HttpServlet {
 	public AddUserInputController() {
 		mstJapanLogic = new MstJapanLogicImpl();
 		mstGroupLogic = new MstGroupLogicImpl();
+		tblUserLogic = new TblUserLogicImpl();
 	}
 
 	/*
@@ -123,7 +127,6 @@ public class AddUserInputController extends HttpServlet {
 		int currentMonth = Common.getMonthNow();
 		int currentDay = Common.getDayNow();
 		int expireYear = Common.getExpireYear();
-		// String type = req.getParameter("type");
 		List<Integer> listYear = Common.getListYear(Constant.START_YEAR, currentYear);
 		List<Integer> listMonth = Common.getListMonth();
 		List<Integer> listDay = Common.getListDay();
@@ -149,8 +152,10 @@ public class AddUserInputController extends HttpServlet {
 	 *            : object request
 	 * @param resp
 	 *            : object response
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	private UserInfor setDefaultValue(HttpServletRequest req, HttpServletResponse resp) {
+	private UserInfor setDefaultValue(HttpServletRequest req, HttpServletResponse resp) throws ClassNotFoundException, SQLException {
 		String type = req.getParameter(Constant.TYPE);
 		UserInfor userInfor = null;
 		if (type == null || Constant.TYPE_ADM002.equals(type)) {
@@ -190,8 +195,15 @@ public class AddUserInputController extends HttpServlet {
 
 				userInfor.setTotal(req.getParameter(UserInfor.TOTAL));
 			}
+		} else if (Constant.TYPE_ADM005.equals(type)) {
+			String userId = req.getParameter("userId");
+			userInfor = tblUserLogic.getUserById(userId);
+			//get array integer of birthday
+			ArrayList<Integer> birthday = Common.toArrayInteger(userInfor.getBirthday());
+			userInfor.setBirthdayYear(String.valueOf(birthday.get(0)));
+			userInfor.setBirthdayMonth(String.valueOf(birthday.get(1)));
+			userInfor.setBirthdayDay(String.valueOf(birthday.get(2)));
 		}
-
 		return userInfor;
 	}
 }

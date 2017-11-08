@@ -351,6 +351,29 @@ public class Common {
 	}
 
 	/**
+	 * Convert date input to Year,Month,Day store in ArrayList<br>
+	 * date[0] = Year, date[1]=Month , date[2]=Day
+	 * 
+	 * @param date
+	 *            Date ngày tháng cần chuyển về mảng
+	 * @return Xử lý để tạo ra 1 mảng chứa năm, tháng ngày từ 1 ngày
+	 */
+	public static ArrayList<Integer> toArrayInteger(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		// get year, month, day
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH);
+		int day = calendar.get(Calendar.DAY_OF_MONTH);
+		// add in arraylist
+		ArrayList<Integer> listInteger = new ArrayList<>();
+		listInteger.add(year);
+		listInteger.add(month + 1);
+		listInteger.add(day);
+		return listInteger;
+	}
+
+	/**
 	 * check birthday
 	 * 
 	 * @param yearInput

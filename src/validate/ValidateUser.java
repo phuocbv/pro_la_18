@@ -42,7 +42,7 @@ public class ValidateUser {
 	}
 
 	public static final String LOGIN_NAME_PATTERN = "^[a-zA-Z]{1}[a-zA-Z0-9_]{3,14}$";
-	public static final String FULL_NAME_KATA_PATTERN = "^[ア-ン]{0,255}$";
+	public static final String FULL_NAME_KATA_PATTERN = "^[ア-ンーッ ]{0,255}$";
 	public static final String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
 	public static final String TEL_PATTERN = "^[0-9]{1,4}-[0-9]{4}-[0-9]{4}$";
 	public static final String TOTAL_PATTERN = "^[1-9]{1}[0-9]{0,10}$";

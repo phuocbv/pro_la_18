@@ -14,9 +14,10 @@
 <body>
 	<jsp:include page="header.jsp" />
 	<c:if test="${userInfor != null }">
-		<form
+		<%-- <form
 			action="${pageContext.request.contextPath}${Constant.URL_ADD_USER_OK }"
-			method="post" name="inputform">
+			method="post" name="inputform"> --%>
+		<form action="${urlSubmit}" method="${method }" name="inputform">
 			<table class="tbl_input" border="0" width="75%" cellpadding="0"
 				cellspacing="0">
 				<tr>
@@ -25,7 +26,6 @@
 							情報確認 <br>入力された情報をＯＫボタンクリックでＤＢへ保存してください 
 						</div>
 						<div style="padding-left: 100px;">&nbsp;</div>
-						<input type="hidden" value="${keySession}" name="${Constant.KEY_SESSION }"/>
 					</th>
 				</tr>
 				<tr>
@@ -40,7 +40,7 @@
 								</tr>
 								<tr>
 									<td class="lbl_left">グループ:</td>
-									<td align="left"><c:out value="${mstGroup.groupName }"
+									<td align="left"><c:out value="${userInfor.groupName }"
 											escapeXml="true"></c:out></td>
 								</tr>
 								<tr>
@@ -55,9 +55,8 @@
 								</tr>
 								<tr>
 									<td class="lbl_left">生年月日:</td>
-									<td align="left"><c:out
-											value="${Common.convertToString(userInfor.birthdayYear, userInfor.birthdayMonth, userInfor.birthdayDay)}"
-											escapeXml="true" /></td>
+									<td align="left"><fmt:formatDate pattern="yyyy/MM/dd"
+											value="${userInfor.birthday}" /></td>
 								</tr>
 								<tr>
 									<td class="lbl_left">メールアドレス:</td>
@@ -73,32 +72,30 @@
 									<th colspan="2"><a href="javascript:void(0)"
 										onclick="formLevelJapan()">日本語能力</a></th>
 								</tr>
+								<c:set var="checkCodeLevel"
+									value="${(userInfor.codeLevel != null && userInfor.codeLevel != '0') }"></c:set>
 								<tr class="fieldToggle"
-									style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
+									style="display: ${checkCodeLevel ? 'table-row' : 'none'}">
 									<td class="lbl_left">資格:</td>
-									<td align="left"><c:out
-											value="${mstJapan != null ? mstJapan.nameLevel : ''}"
+									<td align="left"><c:out value="${userInfor.nameLevel}"
 											escapeXml="true"></c:out></td>
 								</tr>
 								<tr class="fieldToggle"
-									style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
+									style="display: ${checkCodeLevel ? 'table-row' : 'none'}">
 									<td class="lbl_left">資格交付日:</td>
-									<td align="left"><c:out
-											value="${mstJapan != null ? Common.convertToString(userInfor.startYear, userInfor.startMonth, userInfor.startDay) : ''}"
-											escapeXml="true"></c:out></td>
+									<td align="left"><fmt:formatDate pattern="yyyy/MM/dd"
+											value="${userInfor.startDate}" /></td>
 								</tr>
 								<tr class="fieldToggle"
-									style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
+									style="display: ${checkCodeLevel ? 'table-row' : 'none'}">
 									<td class="lbl_left">失効日:</td>
-									<td align="left"><c:out
-											value="${mstJapan != null ? Common.convertToString(userInfor.endYear, userInfor.endMonth, userInfor.endDay) : ''}"
-											escapeXml="true"></c:out></td>
+									<td align="left"><fmt:formatDate pattern="yyyy/MM/dd"
+											value="${userInfor.endDate}" /></td>
 								</tr>
 								<tr class="fieldToggle"
-									style="display: ${(userInfor.codeLevel != null && userInfor.codeLevel != '0') ? 'table-row' : 'none'}">
+									style="display: ${checkCodeLevel ? 'table-row' : 'none'}">
 									<td class="lbl_left">点数:</td>
-									<td align="left"><c:out
-											value="${mstJapan != null ? userInfor.total : ''}"
+									<td align="left"><c:out value="${userInfor.total}"
 											escapeXml="true"></c:out></td>
 								</tr>
 							</table>
@@ -108,23 +105,44 @@
 				</tr>
 			</table>
 			<div style="padding-left: 100px;">&nbsp;</div>
-			<!-- Begin vung button -->
-			<div style="padding-left: 45px;">
+			<div
+				style="padding-left: ${method == Constant.METHOD_GET ? '100px' : '45px'}">
 				<table border="0" cellpadding="4" cellspacing="0" width="300px">
 					<tr>
 						<th width="200px" align="center">&nbsp;</th>
-						<td><input class="btn" type="submit" value="OK" /></td>
-						<td><input class="btn" type="button" value="戻る"
-							id="btnBackADM003" onclick="backAddUser()" /></td>
+						<c:choose>
+							<c:when test="${method == Constant.METHOD_GET }">
+								<input type="hidden" value="${Constant.TYPE_ADM005 }"
+									name="type" />
+								<input type="hidden" value="${userId}" name="userId" />
+								<td><input class="btn" type="submit" value="編集" /></td>
+								<td><input class="btn" type="button" value="削除" /></td>
+								<td><input class="btn" type="button" value="戻る" onclick="backListUser()" /></td>
+							</c:when>
+							<c:otherwise>
+								<input type="hidden" value="${keySession}"
+									name="${Constant.KEY_SESSION }" />
+								<td><input class="btn" type="submit" value="OK" /></td>
+								<td><input class="btn" type="button" value="戻る"
+									id="btnBackADM003" onclick="backAddUser()" /></td>
+							</c:otherwise>
+						</c:choose>
 					</tr>
 				</table>
 			</div>
+
+			<!-- Begin vung button -->
+
 			<!-- End vung button -->
 		</form>
 	</c:if>
 	<!-- End vung input -->
 	<jsp:include page="footer.jsp" />
 	<script>
+		function backListUser() {
+			
+		}
+	
 		function backAddUser() {
 			window.location.href = '${pageContext.request.contextPath}${Constant.URL_ADD_USER_INPUT}'
 					+ '?type=${Constant.TYPE_ADM004}&key=${keySession}';

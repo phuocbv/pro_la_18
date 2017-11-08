@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import common.Common;
 import common.Constant;
@@ -33,8 +32,7 @@ public class LogoutController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			HttpSession session = request.getSession();
-			session.invalidate(); // removeAttribute(Constant.SESSION_LOGGINED_USER);// remote session
+			request.getSession().invalidate(); // removeAttribute(Constant.SESSION_LOGGINED_USER);// remote session
 			StringBuffer stringBuffer = new StringBuffer(request.getContextPath());
 			stringBuffer.append(Constant.URL_LOGIN);
 			response.sendRedirect(stringBuffer.toString());

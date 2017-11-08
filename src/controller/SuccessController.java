@@ -19,7 +19,7 @@ import common.ConstantProperties;
 import properties.MessageProperties;
 
 /**
- * servlet show error
+ * servlet show notification
  * 
  * @author LA-AM
  *

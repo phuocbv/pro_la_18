@@ -10,9 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import common.Common;
 import common.Constant;
-import common.ConstantProperties;
 
 /**
  * store config common

@@ -88,6 +88,8 @@ public interface TblUserDAO {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public int insertUser(TblUser tblUser) throws ClassNotFoundException, SQLException;
+	public Integer insertUser(TblUser tblUser) throws ClassNotFoundException, SQLException;
+
+	public UserInfor getUserById(int id) throws ClassNotFoundException, SQLException;
 
 }

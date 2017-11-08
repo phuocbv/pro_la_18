@@ -46,6 +46,12 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			" INSERT INTO tbl_user (group_id, login_name, password, full_name, full_name_kana, email, tel, birthday, salt) ")
 			.append(" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 
+	private StringBuffer sqlGetUserById = new StringBuffer().append(
+			" SELECT tbl_user.user_id, tbl_user.group_id, mst_group.group_name, tbl_user.login_name, tbl_user.full_name, tbl_user.full_name_kana, tbl_user.birthday, ")
+			.append(" tbl_user.email, tbl_user.tel, mst_japan.code_level, mst_japan.name_level, tbl_detail_user_japan.start_date, ")
+			.append(" tbl_detail_user_japan.end_date, tbl_detail_user_japan.total ").append(sqlJoin.toString())
+			.append(" AND tbl_user.user_id = ? ");
+
 	/**
 	 * get list user
 	 * 
@@ -336,8 +342,8 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 * @throws SQLException
 	 */
 	@Override
-	public int insertUser(TblUser tblUser) throws ClassNotFoundException, SQLException {
-		int userId = 0;
+	public Integer insertUser(TblUser tblUser) throws ClassNotFoundException, SQLException {
+		Integer userId = null;
 		int i = 0;
 		try {
 			if (connection == null) {
@@ -360,8 +366,45 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 				userId = resultSet.getInt(1);
 			}
 		} catch (SQLException e) {
-			userId = 0;
+			userId = null;
 		}
 		return userId;
+	}
+
+	@Override
+	public UserInfor getUserById(int id) throws ClassNotFoundException, SQLException {
+		UserInfor userInfor = null;
+		try {
+			connection = getConnection();// get connection
+			if (connection == null) {// if connect null then return
+				return userInfor;
+			}
+			pstm = connection.prepareStatement(sqlGetUserById.toString());// use PrepareStatement
+			pstm.setInt(1, id);
+			System.out.println(pstm.toString());
+			resultSet = pstm.executeQuery();// execute sql
+			int i;
+			while (resultSet.next()) {
+				i = 0;
+				userInfor = new UserInfor();
+				userInfor.setUserId(resultSet.getInt(++i));
+				userInfor.setGroupId(resultSet.getString(++i));
+				userInfor.setGroupName(resultSet.getString(++i));
+				userInfor.setLoginName(resultSet.getString(++i));
+				userInfor.setFullName(resultSet.getString(++i));
+				userInfor.setFullNameKana(resultSet.getString(++i));
+				userInfor.setBirthday(resultSet.getDate(++i));
+				userInfor.setEmail(resultSet.getString(++i));
+				userInfor.setTel(resultSet.getString(++i));
+				userInfor.setCodeLevel(resultSet.getString(++i));
+				userInfor.setNameLevel(resultSet.getString(++i));
+				userInfor.setStartDate(resultSet.getDate(++i));
+				userInfor.setEndDate(resultSet.getDate(++i));
+				userInfor.setTotal(resultSet.getString(++i));
+			}
+		} finally {
+			closeConnect();
+		}
+		return userInfor;
 	}
 }
