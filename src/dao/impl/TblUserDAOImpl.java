@@ -269,7 +269,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			resultSet = pstm.executeQuery();// execute sql
 			int i;
 			// repeat record get and add to list
-			while (resultSet.next()) {
+			if (resultSet.next()) {
 				i = 0;
 				tblUser = new TblUser();
 				tblUser.setUserId(resultSet.getInt(++i));
@@ -312,7 +312,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			resultSet = pstm.executeQuery();// execute sql
 			int i;
 			// repeat record get and add to list
-			while (resultSet.next()) {
+			if (resultSet.next()) {
 				i = 0;
 				tblUser = new TblUser();
 				tblUser.setUserId(resultSet.getInt(++i));
@@ -384,7 +384,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
 			int i;
-			while (resultSet.next()) {
+			if (resultSet.next()) {
 				i = 0;
 				userInfor = new UserInfor();
 				userInfor.setUserId(resultSet.getInt(++i));

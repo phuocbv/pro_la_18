@@ -189,7 +189,8 @@ public class Common {
 	 * check sort
 	 * 
 	 * @param sort
-	 * @return
+	 *            : type sort
+	 * @return string : type sort
 	 */
 	public static String checkSort(String sort) {
 		if (Constant.DESC.equals(sort)) {
@@ -230,7 +231,7 @@ public class Common {
 	}
 
 	/**
-	 * get current date
+	 * get current day
 	 * 
 	 * @return current day
 	 */
@@ -253,7 +254,7 @@ public class Common {
 	/**
 	 * get expire year
 	 * 
-	 * @return
+	 * @return int : expire year
 	 */
 	public static int getExpireYear() {
 		Calendar now = Calendar.getInstance();
@@ -339,9 +340,12 @@ public class Common {
 	 * format date
 	 * 
 	 * @param year
+	 *            : input year convert
 	 * @param month
+	 *            : input month convert
 	 * @param day
-	 * @return string
+	 *            : input day convert
+	 * @return string : string after convert
 	 */
 	public static String convertToString(int year, int month, int day) {
 		Calendar calendar = Calendar.getInstance();

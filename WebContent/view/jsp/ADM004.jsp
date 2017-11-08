@@ -140,9 +140,9 @@
 	<jsp:include page="footer.jsp" />
 	<script>
 		function backListUser() {
-			
+			window.location.href = '${pageContext.request.contextPath}${Constant.URL_LIST_USER}?type=back';
 		}
-	
+
 		function backAddUser() {
 			window.location.href = '${pageContext.request.contextPath}${Constant.URL_ADD_USER_INPUT}'
 					+ '?type=${Constant.TYPE_ADM004}&key=${keySession}';

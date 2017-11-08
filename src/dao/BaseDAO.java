@@ -17,8 +17,6 @@ public interface BaseDAO {
 	/**
 	 * close connection
 	 * 
-	 * @param
-	 * @return
 	 */
 	public void closeConnect() throws SQLException;
 

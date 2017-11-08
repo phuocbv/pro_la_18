@@ -23,7 +23,7 @@ import logic.TblUserLogic;
  */
 public class TblUserLogicImpl implements TblUserLogic {
 	private TblUserDAO tblUserDAO;
-	private TblDeatilUserJapanDAO tblDetailUserJapanDAO;
+	private TblDetailUserJapanDAO tblDetailUserJapanDAO;
 	private BaseDAO baseDAO;
 
 	/**

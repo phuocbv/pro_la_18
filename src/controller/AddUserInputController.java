@@ -59,10 +59,18 @@ public class AddUserInputController extends HttpServlet {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			setDataLogic(req, resp);
 			UserInfor userInfor = setDefaultValue(req, resp);
+			StringBuffer url = new StringBuffer(req.getContextPath());
+			int userId = userInfor.getUserId();
+			if (userId > 0) {
+				url.append(Constant.URL_SHOW_DETAIL_USER);
+			} else {
+				url.append(Constant.URL_LIST_USER);
+			}
+			req.setAttribute("url", url.toString());
 			req.setAttribute("userInfor", userInfor);
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM003);
 			dispatcher.forward(req, resp);// forward to page jsp
@@ -152,10 +160,11 @@ public class AddUserInputController extends HttpServlet {
 	 *            : object request
 	 * @param resp
 	 *            : object response
-	 * @throws SQLException 
-	 * @throws ClassNotFoundException 
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
 	 */
-	private UserInfor setDefaultValue(HttpServletRequest req, HttpServletResponse resp) throws ClassNotFoundException, SQLException {
+	private UserInfor setDefaultValue(HttpServletRequest req, HttpServletResponse resp)
+			throws ClassNotFoundException, SQLException {
 		String type = req.getParameter(Constant.TYPE);
 		UserInfor userInfor = null;
 		if (type == null || Constant.TYPE_ADM002.equals(type)) {
@@ -198,7 +207,7 @@ public class AddUserInputController extends HttpServlet {
 		} else if (Constant.TYPE_ADM005.equals(type)) {
 			String userId = req.getParameter("userId");
 			userInfor = tblUserLogic.getUserById(userId);
-			//get array integer of birthday
+			// get array integer of birthday
 			ArrayList<Integer> birthday = Common.toArrayInteger(userInfor.getBirthday());
 			userInfor.setBirthdayYear(String.valueOf(birthday.get(0)));
 			userInfor.setBirthdayMonth(String.valueOf(birthday.get(1)));

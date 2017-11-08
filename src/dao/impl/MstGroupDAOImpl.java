@@ -72,7 +72,7 @@ public class MstGroupDAOImpl extends BaseDAOImpl implements MstGroupDAO {
 			resultSet = pstm.executeQuery();// execute sql
 			System.out.println(pstm.toString());
 			// reader record
-			while (resultSet.next()) {
+			if (resultSet.next()) {
 				mstGroup = new MstGroup();
 				mstGroup.setGroupId(resultSet.getInt(1));
 				mstGroup.setGroupName(resultSet.getString(2));

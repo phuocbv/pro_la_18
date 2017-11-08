@@ -40,7 +40,7 @@ public class ShowDetailUserController extends HttpServlet {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			String userId = req.getParameter("userId");
 			if (userId != null && !Constant.EMPTY_STRING.equals(userId)) {

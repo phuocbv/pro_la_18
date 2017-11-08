@@ -14,7 +14,7 @@ import entity.TblDetailUserJapan;
  * @author da
  *
  */
-public interface TblDeatilUserJapanDAO {
+public interface TblDetailUserJapanDAO {
 	/**
 	 * insert in detail user japan
 	 * 

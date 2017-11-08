@@ -209,6 +209,7 @@
 			</tr>
 		</table>
 		<div style="padding-left: 100px;">&nbsp;</div>
+		<input type="hidden" value="${userId }" name="userId"/>
 		<!-- Begin vung button -->
 		<div style="padding-left: 45px;">
 			<table border="0" cellpadding="4" cellspacing="0" width="300px">
@@ -225,8 +226,7 @@
 	<!-- End vung input -->
 	<script>
 		function backListUser() {
-			window.location.href = '${pageContext.request.contextPath}${Constant.URL_LIST_USER}'
-					+ '?type=back';
+			window.location.href = '${url}?type=back';
 		}
 	</script>
 	<!-- Begin vung footer -->

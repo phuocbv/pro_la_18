@@ -55,7 +55,7 @@ public class AddUserConfirmController extends HttpServlet {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			String keySession = req.getParameter(Constant.KEY_SESSION);
 			UserInfor userInfor = (UserInfor) req.getSession().getAttribute(keySession);
@@ -63,7 +63,7 @@ public class AddUserConfirmController extends HttpServlet {
 				MstGroup mstGroup = mstGroupLogic.getGroupById(userInfor.getGroupId());
 				userInfor.setGroupName(mstGroup.getGroupName());
 				String codeLevel = userInfor.getCodeLevel();
-				//check hava level japan
+				// check hava level japan
 				if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
 					MstJapan mstJapan = mstJapanLogic.getMstJapanByCodeLevel(userInfor.getCodeLevel());
 					userInfor.setNameLevel(mstJapan.getNameLevel());
@@ -89,7 +89,7 @@ public class AddUserConfirmController extends HttpServlet {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			String keySession = req.getParameter(Constant.KEY_SESSION);
 			UserInfor userInfor = (UserInfor) req.getSession().getAttribute(keySession);

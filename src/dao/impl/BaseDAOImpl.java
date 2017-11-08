@@ -56,8 +56,6 @@ public class BaseDAOImpl implements BaseDAO {
 	/**
 	 * close connection
 	 * 
-	 * @param
-	 * @return
 	 * @throws SQLException
 	 */
 	@Override
@@ -106,7 +104,6 @@ public class BaseDAOImpl implements BaseDAO {
 	 */
 	@Override
 	public void commit() throws SQLException {
-		// pstm.executeUpdate();
 		if (connection != null) {
 			connection.commit();
 		}

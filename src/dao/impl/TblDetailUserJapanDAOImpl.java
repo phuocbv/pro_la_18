@@ -7,7 +7,7 @@ package dao.impl;
 import java.sql.Date;
 import java.sql.SQLException;
 
-import dao.TblDeatilUserJapanDAO;
+import dao.TblDetailUserJapanDAO;
 import entity.TblDetailUserJapan;
 
 /**
@@ -16,7 +16,7 @@ import entity.TblDetailUserJapan;
  * @author da
  *
  */
-public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDeatilUserJapanDAO {
+public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDetailUserJapanDAO {
 	private StringBuffer sqlInsertDetailUserJapan = new StringBuffer()
 			.append(" INSERT INTO tbl_detail_user_japan(user_id, code_level, start_date, end_date, total) ")
 			.append(" VALUES (?, ?, ?, ?, ?) ");

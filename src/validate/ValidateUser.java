@@ -60,95 +60,101 @@ public class ValidateUser {
 	public List<String> validateUserInfor(UserInfor userInfor) throws ClassNotFoundException, SQLException {
 		List<String> listError = new ArrayList<>();
 		// check login name (4)
-		if (userInfor.getLoginName() == null || Constant.EMPTY_STRING.equals(userInfor.getLoginName())) {
+		String loginName = userInfor.getLoginName();
+		if (loginName == null || Constant.EMPTY_STRING.equals(loginName)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_LOGIN_NAME));
-		} else if (userInfor.getLoginName().length() < Constant.MIN_LENGTH_LOGIN_NAME
-				|| userInfor.getLoginName().length() > Constant.MAX_LENGTH_FULL_NAME) {
+		} else if (loginName.length() < Constant.MIN_LENGTH_LOGIN_NAME
+				|| loginName.length() > Constant.MAX_LENGTH_FULL_NAME) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER007_LOGIN_NAME));
-		} else if (!userInfor.getLoginName().matches(LOGIN_NAME_PATTERN)) {
+		} else if (!loginName.matches(LOGIN_NAME_PATTERN)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER019));
-		} else if (tblUserLogic.checkExistedLoginName(null, userInfor.getLoginName())) {
+		} else if (tblUserLogic.checkExistedLoginName(null, loginName)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER003_LOGIN_NAME));
 		}
 
 		// check group id (2)
-		if (userInfor.getGroupId() == null || Constant.ZERO.equals(userInfor.getGroupId())
-				|| Constant.EMPTY_STRING.equals(userInfor.getGroupId())) {
+		String groupId = userInfor.getGroupId();
+		if (groupId == null || Constant.ZERO.equals(groupId) || Constant.EMPTY_STRING.equals(groupId)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER002_GROUP));
-		} else if (!mstGroupLogic.checkExistGroup(userInfor.getGroupId())) {
+		} else if (!mstGroupLogic.checkExistGroup(groupId)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER004_GROUP));
 		}
 
 		// check full name (2)
-		if (userInfor.getFullName() == null || Constant.EMPTY_STRING.equals(userInfor.getFullName())) {
+		String fullName = userInfor.getFullName();
+		if (fullName == null || Constant.EMPTY_STRING.equals(fullName)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_FULL_NAME));
-		} else if (userInfor.getFullName().length() > Constant.MAX_LENGTH_FULL_NAME) {
+		} else if (fullName.length() > Constant.MAX_LENGTH_FULL_NAME) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER006_FULL_NAME));
 		}
 
 		// check full name kana (2)
-		if (userInfor.getFullNameKana() != null
-				&& userInfor.getFullNameKana().length() > Constant.MAX_LENGTH_FULL_NAME_KANA) {
+		String fullNameKana = userInfor.getFullNameKana();
+		if (fullNameKana != null && fullNameKana.length() > Constant.MAX_LENGTH_FULL_NAME_KANA) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER006_FULL_NAME_KANA));
-		} else if (!userInfor.getFullNameKana().matches(FULL_NAME_KATA_PATTERN)) {
+		} else if (!fullNameKana.matches(FULL_NAME_KATA_PATTERN)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER009_FULL_NAME_KANA));
 		}
 
 		// check birthday (1)
-		if (!Common.checkBirthday(userInfor.getBirthdayYear(), userInfor.getBirthdayMonth(),
-				userInfor.getBirthdayDay())) {
+		String year = userInfor.getBirthdayYear();
+		String month = userInfor.getBirthdayMonth();
+		String day = userInfor.getBirthdayDay();
+		if (!Common.checkBirthday(year, month, day)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER011_BIRTHDAY));
 		} else { // in case haven't error then add to birthday
-			int birthdayYear = Common.parseInt(userInfor.getBirthdayYear(), 0);
-			int birthdayMonth = Common.parseInt(userInfor.getBirthdayMonth(), 0);
-			int birthdayDay = Common.parseInt(userInfor.getBirthdayDay(), 0);
+			int birthdayYear = Common.parseInt(year, 0);
+			int birthdayMonth = Common.parseInt(month, 0);
+			int birthdayDay = Common.parseInt(day, 0);
 			Date birthday = Common.toDate(birthdayYear, birthdayMonth, birthdayDay);
 			userInfor.setBirthday(birthday);
 		}
 
 		// check email (4)
-		if (userInfor.getEmail() == null || Constant.EMPTY_STRING.equals(userInfor.getEmail())) {
+		String email = userInfor.getEmail();
+		if (email == null || Constant.EMPTY_STRING.equals(email)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_EMAIL));
-		} else if (userInfor.getEmail().length() > 255) {
+		} else if (email.length() > 255) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER006_EMAIL));
-		} else if (!userInfor.getEmail().matches(EMAIL_PATTERN)) {
+		} else if (!email.matches(EMAIL_PATTERN)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER005_EMAIL));
-		} else if (tblUserLogic.checkExistedEmail(null, userInfor.getEmail())) {
+		} else if (tblUserLogic.checkExistedEmail(null, email)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER003_EMAIL));
 		}
 
 		// check phone (3)
-		if (userInfor.getTel() == null || Constant.EMPTY_STRING.equals(userInfor.getTel())) {
+		String tel = userInfor.getTel();
+		if (tel == null || Constant.EMPTY_STRING.equals(tel)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_TEL));
-		} else if (userInfor.getTel().length() > Constant.MAX_LENGTH_TEL) {
+		} else if (tel.length() > Constant.MAX_LENGTH_TEL) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER006_TEL));
-		} else if (!userInfor.getTel().matches(TEL_PATTERN)) {
+		} else if (!tel.matches(TEL_PATTERN)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER005_TEL));
 		}
 
 		// check password (3)
-		if (userInfor.getPassword() == null || Constant.EMPTY_STRING.equals(userInfor.getPassword())) {
+		String password = userInfor.getPassword();
+		if (password == null || Constant.EMPTY_STRING.equals(password)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_PASSWORD));
 		} else {
-			if (userInfor.getPassword().length() < Constant.MIN_LENGTH_PASSWORD
-					|| userInfor.getPassword().length() > Constant.MAX_LENGTH_PASSWORD) {
+			if (password.length() < Constant.MIN_LENGTH_PASSWORD || password.length() > Constant.MAX_LENGTH_PASSWORD) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER007_PASSWORD));
-			} else if (!userInfor.getPassword().matches(PASSWORD_PATTERN)) {
+			} else if (!password.matches(PASSWORD_PATTERN)) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER008_PASSWORD));
 			}
 
 			// check confirm password (1)
-			if (userInfor.getConfirmPassword() == null
-					|| Constant.EMPTY_STRING.equals(userInfor.getConfirmPassword())) {
+			String comfirmPassword = userInfor.getConfirmPassword();
+			if (comfirmPassword == null || Constant.EMPTY_STRING.equals(comfirmPassword)) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER017));
-			} else if (!userInfor.getConfirmPassword().equals(userInfor.getPassword())) {
+			} else if (!comfirmPassword.equals(password)) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER017));
 			}
 		}
 
 		// case chose level japan
 		String codeLevel = userInfor.getCodeLevel();
-		if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
+		if (codeLevel != null && !Constant.ZERO.equals(codeLevel)) {
 			int startYear = Common.parseInt(userInfor.getStartYear(), 0);
 			int startMonth = Common.parseInt(userInfor.getStartMonth(), 0);
 			int startDay = Common.parseInt(userInfor.getStartDay(), 0);
@@ -180,9 +186,10 @@ public class ValidateUser {
 			}
 
 			// check total (2)
-			if (userInfor.getTotal() == null || Constant.EMPTY_STRING.equals(userInfor.getTotal())) {
+			String total = userInfor.getTotal();
+			if (total == null || Constant.EMPTY_STRING.equals(total)) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_TOTAL));
-			} else if (!userInfor.getTotal().matches(TOTAL_PATTERN)) {
+			} else if (!total.matches(TOTAL_PATTERN)) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER018_TOTAL));
 			}
 		}

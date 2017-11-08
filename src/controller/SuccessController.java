@@ -4,10 +4,8 @@
  */
 package controller;
 
-import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +34,7 @@ public class SuccessController extends HttpServlet {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			String type = req.getParameter(Constant.TYPE);
 			String message = "";
