@@ -396,10 +396,10 @@ public class Common {
 		if (date == null) {
 			return false;
 		}
-		// if birthday >= current date then return false
-		if ((new Date()).compareTo(date) <= 0) {
-			return false;
-		}
+		// if birthday > current date then return false
+//		if ((new Date()).compareTo(date) < 0) {
+//			return false;
+//		}
 		return true;
 	}
 

@@ -91,5 +91,15 @@ public interface TblUserDAO {
 	public Integer insertUser(TblUser tblUser) throws ClassNotFoundException, SQLException;
 
 	public UserInfor getUserById(int id) throws ClassNotFoundException, SQLException;
-
+	
+	/**
+	 * update tblUser in database
+	 * 
+	 * @param tblUser
+	 *            : object tbl_user
+	 * @return boolean : check insert success
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public Integer updateUser(TblUser tblUser) throws ClassNotFoundException, SQLException;
 }

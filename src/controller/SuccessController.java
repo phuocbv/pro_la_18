@@ -1,9 +1,8 @@
 /**
  * Copyright(C) 2017  Luvina
- * ErrorController.java, 20/10/2017 phuocbv
+ * SuccessController.java, 20/10/2017 phuocbv
  */
 package controller;
-
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
@@ -38,11 +37,20 @@ public class SuccessController extends HttpServlet {
 		try {
 			String type = req.getParameter(Constant.TYPE);
 			String message = "";
-			if (type == null || Constant.ERROR.equals(type)) {
+			String color = "black";
+			if (type == null) {
+				StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+				stringBuffer.append(Constant.URL_LOGOUT);
+				resp.sendRedirect(stringBuffer.toString());
+				return;
+			}
+			if (Constant.ERROR.equals(type)) {
+				color = "red";
 				message = MessageProperties.getValue(ConstantProperties.SYSTEM_ERROR);
 			} else if (Constant.INSERT_SUCCESS.equals(type)) {
 				message = MessageProperties.getValue(ConstantProperties.MSG001);
 			}
+			req.setAttribute("color", color);
 			req.setAttribute("message", message);
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM006);
 			dispatcher.forward(req, resp);// forward to jsp page

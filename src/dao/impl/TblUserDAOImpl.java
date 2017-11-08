@@ -263,11 +263,18 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		try {
 			connection = getConnection();// get connection
 			StringBuffer sql = new StringBuffer(sqlGetTblUser.toString()).append(" WHERE tbl_user.login_name = ?  ");
+			if (userId != null) {
+				sql.append(" AND tbl_user.user_id = ? ");
+			}
+			int i;
+			i = 0;
 			pstm = connection.prepareStatement(sql.toString());
-			pstm.setString(1, loginName);
+			pstm.setString(++i, loginName);
+			if (userId != null) {
+				pstm.setInt(++i, userId);
+			}
 			System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
-			int i;
 			// repeat record get and add to list
 			if (resultSet.next()) {
 				i = 0;
@@ -306,11 +313,17 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		try {
 			connection = getConnection();// get connection
 			StringBuffer sql = new StringBuffer(sqlGetTblUser.toString()).append(" WHERE tbl_user.email = ? ");
+			if (userId != null) {
+				sql.append(" AND tbl_user.user_id = ? ");
+			}
+			int i = 0;
 			pstm = connection.prepareStatement(sql.toString());
-			pstm.setString(1, email);
+			pstm.setString(++i, email);
+			if (userId != null) {
+				pstm.setInt(++i, userId);
+			}
 			System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
-			int i;
 			// repeat record get and add to list
 			if (resultSet.next()) {
 				i = 0;
@@ -343,6 +356,45 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 */
 	@Override
 	public Integer insertUser(TblUser tblUser) throws ClassNotFoundException, SQLException {
+		Integer userId = null;
+		int i = 0;
+		try {
+			if (connection == null) {
+				return userId;
+			}
+			pstm = connection.prepareStatement(sqlInsertUser.toString(), Statement.RETURN_GENERATED_KEYS);
+			pstm.setInt(++i, tblUser.getGroupId());
+			pstm.setString(++i, tblUser.getLoginName());
+			pstm.setString(++i, tblUser.getPassword());
+			pstm.setString(++i, tblUser.getFullName());
+			pstm.setString(++i, tblUser.getFullNameKana());
+			pstm.setString(++i, tblUser.getEmail());
+			pstm.setString(++i, tblUser.getTel());
+			pstm.setDate(++i, new Date(tblUser.getBirthday().getTime()));
+			pstm.setString(++i, tblUser.getSalt());
+			System.out.println(pstm.toString());
+			pstm.executeUpdate();
+			resultSet = pstm.getGeneratedKeys();
+			if (resultSet.next()) {
+				userId = resultSet.getInt(1);
+			}
+		} catch (SQLException e) {
+			userId = null;
+		}
+		return userId;
+	}
+	
+	/**
+	 * update tblUser in database
+	 * 
+	 * @param tblUser
+	 *            : object tbl_user
+	 * @return boolean : check insert success
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	@Override
+	public Integer updateUser(TblUser tblUser) throws ClassNotFoundException, SQLException {
 		Integer userId = null;
 		int i = 0;
 		try {

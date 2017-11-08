@@ -5,6 +5,7 @@
 package validate;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,13 +42,6 @@ public class ValidateUser {
 		mstJapanLogic = new MstJapanLogicImpl();
 	}
 
-	public static final String LOGIN_NAME_PATTERN = "^[a-zA-Z]{1}[a-zA-Z0-9_]{3,14}$";
-	public static final String FULL_NAME_KATA_PATTERN = "^[ア-ンーッ ]{0,255}$";
-	public static final String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
-	public static final String TEL_PATTERN = "^[0-9]{1,4}-[0-9]{4}-[0-9]{4}$";
-	public static final String TOTAL_PATTERN = "^[1-9]{1}[0-9]{0,10}$";
-	public static final String PASSWORD_PATTERN = "^[a-zA-Z0-9!@#$%^&*(){}_+.,<>?;:'-=]{6,15}$";
-
 	/**
 	 * method validate user infor
 	 * 
@@ -59,16 +53,18 @@ public class ValidateUser {
 	 */
 	public List<String> validateUserInfor(UserInfor userInfor) throws ClassNotFoundException, SQLException {
 		List<String> listError = new ArrayList<>();
+		Integer userId = userInfor.getUserId() > 0 ? userInfor.getUserId() : null;
+		System.out.println(userId);
 		// check login name (4)
 		String loginName = userInfor.getLoginName();
 		if (loginName == null || Constant.EMPTY_STRING.equals(loginName)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_LOGIN_NAME));
-		} else if (loginName.length() < Constant.MIN_LENGTH_LOGIN_NAME
-				|| loginName.length() > Constant.MAX_LENGTH_FULL_NAME) {
-			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER007_LOGIN_NAME));
-		} else if (!loginName.matches(LOGIN_NAME_PATTERN)) {
+		} else if (!loginName.matches(Constant.LOGIN_NAME_PATTERN)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER019));
-		} else if (tblUserLogic.checkExistedLoginName(null, loginName)) {
+		} else if (loginName.length() < Constant.MIN_LENGTH_LOGIN_NAME
+				|| loginName.length() > Constant.MAX_LENGTH_LOGIN_NAME) {
+			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER007_LOGIN_NAME));
+		} else if (tblUserLogic.checkExistedLoginName(userId, loginName)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER003_LOGIN_NAME));
 		}
 
@@ -92,7 +88,7 @@ public class ValidateUser {
 		String fullNameKana = userInfor.getFullNameKana();
 		if (fullNameKana != null && fullNameKana.length() > Constant.MAX_LENGTH_FULL_NAME_KANA) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER006_FULL_NAME_KANA));
-		} else if (!fullNameKana.matches(FULL_NAME_KATA_PATTERN)) {
+		} else if (!fullNameKana.matches(Constant.FULL_NAME_KATA_PATTERN)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER009_FULL_NAME_KANA));
 		}
 
@@ -114,11 +110,11 @@ public class ValidateUser {
 		String email = userInfor.getEmail();
 		if (email == null || Constant.EMPTY_STRING.equals(email)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_EMAIL));
-		} else if (email.length() > 255) {
+		} else if (email.length() > Constant.MAX_LENGTH_EMAIL) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER006_EMAIL));
-		} else if (!email.matches(EMAIL_PATTERN)) {
+		} else if (!email.matches(Constant.EMAIL_PATTERN)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER005_EMAIL));
-		} else if (tblUserLogic.checkExistedEmail(null, email)) {
+		} else if (tblUserLogic.checkExistedEmail(userId, email)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER003_EMAIL));
 		}
 
@@ -126,12 +122,11 @@ public class ValidateUser {
 		String tel = userInfor.getTel();
 		if (tel == null || Constant.EMPTY_STRING.equals(tel)) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_TEL));
+		} else if (!tel.matches(Constant.TEL_PATTERN)) {
+			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER005_TEL));
 		} else if (tel.length() > Constant.MAX_LENGTH_TEL) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER006_TEL));
-		} else if (!tel.matches(TEL_PATTERN)) {
-			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER005_TEL));
 		}
-
 		// check password (3)
 		String password = userInfor.getPassword();
 		if (password == null || Constant.EMPTY_STRING.equals(password)) {
@@ -139,7 +134,7 @@ public class ValidateUser {
 		} else {
 			if (password.length() < Constant.MIN_LENGTH_PASSWORD || password.length() > Constant.MAX_LENGTH_PASSWORD) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER007_PASSWORD));
-			} else if (!password.matches(PASSWORD_PATTERN)) {
+			} else if (!password.matches(Constant.PASSWORD_PATTERN)) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER008_PASSWORD));
 			}
 
@@ -175,11 +170,12 @@ public class ValidateUser {
 			int endMonth = Common.parseInt(userInfor.getEndMonth(), 0);
 			int endDay = Common.parseInt(userInfor.getEndDay(), 0);
 			Date endDate = Common.toDate(endYear, endMonth, endDay);
-
+			
 			// check end date (2)
 			if (endDate == null) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER011_END_DATE));
-			} else if (endDate.compareTo(startDate) <= 0) {
+			} else if (LocalDate.of(endYear, endMonth, endDay)
+					.compareTo(LocalDate.of(startYear, startMonth, startDay)) <= 0) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER012));
 			} else { // in case haven't error then add to enddate
 				userInfor.setEndDate(endDate);
@@ -189,7 +185,7 @@ public class ValidateUser {
 			String total = userInfor.getTotal();
 			if (total == null || Constant.EMPTY_STRING.equals(total)) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_TOTAL));
-			} else if (!total.matches(TOTAL_PATTERN)) {
+			} else if (!total.matches(Constant.TOTAL_PATTERN)) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER018_TOTAL));
 			}
 		}

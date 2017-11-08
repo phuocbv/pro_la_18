@@ -72,7 +72,7 @@
 									<th colspan="2"><a href="javascript:void(0)"
 										onclick="formLevelJapan()">日本語能力</a></th>
 								</tr>
-								<c:set var="checkCodeLevel"
+								<%-- 	<c:set var="checkCodeLevel"
 									value="${(userInfor.codeLevel != null && userInfor.codeLevel != '0') }"></c:set>
 								<tr class="fieldToggle"
 									style="display: ${checkCodeLevel ? 'table-row' : 'none'}">
@@ -97,6 +97,28 @@
 									<td class="lbl_left">点数:</td>
 									<td align="left"><c:out value="${userInfor.total}"
 											escapeXml="true"></c:out></td>
+								</tr> --%>
+								<c:set var="checkCodeLevel"
+									value="${(userInfor.codeLevel != null && userInfor.codeLevel != '0') }"></c:set>
+								<tr class="fieldToggle" style="display: none">
+									<td class="lbl_left">資格:</td>
+									<td align="left"><c:out value="${userInfor.nameLevel}"
+											escapeXml="true"></c:out></td>
+								</tr>
+								<tr class="fieldToggle" style="display: none">
+									<td class="lbl_left">資格交付日:</td>
+									<td align="left"><fmt:formatDate pattern="yyyy/MM/dd"
+											value="${userInfor.startDate}" /></td>
+								</tr>
+								<tr class="fieldToggle" style="display: none">
+									<td class="lbl_left">失効日:</td>
+									<td align="left"><fmt:formatDate pattern="yyyy/MM/dd"
+											value="${userInfor.endDate}" /></td>
+								</tr>
+								<tr class="fieldToggle" style="display: none">
+									<td class="lbl_left">点数:</td>
+									<td align="left"><c:out value="${userInfor.total}"
+											escapeXml="true"></c:out></td>
 								</tr>
 							</table>
 
@@ -117,16 +139,16 @@
 								<input type="hidden" value="${userId}" name="userId" />
 								<td><input class="btn" type="submit" value="編集" /></td>
 								<td><input class="btn" type="button" value="削除" /></td>
-								<td><input class="btn" type="button" value="戻る" onclick="backListUser()" /></td>
+
 							</c:when>
 							<c:otherwise>
 								<input type="hidden" value="${keySession}"
 									name="${Constant.KEY_SESSION }" />
 								<td><input class="btn" type="submit" value="OK" /></td>
-								<td><input class="btn" type="button" value="戻る"
-									id="btnBackADM003" onclick="backAddUser()" /></td>
 							</c:otherwise>
 						</c:choose>
+						<td><input class="btn" type="button" value="戻る"
+							onclick="btnBack()" /></td>
 					</tr>
 				</table>
 			</div>
@@ -139,13 +161,17 @@
 	<!-- End vung input -->
 	<jsp:include page="footer.jsp" />
 	<script>
-		function backListUser() {
+		/* function backListUser() {
 			window.location.href = '${pageContext.request.contextPath}${Constant.URL_LIST_USER}?type=back';
 		}
 
 		function backAddUser() {
 			window.location.href = '${pageContext.request.contextPath}${Constant.URL_ADD_USER_INPUT}'
 					+ '?type=${Constant.TYPE_ADM004}&key=${keySession}';
+		} */
+
+		function btnBack() {
+			window.location.href = '${urlBack}';
 		}
 	</script>
 	<script type="text/javascript" src="view/js/js.js"></script>

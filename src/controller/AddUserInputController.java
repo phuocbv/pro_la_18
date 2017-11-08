@@ -4,13 +4,11 @@
  */
 package controller;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -63,14 +61,6 @@ public class AddUserInputController extends HttpServlet {
 		try {
 			setDataLogic(req, resp);
 			UserInfor userInfor = setDefaultValue(req, resp);
-			StringBuffer url = new StringBuffer(req.getContextPath());
-			int userId = userInfor.getUserId();
-			if (userId > 0) {
-				url.append(Constant.URL_SHOW_DETAIL_USER);
-			} else {
-				url.append(Constant.URL_LIST_USER);
-			}
-			req.setAttribute("url", url.toString());
 			req.setAttribute("userInfor", userInfor);
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM003);
 			dispatcher.forward(req, resp);// forward to page jsp
@@ -167,13 +157,14 @@ public class AddUserInputController extends HttpServlet {
 			throws ClassNotFoundException, SQLException {
 		String type = req.getParameter(Constant.TYPE);
 		UserInfor userInfor = null;
-		if (type == null || Constant.TYPE_ADM002.equals(type)) {
+		String userId = req.getParameter("userId");
+		if (type == null || Constant.TYPE_ADM002.equals(type)) {// from ADM002
 			userInfor = new UserInfor();
-		} else if (Constant.TYPE_ADM004.equals(type)) {
+		} else if (Constant.TYPE_ADM004.equals(type)) {// from ADM004
 			String keySession = req.getParameter(Constant.KEY_SESSION);
 			userInfor = (UserInfor) req.getSession().getAttribute(keySession);
 			req.getSession().removeAttribute(keySession);
-		} else if (Constant.TYPE_ADM003.equals(type)) {
+		} else if (Constant.TYPE_ADM003.equals(type)) {// from ADM003
 			userInfor = new UserInfor();
 			userInfor.setLoginName(req.getParameter(UserInfor.LOGIN_NAME));
 			userInfor.setGroupId(req.getParameter(UserInfor.GROUP_ID));
@@ -205,7 +196,7 @@ public class AddUserInputController extends HttpServlet {
 				userInfor.setTotal(req.getParameter(UserInfor.TOTAL));
 			}
 		} else if (Constant.TYPE_ADM005.equals(type)) {
-			String userId = req.getParameter("userId");
+			// String userId = req.getParameter("userId");
 			userInfor = tblUserLogic.getUserById(userId);
 			// get array integer of birthday
 			ArrayList<Integer> birthday = Common.toArrayInteger(userInfor.getBirthday());
@@ -213,6 +204,21 @@ public class AddUserInputController extends HttpServlet {
 			userInfor.setBirthdayMonth(String.valueOf(birthday.get(1)));
 			userInfor.setBirthdayDay(String.valueOf(birthday.get(2)));
 		}
+
+		// set user id
+		if (userId != null) {
+			int id = Common.parseInt(userId, 0);
+			userInfor.setUserId(id);
+		}
+		// create url back
+		StringBuffer urlBack = new StringBuffer(req.getContextPath());
+		if (userInfor.getUserId() > 0) {
+			urlBack.append(Constant.URL_SHOW_DETAIL_USER).append("?userId=").append(userId);
+			req.setAttribute("userId", userId);
+		} else {
+			urlBack.append(Constant.URL_LIST_USER).append("?type=back");
+		}
+		req.setAttribute("urlBack", urlBack.toString());
 		return userInfor;
 	}
 }

@@ -4,10 +4,7 @@
  */
 package controller;
 
-import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -59,18 +56,28 @@ public class AddUserConfirmController extends HttpServlet {
 		try {
 			String keySession = req.getParameter(Constant.KEY_SESSION);
 			UserInfor userInfor = (UserInfor) req.getSession().getAttribute(keySession);
-			if (userInfor != null) {
-				MstGroup mstGroup = mstGroupLogic.getGroupById(userInfor.getGroupId());
-				userInfor.setGroupName(mstGroup.getGroupName());
-				String codeLevel = userInfor.getCodeLevel();
-				// check hava level japan
-				if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
-					MstJapan mstJapan = mstJapanLogic.getMstJapanByCodeLevel(userInfor.getCodeLevel());
-					userInfor.setNameLevel(mstJapan.getNameLevel());
-				}
+
+			if (userInfor == null) {
+				StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+				stringBuffer.append(Constant.URL_SUCCESS).append("?type=").append(Constant.ERROR);
+				resp.sendRedirect(stringBuffer.toString());
+				return;
 			}
-			StringBuffer urlSubmit = new StringBuffer().append(req.getContextPath()).append(Constant.URL_ADD_USER_OK);
+			MstGroup mstGroup = mstGroupLogic.getGroupById(userInfor.getGroupId());
+			userInfor.setGroupName(mstGroup.getGroupName());
+			String codeLevel = userInfor.getCodeLevel();
+			// check have level japan
+			if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
+				MstJapan mstJapan = mstJapanLogic.getMstJapanByCodeLevel(userInfor.getCodeLevel());
+				userInfor.setNameLevel(mstJapan.getNameLevel());
+			}
+			StringBuffer urlSubmit = new StringBuffer();
+			urlSubmit.append(req.getContextPath()).append(Constant.URL_ADD_USER_OK);
+			StringBuffer urlBack = new StringBuffer();
+			urlBack.append(req.getContextPath()).append(Constant.URL_ADD_USER_INPUT).append("?type=")
+					.append(Constant.TYPE_ADM004).append("&key=").append(keySession);
 			req.setAttribute("urlSubmit", urlSubmit.toString());
+			req.setAttribute("urlBack", urlBack.toString());
 			req.setAttribute("keySession", keySession);
 			req.setAttribute("userInfor", userInfor);
 			req.setAttribute("method", Constant.METHOD_POST);
@@ -96,7 +103,6 @@ public class AddUserConfirmController extends HttpServlet {
 			boolean success = false;
 			if (userInfor != null) {
 				success = tblUserLogic.createUser(userInfor);
-				req.getSession().removeAttribute(Constant.KEY_SESSION);
 				req.getSession().removeAttribute(keySession);
 			}
 			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());

@@ -4,10 +4,7 @@
  */
 package controller;
 
-import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +46,10 @@ public class ShowDetailUserController extends HttpServlet {
 				req.setAttribute("userId", userId);
 			}
 			StringBuffer urlSubmit = new StringBuffer().append(req.getContextPath()).append(Constant.URL_ADD_USER_INPUT);
+			StringBuffer urlBack = new StringBuffer().append(req.getContextPath()).append(Constant.URL_LIST_USER)
+					.append("?type=back");
 			req.setAttribute("urlSubmit", urlSubmit.toString());
+			req.setAttribute("urlBack", urlBack.toString());
 			req.setAttribute("method", Constant.METHOD_GET);
 			req.setAttribute("userId", userId);
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM004);
@@ -58,18 +58,4 @@ public class ShowDetailUserController extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
-	 * javax.servlet.http.HttpServletResponse)
-	 */
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
-	}
-
 }

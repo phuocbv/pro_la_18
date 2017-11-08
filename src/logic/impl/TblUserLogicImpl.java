@@ -94,6 +94,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 		TblUser tblUser = tblUserDAO.getUserByLoginName(userId, loginName);
 		if (tblUser == null) {
 			return false;
+		} else if (userId != null) {
+			return false;
 		}
 		return true;
 	}
@@ -113,6 +115,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	public boolean checkExistedEmail(Integer userId, String email) throws ClassNotFoundException, SQLException {
 		TblUser tblUser = tblUserDAO.getUserByEmail(userId, email);
 		if (tblUser == null) {
+			return false;
+		} else if (userId != null) {
 			return false;
 		}
 		return true;

@@ -112,6 +112,8 @@ public class ListUserController extends HttpServlet {
 				if (currentPage != null) {// get current page
 					page = Common.parseInt(currentPage, Constant.DEFAULT_PAGE);
 				}
+			} else if (Constant.TYPE_BACK.equals(type)) {
+				page = Common.parseInt(dataSession.get(Constant.PAGE), 1);
 			}
 			// add page into session
 			dataSession.put(Constant.PAGE, String.valueOf(page));

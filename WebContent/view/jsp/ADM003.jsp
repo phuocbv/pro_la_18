@@ -14,6 +14,9 @@
 <body>
 	<jsp:include page="header.jsp" />
 	<!-- Begin vung input-->
+	<%-- 	<form
+		action="${pageContext.request.contextPath}${Constant.URL_ADD_USER_VALIDATE }?type=${Constant.TYPE_ADM003}"
+		method="post" name="inputform"> --%>
 	<form
 		action="${pageContext.request.contextPath}${Constant.URL_ADD_USER_VALIDATE }?type=${Constant.TYPE_ADM003}"
 		method="post" name="inputform">
@@ -47,7 +50,7 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> グループ:</td>
 								<td align="left"><select name="${UserInfor.GROUP_ID }">
-										<option value="0">選択してくださいグループ</option>
+										<option value="0">選択してください</option>
 										<c:forEach var="group" items="${listGroup}">
 											<option value="${group.groupId }"
 												${group.groupId == userInfor.groupId ? 'selected' : '' }>${group.groupName }</option>
@@ -131,13 +134,13 @@
 									onclick="formLevelJapan()" id="linkLevelJapannes">日本語能力</a></th>
 							</tr>
 							<c:set var="checkCodeLevel"
-									value="${(userInfor.codeLevel != null && userInfor.codeLevel != '0') }"></c:set>
+								value="${(userInfor.codeLevel != null && userInfor.codeLevel != '0') }"></c:set>
 							<tr class="fieldToggle"
 								style="display: ${checkCodeLevel ? 'table-row' : 'none'}">
 								<td class="lbl_left">資格:</td>
 								<td align="left"><select name="${UserInfor.CODE_LEVEL }"
 									id="selectCodeLevel">
-										<option value="0">選択してください資格</option>
+										<option value="0">選択してください</option>
 										<c:forEach var="item" items="${listJapan}">
 											<option value="${item.codeLevel}"
 												${item.codeLevel == userInfor.codeLevel ? 'selected' : '' }>${item.nameLevel}</option>
@@ -209,7 +212,9 @@
 			</tr>
 		</table>
 		<div style="padding-left: 100px;">&nbsp;</div>
-		<input type="hidden" value="${userId }" name="userId"/>
+		<c:if test="${userId != null }">
+			<input type="hidden" value="${userId }" name="userId" />
+		</c:if>
 		<!-- Begin vung button -->
 		<div style="padding-left: 45px;">
 			<table border="0" cellpadding="4" cellspacing="0" width="300px">
@@ -226,7 +231,7 @@
 	<!-- End vung input -->
 	<script>
 		function backListUser() {
-			window.location.href = '${url}?type=back';
+			window.location.href = '${urlBack}';
 		}
 	</script>
 	<!-- Begin vung footer -->

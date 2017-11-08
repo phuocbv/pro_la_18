@@ -93,6 +93,7 @@ public class Constant {
 	public static final String TYPE_SEARCH = "search";
 	public static final String TYPE_SORT = "sort";
 	public static final String TYPE_PAGING = "paging";
+	public static final String TYPE_BACK = "back";
 
 	public static final String TYPE_ADM002 = "ADM002";
 	public static final String TYPE_ADM003 = "ADM003";
@@ -130,8 +131,17 @@ public class Constant {
 	public static final int MAX_LENGTH_LOGIN_NAME = 15;
 	public static final int MAX_LENGTH_FULL_NAME_KANA = 255;
 	public static final int MAX_LENGTH_FULL_NAME = 255;
-	public static final int MIN_LENGTH_PASSWORD = 6;
+	public static final int MAX_LENGTH_EMAIL = 255;
+	public static final int MIN_LENGTH_PASSWORD = 5;
 	public static final int MAX_LENGTH_PASSWORD = 15;
 	public static final int MAX_LENGTH_TEL = 14;
+	
+	//pattern
+	public static final String LOGIN_NAME_PATTERN = "^[a-zA-Z]{1}[a-zA-Z0-9_]{3,14}$";
+	public static final String FULL_NAME_KATA_PATTERN = "^[ア-ンーッ ]{0,255}$";
+	public static final String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+	public static final String TEL_PATTERN = "^[0-9]{1,4}-[0-9]{1,4}-[0-9]{1,4}$";
+	public static final String TOTAL_PATTERN = "^[1-9]{1}[0-9]{0,10}$";
+	public static final String PASSWORD_PATTERN = "^[a-zA-Z0-9!@#$%^&*(){}_+.,<>?;:'-=]{6,15}$";
 
 }
