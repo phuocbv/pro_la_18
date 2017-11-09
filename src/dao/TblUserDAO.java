@@ -90,8 +90,17 @@ public interface TblUserDAO {
 	 */
 	public Integer insertUser(TblUser tblUser) throws ClassNotFoundException, SQLException;
 
+	/**
+	 * get user by id
+	 * 
+	 * @param id
+	 *            is user_id in table tbl_user
+	 * @return UserInfor is object of table tbl_user
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public UserInfor getUserById(int id) throws ClassNotFoundException, SQLException;
-	
+
 	/**
 	 * update tblUser in database
 	 * 

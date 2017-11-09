@@ -87,5 +87,14 @@ public interface TblUserLogic {
 	 */
 	public boolean createUser(UserInfor userInfor) throws ClassNotFoundException, SQLException;
 	
+	/**
+	 * get user by id
+	 * 
+	 * @param id
+	 *            is user_id in table tbl_user
+	 * @return UserInfor is object of table tbl_user
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public UserInfor getUserById(String id) throws ClassNotFoundException, SQLException;
 }

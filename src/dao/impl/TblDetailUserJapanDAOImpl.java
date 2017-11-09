@@ -30,21 +30,17 @@ public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDetailU
 	 */
 	@Override
 	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException {
-		try {
-			if (connection == null) {
-				return false;
-			}
-			int i = 0;
-			pstm = connection.prepareStatement(sqlInsertDetailUserJapan.toString());
-			pstm.setInt(++i, tblDetailUserJapan.getUserId());
-			pstm.setString(++i, tblDetailUserJapan.getCodeLevel());
-			pstm.setDate(++i, new Date(tblDetailUserJapan.getStartDate().getTime()));
-			pstm.setDate(++i, new Date(tblDetailUserJapan.getEndDate().getTime()));
-			pstm.setInt(++i, tblDetailUserJapan.getTotal());
-			pstm.executeUpdate();
-		} catch (SQLException e) {
+		if (connection == null) {
 			return false;
 		}
+		int i = 0;
+		pstm = connection.prepareStatement(sqlInsertDetailUserJapan.toString());
+		pstm.setInt(++i, tblDetailUserJapan.getUserId());
+		pstm.setString(++i, tblDetailUserJapan.getCodeLevel());
+		pstm.setDate(++i, new Date(tblDetailUserJapan.getStartDate().getTime()));
+		pstm.setDate(++i, new Date(tblDetailUserJapan.getEndDate().getTime()));
+		pstm.setInt(++i, tblDetailUserJapan.getTotal());
+		pstm.executeUpdate();
 		return true;
 	}
 

@@ -150,7 +150,9 @@ public class TblUserLogicImpl implements TblUserLogic {
 			baseDAO.dbConnection();// create connection
 			baseDAO.setAutoCommit(false);// set auto commit = false
 			Integer userId = tblUserDAO.insertUser(tblUser);
+			System.out.println(userId);
 			if (userId == null) {// if insert tbl_user not success then return false
+				
 				return false;
 			}
 			if (userInfor.getCodeLevel() != null) {
@@ -173,6 +175,43 @@ public class TblUserLogicImpl implements TblUserLogic {
 		return true;
 	}
 
+	//test rollback
+//	public static void main(String[] args) {
+//		UserInfor userInfor = new UserInfor();
+//		userInfor.setGroupId("1");
+//		userInfor.setLoginName("dacuoi12345678");
+//		userInfor.setPassword("123456");
+//		userInfor.setFullName("sdadsa");
+//		userInfor.setFullNameKana("dasds");
+//		userInfor.setEmail("dasdsaas");
+//		userInfor.setTel("43245");
+//		userInfor.setBirthday(new java.sql.Date(232));
+//		
+//		userInfor.setCodeLevel("N6");
+//		userInfor.setStartDate(new java.sql.Date(323));
+//		userInfor.setEndDate(new java.sql.Date(323));
+//		userInfor.setTotal("342");
+//		TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
+//		try {
+//			tblUserLogicImpl.createUser(userInfor);
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+
+	/**
+	 * get user by id
+	 * 
+	 * @param id
+	 *            is user_id in table tbl_user
+	 * @return UserInfor is object of table tbl_user
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	@Override
 	public UserInfor getUserById(String id) throws ClassNotFoundException, SQLException {
 		int userId = Common.parseInt(id, 0);

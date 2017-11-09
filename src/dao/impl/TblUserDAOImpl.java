@@ -383,7 +383,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		}
 		return userId;
 	}
-	
+
 	/**
 	 * update tblUser in database
 	 * 
@@ -423,6 +423,15 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		return userId;
 	}
 
+	/**
+	 * get user by id
+	 * 
+	 * @param id
+	 *            is user_id in table tbl_user
+	 * @return UserInfor is object of table tbl_user
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	@Override
 	public UserInfor getUserById(int id) throws ClassNotFoundException, SQLException {
 		UserInfor userInfor = null;
