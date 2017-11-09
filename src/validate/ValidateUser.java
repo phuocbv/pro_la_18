@@ -56,16 +56,18 @@ public class ValidateUser {
 		Integer userId = userInfor.getUserId() > 0 ? userInfor.getUserId() : null;
 		System.out.println(userId);
 		// check login name (4)
-		String loginName = userInfor.getLoginName();
-		if (loginName == null || Constant.EMPTY_STRING.equals(loginName)) {
-			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_LOGIN_NAME));
-		} else if (!loginName.matches(Constant.LOGIN_NAME_PATTERN)) {
-			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER019));
-		} else if (loginName.length() < Constant.MIN_LENGTH_LOGIN_NAME
-				|| loginName.length() > Constant.MAX_LENGTH_LOGIN_NAME) {
-			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER007_LOGIN_NAME));
-		} else if (tblUserLogic.checkExistedLoginName(userId, loginName)) {
-			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER003_LOGIN_NAME));
+		if (userInfor.getUserId() == 0) {
+			String loginName = userInfor.getLoginName();
+			if (loginName == null || Constant.EMPTY_STRING.equals(loginName)) {
+				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_LOGIN_NAME));
+			} else if (!loginName.matches(Constant.LOGIN_NAME_PATTERN)) {
+				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER019));
+			} else if (loginName.length() < Constant.MIN_LENGTH_LOGIN_NAME
+					|| loginName.length() > Constant.MAX_LENGTH_LOGIN_NAME) {
+				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER007_LOGIN_NAME));
+			} else if (tblUserLogic.checkExistedLoginName(userId, loginName)) {
+				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER003_LOGIN_NAME));
+			}
 		}
 
 		// check group id (2)
@@ -170,7 +172,7 @@ public class ValidateUser {
 			int endMonth = Common.parseInt(userInfor.getEndMonth(), 0);
 			int endDay = Common.parseInt(userInfor.getEndDay(), 0);
 			Date endDate = Common.toDate(endYear, endMonth, endDay);
-			
+
 			// check end date (2)
 			if (endDate == null) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER011_END_DATE));
@@ -185,7 +187,7 @@ public class ValidateUser {
 			String total = userInfor.getTotal();
 			if (total == null || Constant.EMPTY_STRING.equals(total)) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_TOTAL));
-			} else if (!total.matches(Constant.TOTAL_PATTERN)) {//check format total
+			} else if (!total.matches(Constant.TOTAL_PATTERN)) {// check format total
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER018_TOTAL));
 			}
 		}

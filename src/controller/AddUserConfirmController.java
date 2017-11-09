@@ -28,7 +28,7 @@ import logic.impl.TblUserLogicImpl;
  * @author LA-AM
  *
  */
-@WebServlet(urlPatterns = { Constant.URL_ADD_USER_OK, Constant.URL_ADD_USER_CONFIRM })
+@WebServlet(urlPatterns = { Constant.URL_ADD_USER_OK, Constant.URL_ADD_USER_CONFIRM, Constant.URL_EDIT_USER_CONFIRM })
 public class AddUserConfirmController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MstGroupLogic mstGroupLogic;
@@ -56,20 +56,23 @@ public class AddUserConfirmController extends HttpServlet {
 		try {
 			String keySession = req.getParameter(Constant.KEY_SESSION);
 			UserInfor userInfor = (UserInfor) req.getSession().getAttribute(keySession);
-
+			// check userInfor exist
 			if (userInfor == null) {
 				StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
 				stringBuffer.append(Constant.URL_SUCCESS).append("?type=").append(Constant.ERROR);
 				resp.sendRedirect(stringBuffer.toString());
 				return;
 			}
-			MstGroup mstGroup = mstGroupLogic.getGroupById(userInfor.getGroupId());
-			userInfor.setGroupName(mstGroup.getGroupName());
-			String codeLevel = userInfor.getCodeLevel();
-			// check have level japan
-			if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
-				MstJapan mstJapan = mstJapanLogic.getMstJapanByCodeLevel(userInfor.getCodeLevel());
-				userInfor.setNameLevel(mstJapan.getNameLevel());
+			// case edit user
+			if (userInfor.getUserId() > 0) {
+				MstGroup mstGroup = mstGroupLogic.getGroupById(userInfor.getGroupId());
+				userInfor.setGroupName(mstGroup.getGroupName());
+				String codeLevel = userInfor.getCodeLevel();
+				// check have level japan
+				if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
+					MstJapan mstJapan = mstJapanLogic.getMstJapanByCodeLevel(userInfor.getCodeLevel());
+					userInfor.setNameLevel(mstJapan.getNameLevel());
+				}
 			}
 			StringBuffer urlSubmit = new StringBuffer();
 			urlSubmit.append(req.getContextPath()).append(Constant.URL_ADD_USER_OK);
@@ -84,6 +87,7 @@ public class AddUserConfirmController extends HttpServlet {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM004);
 			dispatcher.forward(req, resp);// forward to page jsp
 		} catch (Exception e) {
+			e.printStackTrace();
 			Common.processSystemError(req, resp);
 		}
 	}

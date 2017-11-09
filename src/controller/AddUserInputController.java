@@ -65,6 +65,7 @@ public class AddUserInputController extends HttpServlet {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM003);
 			dispatcher.forward(req, resp);// forward to page jsp
 		} catch (Exception e) {
+			e.printStackTrace();
 			Common.processSystemError(req, resp);
 		}
 	}
@@ -82,7 +83,8 @@ public class AddUserInputController extends HttpServlet {
 		try {
 			UserInfor userInfor = setDefaultValue(req, resp);
 			ValidateUser validateUser = new ValidateUser();
-			List<String> listError = validateUser.validateUserInfor(userInfor);// validate user
+			//List<String> listError = validateUser.validateUserInfor(userInfor);// validate user
+			List<String> listError = new ArrayList<>();
 			StringBuffer stringBuffer = new StringBuffer();
 			// case haven't error
 			if (listError.isEmpty()) {
@@ -157,8 +159,8 @@ public class AddUserInputController extends HttpServlet {
 			throws ClassNotFoundException, SQLException {
 		String type = req.getParameter(Constant.TYPE);
 		UserInfor userInfor = null;
-		String userId = req.getParameter("userId");
-		if (type == null || Constant.TYPE_ADM002.equals(type)) {// from ADM002
+		String paramUserId = req.getParameter("userId");
+		if (type == null || Constant.EMPTY_STRING.equals(type) || Constant.TYPE_ADM002.equals(type)) {// from ADM002
 			userInfor = new UserInfor();
 		} else if (Constant.TYPE_ADM004.equals(type)) {// from ADM004
 			String keySession = req.getParameter(Constant.KEY_SESSION);
@@ -197,22 +199,35 @@ public class AddUserInputController extends HttpServlet {
 			}
 		} else if (Constant.TYPE_ADM005.equals(type)) {
 			// String userId = req.getParameter("userId");
-			userInfor = tblUserLogic.getUserInforById(userId);
+			userInfor = tblUserLogic.getUserInforById(paramUserId);
 			// get array integer of birthday
 			ArrayList<Integer> birthday = Common.toArrayInteger(userInfor.getBirthday());
 			userInfor.setBirthdayYear(String.valueOf(birthday.get(0)));
 			userInfor.setBirthdayMonth(String.valueOf(birthday.get(1)));
 			userInfor.setBirthdayDay(String.valueOf(birthday.get(2)));
-		}
 
+			String codeLevel = userInfor.getCodeLevel();
+			// check exist code level
+			if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
+				ArrayList<Integer> startDate = Common.toArrayInteger(userInfor.getStartDate());
+				userInfor.setStartYear(String.valueOf(startDate.get(0)));
+				userInfor.setStartMonth(String.valueOf(startDate.get(1)));
+				userInfor.setStartDay(String.valueOf(startDate.get(2)));
+				ArrayList<Integer> endDate = Common.toArrayInteger(userInfor.getEndDate());
+				userInfor.setEndYear(String.valueOf(endDate.get(0)));
+				userInfor.setEndMonth(String.valueOf(endDate.get(1)));
+				userInfor.setEndDay(String.valueOf(endDate.get(2)));
+			}
+		}
+		StringBuffer urlBack = new StringBuffer(req.getContextPath());
 		// set user id
-		if (userId != null) {
-			int id = Common.parseInt(userId, 0);
+		if (paramUserId != null) {
+			int id = Common.parseInt(paramUserId, 0);
 			userInfor.setUserId(id);
 		}
-		// create url back
-		StringBuffer urlBack = new StringBuffer(req.getContextPath());
-		if (userInfor.getUserId() > 0) {
+		// get userId
+		int userId = userInfor.getUserId();
+		if (userId > 0) {
 			urlBack.append(Constant.URL_SHOW_DETAIL_USER).append("?userId=").append(userId);
 			req.setAttribute("userId", userId);
 		} else {

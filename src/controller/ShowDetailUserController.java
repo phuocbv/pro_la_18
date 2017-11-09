@@ -46,6 +46,7 @@ public class ShowDetailUserController extends HttpServlet {
 				userInfor = tblUserLogic.getUserInforById(userId);
 			}
 			// check userInfor == null
+			System.out.println(userId + " " + userInfor);
 			if (userInfor == null) {
 				StringBuffer url = new StringBuffer(req.getContextPath()).append(Constant.URL_SUCCESS).append("?type=")
 						.append(Constant.ERROR);

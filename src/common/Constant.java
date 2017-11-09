@@ -68,6 +68,7 @@ public class Constant {
 	public static final String URL_ADD_USER_VALIDATE = "/addUserValidate.do";
 	public static final String URL_ADD_USER_OK = "/addUserOK.do";
 	public static final String URL_ADD_USER_CONFIRM = "/addUserConfirm.do";
+	public static final String URL_EDIT_USER_CONFIRM = "/editUserConfirm.do";
 	public static final String URL_SUCCESS = "/notification.do";
 	public static final String URL_SHOW_DETAIL_USER = "/showDetailUser.do";
 	public static final String URL_VIEW_EROR = "/viewError.do";

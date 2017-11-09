@@ -87,6 +87,8 @@ public interface TblUserLogic {
 	 */
 	public boolean createUser(UserInfor userInfor) throws ClassNotFoundException, SQLException;
 	
+	public boolean updateUser(UserInfor userInfor) throws ClassNotFoundException, SQLException;
+	
 	/**
 	 * get user by id
 	 * 
