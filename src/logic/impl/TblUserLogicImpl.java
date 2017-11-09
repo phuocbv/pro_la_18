@@ -91,11 +91,28 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean checkExistedLoginName(Integer userId, String loginName) throws ClassNotFoundException, SQLException {
-		TblUser tblUser = tblUserDAO.getUserByLoginName(userId, loginName);
+		TblUser tblUser = tblUserDAO.getUserByLoginName(null, loginName);
+		
 		if (tblUser == null) {
-			return false;
-		} else if (userId != null) {
-			return false;
+			
+		}
+		
+		
+		// in case add
+		if (userId == null) {
+			// case not exist login name
+			if (tblUser == null) {
+				return false;
+			}
+			return true;
+		} else { // case update
+			if (tblUserDAO.getUserByLoginName(userId, loginName) != null) {
+				
+			}
+			if (tblUser != null) {
+				return true;
+			}
+			//tblUser = 
 		}
 		return true;
 	}
@@ -150,9 +167,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			baseDAO.dbConnection();// create connection
 			baseDAO.setAutoCommit(false);// set auto commit = false
 			Integer userId = tblUserDAO.insertUser(tblUser);
-			System.out.println(userId);
 			if (userId == null) {// if insert tbl_user not success then return false
-				
 				return false;
 			}
 			if (userInfor.getCodeLevel() != null) {
@@ -175,34 +190,6 @@ public class TblUserLogicImpl implements TblUserLogic {
 		return true;
 	}
 
-	//test rollback
-//	public static void main(String[] args) {
-//		UserInfor userInfor = new UserInfor();
-//		userInfor.setGroupId("1");
-//		userInfor.setLoginName("dacuoi12345678");
-//		userInfor.setPassword("123456");
-//		userInfor.setFullName("sdadsa");
-//		userInfor.setFullNameKana("dasds");
-//		userInfor.setEmail("dasdsaas");
-//		userInfor.setTel("43245");
-//		userInfor.setBirthday(new java.sql.Date(232));
-//		
-//		userInfor.setCodeLevel("N6");
-//		userInfor.setStartDate(new java.sql.Date(323));
-//		userInfor.setEndDate(new java.sql.Date(323));
-//		userInfor.setTotal("342");
-//		TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
-//		try {
-//			tblUserLogicImpl.createUser(userInfor);
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-
 	/**
 	 * get user by id
 	 * 
@@ -213,8 +200,13 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @throws SQLException
 	 */
 	@Override
-	public UserInfor getUserById(String id) throws ClassNotFoundException, SQLException {
+	public UserInfor getUserInforById(String id) throws ClassNotFoundException, SQLException {
 		int userId = Common.parseInt(id, 0);
-		return tblUserDAO.getUserById(userId);
+		TblUser tblUser = tblUserDAO.getTblUserById(userId);
+		// check userId exist
+		if (tblUser == null) {
+			return null;
+		}
+		return tblUserDAO.getUserInforById(userId);
 	}
 }

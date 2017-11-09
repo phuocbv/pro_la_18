@@ -99,7 +99,18 @@ public interface TblUserDAO {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public UserInfor getUserById(int id) throws ClassNotFoundException, SQLException;
+	public UserInfor getUserInforById(int id) throws ClassNotFoundException, SQLException;
+
+	/**
+	 * get tbl user by id
+	 * 
+	 * @param id
+	 *            is user_id in table tbl_user
+	 * @return TblUser is object of table tbl_user
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public TblUser getTblUserById(int id) throws ClassNotFoundException, SQLException;
 
 	/**
 	 * update tblUser in database
@@ -111,4 +122,6 @@ public interface TblUserDAO {
 	 * @throws SQLException
 	 */
 	public Integer updateUser(TblUser tblUser) throws ClassNotFoundException, SQLException;
+	
+	public boolean deleteUser(int userId) throws ClassNotFoundException, SQLException;
 }

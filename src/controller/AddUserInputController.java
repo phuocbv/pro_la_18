@@ -197,7 +197,7 @@ public class AddUserInputController extends HttpServlet {
 			}
 		} else if (Constant.TYPE_ADM005.equals(type)) {
 			// String userId = req.getParameter("userId");
-			userInfor = tblUserLogic.getUserById(userId);
+			userInfor = tblUserLogic.getUserInforById(userId);
 			// get array integer of birthday
 			ArrayList<Integer> birthday = Common.toArrayInteger(userInfor.getBirthday());
 			userInfor.setBirthdayYear(String.valueOf(birthday.get(0)));

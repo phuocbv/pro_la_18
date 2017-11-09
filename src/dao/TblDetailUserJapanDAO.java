@@ -23,4 +23,6 @@ public interface TblDetailUserJapanDAO {
 	 * @throws SQLException
 	 */
 	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException;
+	
+	public boolean updateDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException;
 }

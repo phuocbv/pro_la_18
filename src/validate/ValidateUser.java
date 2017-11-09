@@ -185,7 +185,7 @@ public class ValidateUser {
 			String total = userInfor.getTotal();
 			if (total == null || Constant.EMPTY_STRING.equals(total)) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_TOTAL));
-			} else if (!total.matches(Constant.TOTAL_PATTERN)) {
+			} else if (!total.matches(Constant.TOTAL_PATTERN)) {//check format total
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER018_TOTAL));
 			}
 		}

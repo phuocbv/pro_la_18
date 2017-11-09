@@ -40,12 +40,21 @@ public class ShowDetailUserController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			String userId = req.getParameter("userId");
+			UserInfor userInfor = null;
+			// check userId input
 			if (userId != null && !Constant.EMPTY_STRING.equals(userId)) {
-				UserInfor userInfor = tblUserLogic.getUserById(userId);
-				req.setAttribute("userInfor", userInfor);
-				req.setAttribute("userId", userId);
+				userInfor = tblUserLogic.getUserInforById(userId);
 			}
-			StringBuffer urlSubmit = new StringBuffer().append(req.getContextPath()).append(Constant.URL_ADD_USER_INPUT);
+			// check userInfor == null
+			if (userInfor == null) {
+				StringBuffer url = new StringBuffer(req.getContextPath()).append(Constant.URL_SUCCESS).append("?type=")
+						.append(Constant.ERROR);
+				resp.sendRedirect(url.toString());
+			}
+			req.setAttribute("userInfor", userInfor);
+			req.setAttribute("userId", userId);
+			StringBuffer urlSubmit = new StringBuffer().append(req.getContextPath())
+					.append(Constant.URL_ADD_USER_INPUT);
 			StringBuffer urlBack = new StringBuffer().append(req.getContextPath()).append(Constant.URL_LIST_USER)
 					.append("?type=back");
 			req.setAttribute("urlSubmit", urlSubmit.toString());

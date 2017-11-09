@@ -21,6 +21,8 @@ public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDetailU
 			.append(" INSERT INTO tbl_detail_user_japan(user_id, code_level, start_date, end_date, total) ")
 			.append(" VALUES (?, ?, ?, ?, ?) ");
 
+	private StringBuffer sqlUpdateDetailUserJapan = new StringBuffer().append("");
+	
 	/**
 	 * insert in detail user japan
 	 * 
@@ -30,6 +32,22 @@ public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDetailU
 	 */
 	@Override
 	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException {
+		if (connection == null) {
+			return false;
+		}
+		int i = 0;
+		pstm = connection.prepareStatement(sqlInsertDetailUserJapan.toString());
+		pstm.setInt(++i, tblDetailUserJapan.getUserId());
+		pstm.setString(++i, tblDetailUserJapan.getCodeLevel());
+		pstm.setDate(++i, new Date(tblDetailUserJapan.getStartDate().getTime()));
+		pstm.setDate(++i, new Date(tblDetailUserJapan.getEndDate().getTime()));
+		pstm.setInt(++i, tblDetailUserJapan.getTotal());
+		pstm.executeUpdate();
+		return true;
+	}
+
+	@Override
+	public boolean updateDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException {
 		if (connection == null) {
 			return false;
 		}

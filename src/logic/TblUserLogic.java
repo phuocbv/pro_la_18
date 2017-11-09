@@ -96,5 +96,5 @@ public interface TblUserLogic {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public UserInfor getUserById(String id) throws ClassNotFoundException, SQLException;
+	public UserInfor getUserInforById(String id) throws ClassNotFoundException, SQLException;
 }

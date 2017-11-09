@@ -46,7 +46,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			" INSERT INTO tbl_user (group_id, login_name, password, full_name, full_name_kana, email, tel, birthday, salt) ")
 			.append(" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 
-	private StringBuffer sqlGetUserById = new StringBuffer().append(
+	private StringBuffer sqlGetUserInforById = new StringBuffer().append(
 			" SELECT tbl_user.user_id, tbl_user.group_id, mst_group.group_name, tbl_user.login_name, tbl_user.full_name, tbl_user.full_name_kana, tbl_user.birthday, ")
 			.append(" tbl_user.email, tbl_user.tel, mst_japan.code_level, mst_japan.name_level, tbl_detail_user_japan.start_date, ")
 			.append(" tbl_detail_user_japan.end_date, tbl_detail_user_japan.total ").append(sqlJoin.toString())
@@ -433,14 +433,14 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 * @throws SQLException
 	 */
 	@Override
-	public UserInfor getUserById(int id) throws ClassNotFoundException, SQLException {
+	public UserInfor getUserInforById(int id) throws ClassNotFoundException, SQLException {
 		UserInfor userInfor = null;
 		try {
 			connection = getConnection();// get connection
 			if (connection == null) {// if connect null then return
 				return userInfor;
 			}
-			pstm = connection.prepareStatement(sqlGetUserById.toString());// use PrepareStatement
+			pstm = connection.prepareStatement(sqlGetUserInforById.toString());// use PrepareStatement
 			pstm.setInt(1, id);
 			System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
@@ -467,5 +467,55 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			closeConnect();
 		}
 		return userInfor;
+	}
+
+	/**
+	 * get tbl user by id
+	 * 
+	 * @param id
+	 *            is user_id in table tbl_user
+	 * @return TblUser is object of table tbl_user
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	@Override
+	public TblUser getTblUserById(int id) throws ClassNotFoundException, SQLException {
+		TblUser tblUser = null;
+		try {
+			connection = getConnection();// get connection
+			if (connection == null) {// if connect null then return
+				return tblUser;
+			}
+			StringBuffer sqlGetTblUserById = new StringBuffer(sqlGetTblUser.toString());
+			sqlGetTblUserById.append(" WHERE tbl_user.user_id = ? ");
+			pstm = connection.prepareStatement(sqlGetTblUserById.toString());// use PrepareStatement
+			System.out.println(pstm.toString());
+			pstm.setInt(1, id);
+			resultSet = pstm.executeQuery();// execute sql
+			int i;
+			if (resultSet.next()) {
+				i = 0;
+				tblUser = new TblUser();
+				tblUser.setUserId(resultSet.getInt(++i));
+				tblUser.setGroupId(resultSet.getInt(++i));
+				tblUser.setLoginName(resultSet.getString(++i));
+				tblUser.setPassword(resultSet.getString(++i));
+				tblUser.setFullName(resultSet.getString(++i));
+				tblUser.setFullNameKana(resultSet.getString(++i));
+				tblUser.setEmail(resultSet.getString(++i));
+				tblUser.setTel(resultSet.getString(++i));
+				tblUser.setBirthday(resultSet.getDate(++i));
+				tblUser.setSalt(resultSet.getString(++i));
+			}
+		} finally {
+			closeConnect();
+		}
+		return tblUser;
+	}
+
+	@Override
+	public boolean deleteUser(int userId) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
