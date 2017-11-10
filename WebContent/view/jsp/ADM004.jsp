@@ -12,6 +12,12 @@
 <title>ユーザ管理</title>
 </head>
 <body>
+
+
+	<form onsubmit="return submitForm();">
+		<input type="text" border="0" name="submit" />
+		<button value="submit">submit</button>
+	</form>
 	<jsp:include page="header.jsp" />
 	<c:if test="${userInfor != null }">
 		<%-- <form
@@ -72,32 +78,6 @@
 									<th colspan="2"><a href="javascript:void(0)"
 										onclick="formLevelJapan()">日本語能力</a></th>
 								</tr>
-								<%-- 	<c:set var="checkCodeLevel"
-									value="${(userInfor.codeLevel != null && userInfor.codeLevel != '0') }"></c:set>
-								<tr class="fieldToggle"
-									style="display: ${checkCodeLevel ? 'table-row' : 'none'}">
-									<td class="lbl_left">資格:</td>
-									<td align="left"><c:out value="${userInfor.nameLevel}"
-											escapeXml="true"></c:out></td>
-								</tr>
-								<tr class="fieldToggle"
-									style="display: ${checkCodeLevel ? 'table-row' : 'none'}">
-									<td class="lbl_left">資格交付日:</td>
-									<td align="left"><fmt:formatDate pattern="yyyy/MM/dd"
-											value="${userInfor.startDate}" /></td>
-								</tr>
-								<tr class="fieldToggle"
-									style="display: ${checkCodeLevel ? 'table-row' : 'none'}">
-									<td class="lbl_left">失効日:</td>
-									<td align="left"><fmt:formatDate pattern="yyyy/MM/dd"
-											value="${userInfor.endDate}" /></td>
-								</tr>
-								<tr class="fieldToggle"
-									style="display: ${checkCodeLevel ? 'table-row' : 'none'}">
-									<td class="lbl_left">点数:</td>
-									<td align="left"><c:out value="${userInfor.total}"
-											escapeXml="true"></c:out></td>
-								</tr> --%>
 								<c:set var="checkCodeLevel"
 									value="${(userInfor.codeLevel != null && userInfor.codeLevel != '0') }"></c:set>
 								<tr class="fieldToggle" style="display: none">
@@ -127,18 +107,18 @@
 				</tr>
 			</table>
 			<div style="padding-left: 100px;">&nbsp;</div>
-			<div
-				style="padding-left: ${method == Constant.METHOD_GET ? '100px' : '45px'}">
+			<div style="padding-left: ${userId != null ? '100px' : '45px'}">
 				<table border="0" cellpadding="4" cellspacing="0" width="300px">
 					<tr>
 						<th width="200px" align="center">&nbsp;</th>
 						<c:choose>
-							<c:when test="${method == Constant.METHOD_GET }">
+							<c:when test="${userId != null}">
 								<input type="hidden" value="${Constant.TYPE_ADM005 }"
 									name="type" />
 								<input type="hidden" value="${userId}" name="userId" />
 								<td><input class="btn" type="submit" value="編集" /></td>
-								<td><input class="btn" type="button" value="削除" /></td>
+								<td><input class="btn" type="button" value="削除"
+									onclick="redirectEditUer()" /></td>
 
 							</c:when>
 							<c:otherwise>
@@ -170,8 +150,27 @@
 					+ '?type=${Constant.TYPE_ADM004}&key=${keySession}';
 		} */
 
+		function redirectEditUer() {
+			window.location.href = '${pageContext.request.contextPath}${Constant.URL_EDIT_USER_INPUT}'
+					+ '?type=${Constant.TYPE_ADM005}&userId=${userId}';
+		}
+
 		function btnBack() {
+
 			window.location.href = '${urlBack}';
+		}
+
+		function confirm() {
+			return confirm("sdsd");
+		}
+	</script>
+	<script>
+		function submit() {
+			return confirm('Do you really want to submit the form?');
+		}
+
+		function submitForm() {
+			return confirm('Do you really want to submit the form?');
 		}
 	</script>
 	<script type="text/javascript" src="view/js/js.js"></script>

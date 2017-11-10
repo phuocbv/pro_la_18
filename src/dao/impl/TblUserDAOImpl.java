@@ -52,6 +52,11 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			.append(" tbl_detail_user_japan.end_date, tbl_detail_user_japan.total ").append(sqlJoin.toString())
 			.append(" AND tbl_user.user_id = ? ");
 
+	private StringBuffer sqlUpdateUser = new StringBuffer()
+			.append(" UPDATE tbl_user.group_id, tbl_user.password, tbl_user.full_name, ")
+			.append(" tbl_user.full_name_kana, tbl_user.email, tbl_user.tel, tbl_user.birthday ")
+			.append(" SET (?, ?, ?, ?, ?, ?, ?) WHERE tbl_user.user_id = ?");
+
 	/**
 	 * get list user
 	 * 
@@ -264,7 +269,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			connection = getConnection();// get connection
 			StringBuffer sql = new StringBuffer(sqlGetTblUser.toString()).append(" WHERE tbl_user.login_name = ?  ");
 			if (userId != null) {
-				sql.append(" AND tbl_user.user_id = ? ");
+				sql.append(" AND tbl_user.user_id != ? ");
 			}
 			int i;
 			i = 0;
@@ -314,7 +319,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			connection = getConnection();// get connection
 			StringBuffer sql = new StringBuffer(sqlGetTblUser.toString()).append(" WHERE tbl_user.email = ? ");
 			if (userId != null) {
-				sql.append(" AND tbl_user.user_id = ? ");
+				sql.append(" AND tbl_user.user_id != ? ");
 			}
 			int i = 0;
 			pstm = connection.prepareStatement(sql.toString());
@@ -389,7 +394,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	 * 
 	 * @param tblUser
 	 *            : object tbl_user
-	 * @return boolean : check insert success
+	 * @return boolean : check update success
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
@@ -397,29 +402,19 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	public Integer updateUser(TblUser tblUser) throws ClassNotFoundException, SQLException {
 		Integer userId = null;
 		int i = 0;
-		try {
-			if (connection == null) {
-				return userId;
-			}
-			pstm = connection.prepareStatement(sqlInsertUser.toString(), Statement.RETURN_GENERATED_KEYS);
-			pstm.setInt(++i, tblUser.getGroupId());
-			pstm.setString(++i, tblUser.getLoginName());
-			pstm.setString(++i, tblUser.getPassword());
-			pstm.setString(++i, tblUser.getFullName());
-			pstm.setString(++i, tblUser.getFullNameKana());
-			pstm.setString(++i, tblUser.getEmail());
-			pstm.setString(++i, tblUser.getTel());
-			pstm.setDate(++i, new Date(tblUser.getBirthday().getTime()));
-			pstm.setString(++i, tblUser.getSalt());
-			System.out.println(pstm.toString());
-			pstm.executeUpdate();
-			resultSet = pstm.getGeneratedKeys();
-			if (resultSet.next()) {
-				userId = resultSet.getInt(1);
-			}
-		} catch (SQLException e) {
-			userId = null;
+		if (connection == null) {
+			return userId;
 		}
+		pstm = connection.prepareStatement(sqlUpdateUser.toString());
+		pstm.setInt(++i, tblUser.getGroupId());
+		pstm.setString(++i, tblUser.getPassword());
+		pstm.setString(++i, tblUser.getFullName());
+		pstm.setString(++i, tblUser.getFullNameKana());
+		pstm.setString(++i, tblUser.getEmail());
+		pstm.setString(++i, tblUser.getTel());
+		pstm.setDate(++i, new Date(tblUser.getBirthday().getTime()));
+		pstm.setInt(++i, tblUser.getUserId());
+		pstm.executeUpdate();
 		return userId;
 	}
 
@@ -442,7 +437,6 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			}
 			pstm = connection.prepareStatement(sqlGetUserInforById.toString());// use PrepareStatement
 			pstm.setInt(1, id);
-			System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
 			int i;
 			if (resultSet.next()) {

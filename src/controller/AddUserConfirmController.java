@@ -106,7 +106,11 @@ public class AddUserConfirmController extends HttpServlet {
 			UserInfor userInfor = (UserInfor) req.getSession().getAttribute(keySession);
 			boolean success = false;
 			if (userInfor != null) {
-				success = tblUserLogic.createUser(userInfor);
+				if (userInfor.getUserId() > 0) {//in case update user
+					//call user logic update 
+				} else {//in case create user
+					success = tblUserLogic.createUser(userInfor);
+				}
 				req.getSession().removeAttribute(keySession);
 			}
 			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());

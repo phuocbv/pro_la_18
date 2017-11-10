@@ -91,28 +91,9 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean checkExistedLoginName(Integer userId, String loginName) throws ClassNotFoundException, SQLException {
-		TblUser tblUser = tblUserDAO.getUserByLoginName(null, loginName);
-		
+		TblUser tblUser = tblUserDAO.getUserByLoginName(userId, loginName);
 		if (tblUser == null) {
-			
-		}
-		
-		
-		// in case add
-		if (userId == null) {
-			// case not exist login name
-			if (tblUser == null) {
-				return false;
-			}
-			return true;
-		} else { // case update
-			if (tblUserDAO.getUserByLoginName(userId, loginName) != null) {
-				
-			}
-			if (tblUser != null) {
-				return true;
-			}
-			//tblUser = 
+			return false;
 		}
 		return true;
 	}
@@ -132,8 +113,6 @@ public class TblUserLogicImpl implements TblUserLogic {
 	public boolean checkExistedEmail(Integer userId, String email) throws ClassNotFoundException, SQLException {
 		TblUser tblUser = tblUserDAO.getUserByEmail(userId, email);
 		if (tblUser == null) {
-			return false;
-		} else if (userId != null) {
 			return false;
 		}
 		return true;
@@ -211,9 +190,9 @@ public class TblUserLogicImpl implements TblUserLogic {
 	}
 
 	@Override
-	public boolean updateUser(UserInfor userInfor) throws ClassNotFoundException, SQLException {
-//		int userId = 
-//		TblUser tblUser = tblUserDAO.getTblUserById()
+	public boolean editUser(UserInfor userInfor) throws ClassNotFoundException, SQLException {
+		// int userId =
+		// TblUser tblUser = tblUserDAO.getTblUserById()
 		int groupId = Common.parseInt(userInfor.getGroupId(), 0);
 		String salt = Common.MD5(Common.randomString());
 		String password = Common.MD5(userInfor.getPassword(), salt);

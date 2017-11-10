@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 import dao.TblDetailUserJapanDAO;
+import entity.MstGroup;
 import entity.TblDetailUserJapan;
 
 /**
@@ -22,7 +23,7 @@ public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDetailU
 			.append(" VALUES (?, ?, ?, ?, ?) ");
 
 	private StringBuffer sqlUpdateDetailUserJapan = new StringBuffer().append("");
-	
+
 	/**
 	 * insert in detail user japan
 	 * 
@@ -48,16 +49,30 @@ public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDetailU
 
 	@Override
 	public boolean updateDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException {
+		// if (connection == null) {
+		// return false;
+		// }
+		// int i = 0;
+		// pstm = connection.prepareStatement(sqlInsertDetailUserJapan.toString());
+		// pstm.setInt(++i, tblDetailUserJapan.getUserId());
+		// pstm.setString(++i, tblDetailUserJapan.getCodeLevel());
+		// pstm.setDate(++i, new Date(tblDetailUserJapan.getStartDate().getTime()));
+		// pstm.setDate(++i, new Date(tblDetailUserJapan.getEndDate().getTime()));
+		// pstm.setInt(++i, tblDetailUserJapan.getTotal());
+		// pstm.executeUpdate();
+		// return true;
+		//
+		// if connect null then return
 		if (connection == null) {
 			return false;
 		}
 		int i = 0;
-		pstm = connection.prepareStatement(sqlInsertDetailUserJapan.toString());
-		pstm.setInt(++i, tblDetailUserJapan.getUserId());
+		pstm = connection.prepareStatement(sqlUpdateDetailUserJapan.toString());// use PrepareStatement
 		pstm.setString(++i, tblDetailUserJapan.getCodeLevel());
 		pstm.setDate(++i, new Date(tblDetailUserJapan.getStartDate().getTime()));
 		pstm.setDate(++i, new Date(tblDetailUserJapan.getEndDate().getTime()));
 		pstm.setInt(++i, tblDetailUserJapan.getTotal());
+		pstm.setInt(++i, tblDetailUserJapan.getUserId());
 		pstm.executeUpdate();
 		return true;
 	}

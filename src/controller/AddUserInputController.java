@@ -33,7 +33,7 @@ import validate.ValidateUser;
  * @author da
  *
  */
-@WebServlet(urlPatterns = { Constant.URL_ADD_USER_INPUT, Constant.URL_ADD_USER_VALIDATE })
+@WebServlet(urlPatterns = { Constant.URL_ADD_USER_INPUT, Constant.URL_ADD_USER_VALIDATE, Constant.URL_EDIT_USER_INPUT })
 public class AddUserInputController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MstJapanLogic mstJapanLogic;
@@ -59,13 +59,24 @@ public class AddUserInputController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
 		try {
+			String paramUserId = req.getParameter("userId");
+			String type = req.getParameter(Constant.TYPE);
+			UserInfor userInfor = null;
+			if (Constant.TYPE_ADM005.equals(type)) {
+				userInfor = tblUserLogic.getUserInforById(paramUserId);
+				if (userInfor == null) {
+					StringBuffer url = new StringBuffer(req.getContextPath()).append(Constant.URL_SUCCESS)
+							.append("?type=").append(Constant.ERROR);
+					resp.sendRedirect(url.toString());
+					return;
+				}
+			}
 			setDataLogic(req, resp);
-			UserInfor userInfor = setDefaultValue(req, resp);
+			userInfor = setDefaultValue(req, resp);
 			req.setAttribute("userInfor", userInfor);
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM003);
 			dispatcher.forward(req, resp);// forward to page jsp
 		} catch (Exception e) {
-			e.printStackTrace();
 			Common.processSystemError(req, resp);
 		}
 	}
@@ -83,8 +94,8 @@ public class AddUserInputController extends HttpServlet {
 		try {
 			UserInfor userInfor = setDefaultValue(req, resp);
 			ValidateUser validateUser = new ValidateUser();
-			//List<String> listError = validateUser.validateUserInfor(userInfor);// validate user
-			List<String> listError = new ArrayList<>();
+			List<String> listError = validateUser.validateUserInfor(userInfor);// validate user
+			// List<String> listError = new ArrayList<>();
 			StringBuffer stringBuffer = new StringBuffer();
 			// case haven't error
 			if (listError.isEmpty()) {
@@ -220,7 +231,7 @@ public class AddUserInputController extends HttpServlet {
 			}
 		}
 		StringBuffer urlBack = new StringBuffer(req.getContextPath());
-		// set user id
+		// set user id ADM03 -> ADM004
 		if (paramUserId != null) {
 			int id = Common.parseInt(paramUserId, 0);
 			userInfor.setUserId(id);

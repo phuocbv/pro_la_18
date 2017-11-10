@@ -45,7 +45,8 @@
 									name="${UserInfor.LOGIN_NAME }"
 									value="<c:out value="${userInfor.loginName }" escapeXml="true" />"
 									size="15" onfocus="this.style.borderColor='#0066ff';"
-									onblur="this.style.borderColor='#aaaaaa';" /></td>
+									onblur="this.style.borderColor='#aaaaaa';"
+									${userId != null ? 'readonly' : ''}/></td>
 							</tr>
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> グループ:</td>

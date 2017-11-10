@@ -81,14 +81,22 @@ public interface TblUserLogic {
 	 * 
 	 * @param userInfor
 	 *            : object userInfor
-	 * @return boolean : check create user
+	 * @return boolean : check create success
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
 	public boolean createUser(UserInfor userInfor) throws ClassNotFoundException, SQLException;
-	
-	public boolean updateUser(UserInfor userInfor) throws ClassNotFoundException, SQLException;
-	
+
+	/**
+	 * update tbl_user
+	 * 
+	 * @param userInfor : object contain  
+	 * @return boolean : check update success
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public boolean editUser(UserInfor userInfor) throws ClassNotFoundException, SQLException;
+
 	/**
 	 * get user by id
 	 * 

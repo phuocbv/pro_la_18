@@ -109,6 +109,7 @@ public class LoginFilter implements Filter {
 		listUrlAllow.add(Constant.URL_ADD_USER_OK);
 		listUrlAllow.add(Constant.URL_SHOW_DETAIL_USER);
 		listUrlAllow.add(Constant.URL_SUCCESS);
+		listUrlAllow.add(Constant.URL_EDIT_USER_INPUT);
 	}
 
 }
