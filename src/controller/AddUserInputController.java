@@ -216,7 +216,6 @@ public class AddUserInputController extends HttpServlet {
 			userInfor.setBirthdayYear(String.valueOf(birthday.get(0)));
 			userInfor.setBirthdayMonth(String.valueOf(birthday.get(1)));
 			userInfor.setBirthdayDay(String.valueOf(birthday.get(2)));
-
 			String codeLevel = userInfor.getCodeLevel();
 			// check exist code level
 			if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {

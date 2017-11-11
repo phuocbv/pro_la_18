@@ -64,15 +64,13 @@ public class AddUserConfirmController extends HttpServlet {
 				return;
 			}
 			// case edit user
-			if (userInfor.getUserId() > 0) {
-				MstGroup mstGroup = mstGroupLogic.getGroupById(userInfor.getGroupId());
-				userInfor.setGroupName(mstGroup.getGroupName());
-				String codeLevel = userInfor.getCodeLevel();
-				// check have level japan
-				if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
-					MstJapan mstJapan = mstJapanLogic.getMstJapanByCodeLevel(userInfor.getCodeLevel());
-					userInfor.setNameLevel(mstJapan.getNameLevel());
-				}
+			MstGroup mstGroup = mstGroupLogic.getGroupById(userInfor.getGroupId());
+			userInfor.setGroupName(mstGroup.getGroupName());
+			String codeLevel = userInfor.getCodeLevel();
+			// check have level japan
+			if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
+				MstJapan mstJapan = mstJapanLogic.getMstJapanByCodeLevel(userInfor.getCodeLevel());
+				userInfor.setNameLevel(mstJapan.getNameLevel());
 			}
 			StringBuffer urlSubmit = new StringBuffer();
 			urlSubmit.append(req.getContextPath()).append(Constant.URL_ADD_USER_OK);
@@ -104,16 +102,19 @@ public class AddUserConfirmController extends HttpServlet {
 		try {
 			String keySession = req.getParameter(Constant.KEY_SESSION);
 			UserInfor userInfor = (UserInfor) req.getSession().getAttribute(keySession);
+			System.out.println(userInfor + " userInfor");
 			boolean success = false;
+			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
 			if (userInfor != null) {
 				if (userInfor.getUserId() > 0) {//in case update user
 					//call user logic update 
+					success = tblUserLogic.editUser(userInfor);
 				} else {//in case create user
 					success = tblUserLogic.createUser(userInfor);
 				}
 				req.getSession().removeAttribute(keySession);
 			}
-			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+			
 			stringBuffer.append(Constant.URL_SUCCESS);
 			stringBuffer.append("?");
 			stringBuffer.append(Constant.TYPE);
@@ -125,6 +126,7 @@ public class AddUserConfirmController extends HttpServlet {
 			}
 			resp.sendRedirect(stringBuffer.toString());
 		} catch (Exception e) {
+			e.printStackTrace();
 			Common.processSystemError(req, resp);
 		}
 	}

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import common.Common;
+import common.Constant;
 import dao.*;
 import dao.impl.*;
 import entity.TblDetailUserJapan;
@@ -168,6 +169,53 @@ public class TblUserLogicImpl implements TblUserLogic {
 		}
 		return true;
 	}
+	
+	@Override
+	public boolean editUser(UserInfor userInfor) throws ClassNotFoundException, SQLException {
+		TblUser oldTbluser = tblUserDAO.getTblUserById(userInfor.getUserId());
+		if (oldTbluser == null) {
+			return false;
+		}
+		int groupId = Common.parseInt(userInfor.getGroupId(), 0);
+		TblUser tblUser = new TblUser();
+		tblUser.setUserId(userInfor.getUserId());
+		tblUser.setGroupId(groupId);
+		tblUser.setFullName(userInfor.getFullName());
+		tblUser.setFullNameKana(userInfor.getFullNameKana());
+		tblUser.setEmail(userInfor.getEmail());
+		tblUser.setTel(userInfor.getTel());
+		tblUser.setBirthday(userInfor.getBirthday());
+		String newPasswrod = userInfor.getPassword();
+		if (newPasswrod == null || Constant.EMPTY_STRING.equals(newPasswrod)) {
+			tblUser.setPassword(oldTbluser.getPassword());
+		} else {
+			newPasswrod = Common.MD5(newPasswrod, oldTbluser.getSalt());
+			tblUser.setPassword(newPasswrod);
+		}
+		try {
+			baseDAO.dbConnection();// create connection
+			baseDAO.setAutoCommit(false);// set auto commit = false
+			tblUserDAO.updateUser(tblUser);
+			if (userInfor.getCodeLevel() != null) {
+				int total = Common.parseInt(userInfor.getTotal(), 0);
+				TblDetailUserJapan tblDetailUserJapan = new TblDetailUserJapan();
+				tblDetailUserJapan.setUserId(oldTbluser.getUserId());
+				tblDetailUserJapan.setCodeLevel(userInfor.getCodeLevel());
+				tblDetailUserJapan.setStartDate(userInfor.getStartDate());
+				tblDetailUserJapan.setEndDate(userInfor.getEndDate());
+				tblDetailUserJapan.setTotal(total);
+				tblDetailUserJapanDAO.updateDetailUserJapan(tblDetailUserJapan);
+			}
+			baseDAO.commit();
+		} catch (SQLException e) {
+			baseDAO.rollBack();
+			e.printStackTrace();
+			return false;
+		} finally {
+			baseDAO.closeConnect();
+		}
+		return true;
+	}
 
 	/**
 	 * get user by id
@@ -187,49 +235,5 @@ public class TblUserLogicImpl implements TblUserLogic {
 			return null;
 		}
 		return tblUserDAO.getUserInforById(userId);
-	}
-
-	@Override
-	public boolean editUser(UserInfor userInfor) throws ClassNotFoundException, SQLException {
-		// int userId =
-		// TblUser tblUser = tblUserDAO.getTblUserById()
-		int groupId = Common.parseInt(userInfor.getGroupId(), 0);
-		String salt = Common.MD5(Common.randomString());
-		String password = Common.MD5(userInfor.getPassword(), salt);
-		TblUser tblUser = new TblUser();
-		tblUser.setGroupId(groupId);
-		tblUser.setLoginName(userInfor.getLoginName());
-		tblUser.setPassword(password);
-		tblUser.setFullName(userInfor.getFullName());
-		tblUser.setFullNameKana(userInfor.getFullNameKana());
-		tblUser.setEmail(userInfor.getEmail());
-		tblUser.setTel(userInfor.getTel());
-		tblUser.setBirthday(userInfor.getBirthday());
-		tblUser.setSalt(salt);
-		try {
-			baseDAO.dbConnection();// create connection
-			baseDAO.setAutoCommit(false);// set auto commit = false
-			Integer userId = tblUserDAO.insertUser(tblUser);
-			if (userId == null) {// if insert tbl_user not success then return false
-				return false;
-			}
-			if (userInfor.getCodeLevel() != null) {
-				int total = Common.parseInt(userInfor.getTotal(), 0);
-				TblDetailUserJapan tblDetailUserJapan = new TblDetailUserJapan();
-				tblDetailUserJapan.setUserId(userId);
-				tblDetailUserJapan.setCodeLevel(userInfor.getCodeLevel());
-				tblDetailUserJapan.setStartDate(userInfor.getStartDate());
-				tblDetailUserJapan.setEndDate(userInfor.getEndDate());
-				tblDetailUserJapan.setTotal(total);
-				tblDetailUserJapanDAO.insertDetailUserJapan(tblDetailUserJapan);
-			}
-			baseDAO.commit();
-		} catch (SQLException e) {
-			baseDAO.rollBack();
-			return false;
-		} finally {
-			baseDAO.closeConnect();
-		}
-		return true;
 	}
 }

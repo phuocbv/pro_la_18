@@ -129,10 +129,12 @@ public class ValidateUser {
 		} else if (tel.length() > Constant.MAX_LENGTH_TEL) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER006_TEL));
 		}
-		// check password (3)
+		// check password in case add (3)
 		String password = userInfor.getPassword();
 		if (password == null || Constant.EMPTY_STRING.equals(password)) {
-			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_PASSWORD));
+			if (userId == null) {
+				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_PASSWORD));
+			}
 		} else {
 			if (password.length() < Constant.MIN_LENGTH_PASSWORD || password.length() > Constant.MAX_LENGTH_PASSWORD) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER007_PASSWORD));

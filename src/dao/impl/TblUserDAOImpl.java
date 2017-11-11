@@ -42,20 +42,21 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			.append(" tbl_user.full_name, tbl_user.full_name_kana, tbl_user.email, tbl_user.tel, tbl_user.birthday, tbl_user.salt ")
 			.append(" FROM tbl_user ");
 
-	private StringBuffer sqlInsertUser = new StringBuffer().append(
-			" INSERT INTO tbl_user (group_id, login_name, password, full_name, full_name_kana, email, tel, birthday, salt) ")
+	private StringBuffer sqlInsertUser = new StringBuffer()
+			.append(" INSERT INTO tbl_user (group_id, login_name, password, ")
+			.append(" full_name, full_name_kana, email, tel, birthday, salt) ")
 			.append(" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 
-	private StringBuffer sqlGetUserInforById = new StringBuffer().append(
-			" SELECT tbl_user.user_id, tbl_user.group_id, mst_group.group_name, tbl_user.login_name, tbl_user.full_name, tbl_user.full_name_kana, tbl_user.birthday, ")
+	private StringBuffer sqlGetUserInforById = new StringBuffer()
+			.append(" SELECT tbl_user.user_id, tbl_user.group_id, mst_group.group_name, tbl_user.login_name, ")
+			.append(" tbl_user.full_name, tbl_user.full_name_kana, tbl_user.birthday, ")
 			.append(" tbl_user.email, tbl_user.tel, mst_japan.code_level, mst_japan.name_level, tbl_detail_user_japan.start_date, ")
 			.append(" tbl_detail_user_japan.end_date, tbl_detail_user_japan.total ").append(sqlJoin.toString())
 			.append(" AND tbl_user.user_id = ? ");
 
-	private StringBuffer sqlUpdateUser = new StringBuffer()
-			.append(" UPDATE tbl_user.group_id, tbl_user.password, tbl_user.full_name, ")
-			.append(" tbl_user.full_name_kana, tbl_user.email, tbl_user.tel, tbl_user.birthday ")
-			.append(" SET (?, ?, ?, ?, ?, ?, ?) WHERE tbl_user.user_id = ?");
+	private StringBuffer sqlUpdateUser = new StringBuffer().append(" UPDATE tbl_user ").append(
+			" SET tbl_user.group_id = ?, tbl_user.password = ?, tbl_user.full_name = ?, tbl_user.full_name_kana = ?, ")
+			.append(" tbl_user.email = ?, tbl_user.tel = ?, tbl_user.birthday = ? WHERE tbl_user.user_id = ?");
 
 	/**
 	 * get list user
@@ -414,6 +415,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		pstm.setString(++i, tblUser.getTel());
 		pstm.setDate(++i, new Date(tblUser.getBirthday().getTime()));
 		pstm.setInt(++i, tblUser.getUserId());
+		System.out.println(pstm.toString());
 		pstm.executeUpdate();
 		return userId;
 	}

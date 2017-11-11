@@ -8,7 +8,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 import dao.TblDetailUserJapanDAO;
-import entity.MstGroup;
 import entity.TblDetailUserJapan;
 
 /**
@@ -22,7 +21,9 @@ public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDetailU
 			.append(" INSERT INTO tbl_detail_user_japan(user_id, code_level, start_date, end_date, total) ")
 			.append(" VALUES (?, ?, ?, ?, ?) ");
 
-	private StringBuffer sqlUpdateDetailUserJapan = new StringBuffer().append("");
+	private StringBuffer sqlUpdateDetailUserJapan = new StringBuffer().append(" UPDATE tbl_detail_user_japan ")
+			.append(" SET tbl_detail_user_japan.code_level = ?, tbl_detail_user_japan.start_date = ?, ")
+			.append(" tbl_detail_user_japan.end_date = ?, tbl_detail_user_japan.total=? WHERE user_id = ? ");
 
 	/**
 	 * insert in detail user japan
@@ -47,22 +48,16 @@ public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDetailU
 		return true;
 	}
 
+	/**
+	 * update detail user japan
+	 * 
+	 * @param tblDetailUserJapan
+	 *            is object of table tbl_detail_user_japan
+	 * @return boolean check update success
+	 * @throws SQLException
+	 */
 	@Override
 	public boolean updateDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException {
-		// if (connection == null) {
-		// return false;
-		// }
-		// int i = 0;
-		// pstm = connection.prepareStatement(sqlInsertDetailUserJapan.toString());
-		// pstm.setInt(++i, tblDetailUserJapan.getUserId());
-		// pstm.setString(++i, tblDetailUserJapan.getCodeLevel());
-		// pstm.setDate(++i, new Date(tblDetailUserJapan.getStartDate().getTime()));
-		// pstm.setDate(++i, new Date(tblDetailUserJapan.getEndDate().getTime()));
-		// pstm.setInt(++i, tblDetailUserJapan.getTotal());
-		// pstm.executeUpdate();
-		// return true;
-		//
-		// if connect null then return
 		if (connection == null) {
 			return false;
 		}
@@ -73,6 +68,7 @@ public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDetailU
 		pstm.setDate(++i, new Date(tblDetailUserJapan.getEndDate().getTime()));
 		pstm.setInt(++i, tblDetailUserJapan.getTotal());
 		pstm.setInt(++i, tblDetailUserJapan.getUserId());
+		System.out.println(pstm.toString());
 		pstm.executeUpdate();
 		return true;
 	}

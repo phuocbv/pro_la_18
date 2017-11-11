@@ -27,7 +27,7 @@ public interface TblDetailUserJapanDAO {
 	/**
 	 * update detail user japan
 	 * 
-	 * @param tblDetailUserJapan
+	 * @param tblDetailUserJapan is object of table tbl_detail_user_japan
 	 * @return boolean check update success
 	 * @throws SQLException
 	 */

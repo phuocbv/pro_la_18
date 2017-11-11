@@ -4,10 +4,7 @@
  */
 package controller;
 
-import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -71,30 +68,4 @@ public class ShowDetailUserController extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
-	 * javax.servlet.http.HttpServletResponse)
-	 */
-//	@Override
-//	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		try {
-//			String paramUserId = req.getParameter("userId");
-//			String type = req.getParameter(Constant.TYPE);
-//			UserInfor userInfor = tblUserLogic.getUserInforById(paramUserId);
-//			StringBuffer url = new StringBuffer(req.getContextPath());
-//			if (userInfor == null) {
-//				url.append(Constant.URL_SUCCESS).append("?type=")
-//						.append(Constant.ERROR);
-//			}
-//			
-//			resp.sendRedirect(url.toString());
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
 }
