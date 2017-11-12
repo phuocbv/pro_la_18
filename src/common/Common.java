@@ -97,12 +97,13 @@ public class Common {
 				Constant.DEFAULT_NUMBER_PAGE_IN_PAGE);
 		// total page follow limit
 		int totalPage = totalPage(totalRecords, limit);// (int) Math.ceil((float) totalRecords / limit);
-		if (currentPage < 1) {// if page < 1 still display paging 1 2 3 and data empty
-			currentPage = 1;
-		}
-		if (currentPage > totalPage) {
-			currentPage = totalPage;
-		}
+		// if (currentPage < 1) {// if page < 1 still display paging 1 2 3 and data
+		// empty
+		// currentPage = 1;
+		// }
+		// if (currentPage > totalPage) {
+		// currentPage = totalPage;
+		// }
 		int currentRange = getCurrentRange(currentPage, numberPageInPage);// get current range
 		int start = getStartPage(currentRange, numberPageInPage);// start paging
 		int end = getEndPage(currentRange, numberPageInPage, totalPage);// end paging
@@ -397,9 +398,9 @@ public class Common {
 			return false;
 		}
 		// if birthday > current date then return false
-//		if ((new Date()).compareTo(date) < 0) {
-//			return false;
-//		}
+		// if ((new Date()).compareTo(date) < 0) {
+		// return false;
+		// }
 		return true;
 	}
 
@@ -426,13 +427,13 @@ public class Common {
 	 * @param req
 	 * @param resp
 	 */
-	public static void processSystemError(HttpServletRequest req, HttpServletResponse resp) {
-		StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+	public static void processSystemError(HttpServletRequest req, HttpServletResponse resp, String type) {
+		StringBuffer urlNotification = new StringBuffer(req.getContextPath());
+		urlNotification.append(Constant.URL_SUCCESS).append("?type=").append(type);
 		try {
 			// in case have error then send redirect to view error
-			resp.sendRedirect(stringBuffer.append(Constant.URL_SUCCESS).toString());
+			resp.sendRedirect(urlNotification.toString());
 		} catch (IOException e1) {
-
 		}
 	}
 }

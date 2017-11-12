@@ -49,13 +49,17 @@ public class SuccessController extends HttpServlet {
 				message = MessageProperties.getValue(ConstantProperties.SYSTEM_ERROR);
 			} else if (Constant.INSERT_SUCCESS.equals(type)) {
 				message = MessageProperties.getValue(ConstantProperties.MSG001);
+			} else if (Constant.UPDATE_SUCCESS.equals(type)) {
+				message = MessageProperties.getValue(ConstantProperties.MSG002);
+			} else if (Constant.DELETE_SUCCESS.equals(type)) {
+				message = MessageProperties.getValue(ConstantProperties.MSG003);
 			}
 			req.setAttribute("color", color);
 			req.setAttribute("message", message);
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM006);
 			dispatcher.forward(req, resp);// forward to jsp page
 		} catch (Exception e) {
-			Common.processSystemError(req, resp);
+			Common.processSystemError(req, resp, Constant.ERROR);
 		}
 
 	}

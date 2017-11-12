@@ -28,7 +28,8 @@ import logic.impl.TblUserLogicImpl;
  * @author LA-AM
  *
  */
-@WebServlet(urlPatterns = { Constant.URL_ADD_USER_OK, Constant.URL_ADD_USER_CONFIRM, Constant.URL_EDIT_USER_CONFIRM })
+@WebServlet(urlPatterns = { Constant.URL_ADD_USER_OK, Constant.URL_ADD_USER_CONFIRM, Constant.URL_EDIT_USER_CONFIRM,
+		Constant.URL_EDIT_USER_OK })
 public class AddUserConfirmController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MstGroupLogic mstGroupLogic;
@@ -58,9 +59,7 @@ public class AddUserConfirmController extends HttpServlet {
 			UserInfor userInfor = (UserInfor) req.getSession().getAttribute(keySession);
 			// check userInfor exist
 			if (userInfor == null) {
-				StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
-				stringBuffer.append(Constant.URL_SUCCESS).append("?type=").append(Constant.ERROR);
-				resp.sendRedirect(stringBuffer.toString());
+				Common.processSystemError(req, resp, Constant.ERROR);
 				return;
 			}
 			// case edit user
@@ -72,11 +71,16 @@ public class AddUserConfirmController extends HttpServlet {
 				MstJapan mstJapan = mstJapanLogic.getMstJapanByCodeLevel(userInfor.getCodeLevel());
 				userInfor.setNameLevel(mstJapan.getNameLevel());
 			}
+			int userId = userInfor.getUserId();
 			StringBuffer urlSubmit = new StringBuffer();
-			urlSubmit.append(req.getContextPath()).append(Constant.URL_ADD_USER_OK);
+			// url submit
+			String urlActionSubmit = userId > 0 ? Constant.URL_EDIT_USER_OK : Constant.URL_ADD_USER_OK;
+			urlSubmit.append(req.getContextPath()).append(urlActionSubmit);
 			StringBuffer urlBack = new StringBuffer();
-			urlBack.append(req.getContextPath()).append(Constant.URL_ADD_USER_INPUT).append("?type=")
-					.append(Constant.TYPE_ADM004).append("&key=").append(keySession);
+			String urlActionBack = userId > 0 ? Constant.URL_EDIT_USER_INPUT : Constant.URL_ADD_USER_INPUT;
+			// url back
+			urlBack.append(req.getContextPath()).append(urlActionBack).append("?type=").append(Constant.TYPE_ADM004)
+					.append("&key=").append(keySession);
 			req.setAttribute("urlSubmit", urlSubmit.toString());
 			req.setAttribute("urlBack", urlBack.toString());
 			req.setAttribute("keySession", keySession);
@@ -86,7 +90,7 @@ public class AddUserConfirmController extends HttpServlet {
 			dispatcher.forward(req, resp);// forward to page jsp
 		} catch (Exception e) {
 			e.printStackTrace();
-			Common.processSystemError(req, resp);
+			Common.processSystemError(req, resp, Constant.ERROR);
 		}
 	}
 
@@ -102,33 +106,26 @@ public class AddUserConfirmController extends HttpServlet {
 		try {
 			String keySession = req.getParameter(Constant.KEY_SESSION);
 			UserInfor userInfor = (UserInfor) req.getSession().getAttribute(keySession);
-			System.out.println(userInfor + " userInfor");
 			boolean success = false;
-			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+			String type = Constant.ERROR;
+			StringBuffer urlNotification = new StringBuffer(req.getContextPath());
 			if (userInfor != null) {
-				if (userInfor.getUserId() > 0) {//in case update user
-					//call user logic update 
-					success = tblUserLogic.editUser(userInfor);
-				} else {//in case create user
+				if (userInfor.getUserId() > 0) {// in case update user
+					success = tblUserLogic.editUser(userInfor);// call user logic update
+					type = Constant.UPDATE_SUCCESS;
+				} else {// in case create user
 					success = tblUserLogic.createUser(userInfor);
+					type = Constant.INSERT_SUCCESS;
 				}
 				req.getSession().removeAttribute(keySession);
 			}
-			
-			stringBuffer.append(Constant.URL_SUCCESS);
-			stringBuffer.append("?");
-			stringBuffer.append(Constant.TYPE);
-			stringBuffer.append("=");
-			if (success) {
-				stringBuffer.append(Constant.INSERT_SUCCESS);
-			} else {
-				stringBuffer.append(Constant.ERROR);
-			}
-			resp.sendRedirect(stringBuffer.toString());
+			urlNotification.append(Constant.URL_SUCCESS).append("?").append(Constant.TYPE).append("=");
+			type = success ? type : Constant.ERROR;
+			urlNotification.append(type);
+			resp.sendRedirect(urlNotification.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
-			Common.processSystemError(req, resp);
+			Common.processSystemError(req, resp, Constant.ERROR);
 		}
 	}
-
 }

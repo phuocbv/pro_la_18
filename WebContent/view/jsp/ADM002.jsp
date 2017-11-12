@@ -16,7 +16,9 @@
 <body>
 	<jsp:include page="header.jsp" />
 	<!-- Begin vung dieu kien tim kiem -->
-	<form action="listUser.do?type=search" method="post" name="mainform">
+	<form
+		action="${pageContext.request.contextPath}${Constant.URL_LIST_USER}?type=search"
+		method="post" name="mainform">
 		<table class="tbl_input" border="0" width="90%" cellpadding="0"
 			cellspacing="0">
 			<tr>

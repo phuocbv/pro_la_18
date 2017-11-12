@@ -56,12 +56,12 @@ public class LoginFilter implements Filter {
 		String path = req.getRequestURI().substring(req.getContextPath().length());
 		// get session admin
 		String loginName = (String) req.getSession().getAttribute(Constant.SESSION_LOGGINED_USER);
-		StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+		StringBuffer url = new StringBuffer(req.getContextPath());
 
 		// if path is /login
 		if (Constant.URL_LOGIN.equals(path)) {
 			if (loginName != null) {// if logined then direct to list user
-				res.sendRedirect(stringBuffer.append(Constant.URL_LIST_USER).toString());
+				res.sendRedirect(url.append(Constant.URL_LIST_USER).toString());
 				return;
 			} else {// to login page
 				chain.doFilter(request, response);
@@ -80,7 +80,8 @@ public class LoginFilter implements Filter {
 		if (loginName != null) {
 			// domain name have not in list url do then redirect to list user
 			if (!listUrlAllow.contains(path)) {
-				res.sendRedirect(stringBuffer.append(Constant.URL_SUCCESS).toString());
+				url.append(Constant.URL_SUCCESS).append("?type=").append(Constant.ERROR);
+				res.sendRedirect(url.toString());
 				return;
 			}
 			chain.doFilter(request, response);
@@ -88,7 +89,7 @@ public class LoginFilter implements Filter {
 		}
 
 		// if not login then redirect to path login
-		res.sendRedirect(stringBuffer.append(Constant.URL_LOGIN).toString());
+		res.sendRedirect(url.append(Constant.URL_LOGIN).toString());
 
 	}
 
@@ -102,7 +103,7 @@ public class LoginFilter implements Filter {
 		listUrlAllow = new ArrayList<String>();
 		listUrlAllow.add(Constant.URL_LIST_USER);
 		listUrlAllow.add(Constant.URL_LOGOUT);
-		listUrlAllow.add(Constant.URL_VIEW_EROR);
+		listUrlAllow.add(Constant.URL_DELETE_USER);
 		listUrlAllow.add(Constant.URL_ADD_USER_INPUT);
 		listUrlAllow.add(Constant.URL_ADD_USER_VALIDATE);
 		listUrlAllow.add(Constant.URL_ADD_USER_CONFIRM);
@@ -110,6 +111,9 @@ public class LoginFilter implements Filter {
 		listUrlAllow.add(Constant.URL_SHOW_DETAIL_USER);
 		listUrlAllow.add(Constant.URL_SUCCESS);
 		listUrlAllow.add(Constant.URL_EDIT_USER_INPUT);
+		listUrlAllow.add(Constant.URL_EDIT_USER_VALIDATE);
+		listUrlAllow.add(Constant.URL_EDIT_USER_CONFIRM);
+		listUrlAllow.add(Constant.URL_EDIT_USER_OK);
 	}
 
 }

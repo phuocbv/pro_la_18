@@ -44,15 +44,9 @@ public class UserInfor {
 	private String endDay;
 
 	// field name in ADM002 of database
-	// public static final String USER_ID = "user_id";
 	public static final String FULL_NAME = "full_name";
-	// public static final String BIRTHDAY = "birthday";
 	public static final String EMAIL = "email";
 	public static final String TEL = "tel";
-	// public static final String GROUP_NAME = "group_name";
-	// public static final String NAME_LEVEL = "name_level";
-	// public static final String END_DATE = "end_date";
-	// public static final String TOTAL = "total";
 	public static final String FULL_NAME_KANA = "full_name_kana";
 
 	// japan

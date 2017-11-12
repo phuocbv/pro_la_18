@@ -33,7 +33,8 @@ import validate.ValidateUser;
  * @author da
  *
  */
-@WebServlet(urlPatterns = { Constant.URL_ADD_USER_INPUT, Constant.URL_ADD_USER_VALIDATE, Constant.URL_EDIT_USER_INPUT })
+@WebServlet(urlPatterns = { Constant.URL_ADD_USER_INPUT, Constant.URL_ADD_USER_VALIDATE, Constant.URL_EDIT_USER_INPUT,
+		Constant.URL_EDIT_USER_VALIDATE })
 public class AddUserInputController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MstJapanLogic mstJapanLogic;
@@ -64,10 +65,8 @@ public class AddUserInputController extends HttpServlet {
 			UserInfor userInfor = null;
 			if (Constant.TYPE_ADM005.equals(type)) {
 				userInfor = tblUserLogic.getUserInforById(paramUserId);
-				if (userInfor == null) {
-					StringBuffer url = new StringBuffer(req.getContextPath()).append(Constant.URL_SUCCESS)
-							.append("?type=").append(Constant.ERROR);
-					resp.sendRedirect(url.toString());
+				if (userInfor == null) {// in case userInfor not exist
+					Common.processSystemError(req, resp, Constant.ERROR);
 					return;
 				}
 			}
@@ -77,7 +76,7 @@ public class AddUserInputController extends HttpServlet {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM003);
 			dispatcher.forward(req, resp);// forward to page jsp
 		} catch (Exception e) {
-			Common.processSystemError(req, resp);
+			Common.processSystemError(req, resp, Constant.ERROR);
 		}
 	}
 
@@ -95,13 +94,13 @@ public class AddUserInputController extends HttpServlet {
 			UserInfor userInfor = setDefaultValue(req, resp);
 			ValidateUser validateUser = new ValidateUser();
 			List<String> listError = validateUser.validateUserInfor(userInfor);// validate user
-			// List<String> listError = new ArrayList<>();
-			StringBuffer stringBuffer = new StringBuffer();
+			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
 			// case haven't error
 			if (listError.isEmpty()) {
-				stringBuffer.append(req.getContextPath());
 				String keySession = Common.MD5(Common.randomString());
-				stringBuffer.append(Constant.URL_ADD_USER_CONFIRM);
+				String action = userInfor.getUserId() > 0 ? Constant.URL_EDIT_USER_CONFIRM
+						: Constant.URL_ADD_USER_CONFIRM;
+				stringBuffer.append(action);
 				stringBuffer.append("?");
 				stringBuffer.append(Constant.KEY_SESSION);
 				stringBuffer.append("=");
@@ -116,7 +115,7 @@ public class AddUserInputController extends HttpServlet {
 				dispatcher.forward(req, resp);// forward to page jsp
 			}
 		} catch (Exception e) {
-			Common.processSystemError(req, resp);
+			Common.processSystemError(req, resp, Constant.ERROR);
 		}
 	}
 
@@ -169,8 +168,8 @@ public class AddUserInputController extends HttpServlet {
 	private UserInfor setDefaultValue(HttpServletRequest req, HttpServletResponse resp)
 			throws ClassNotFoundException, SQLException {
 		String type = req.getParameter(Constant.TYPE);
-		UserInfor userInfor = null;
 		String paramUserId = req.getParameter("userId");
+		UserInfor userInfor = null;
 		if (type == null || Constant.EMPTY_STRING.equals(type) || Constant.TYPE_ADM002.equals(type)) {// from ADM002
 			userInfor = new UserInfor();
 		} else if (Constant.TYPE_ADM004.equals(type)) {// from ADM004
@@ -208,7 +207,7 @@ public class AddUserInputController extends HttpServlet {
 
 				userInfor.setTotal(req.getParameter(UserInfor.TOTAL));
 			}
-		} else if (Constant.TYPE_ADM005.equals(type)) {
+		} else if (Constant.TYPE_ADM005.equals(type)) {// from ADM005
 			// String userId = req.getParameter("userId");
 			userInfor = tblUserLogic.getUserInforById(paramUserId);
 			// get array integer of birthday
@@ -230,7 +229,8 @@ public class AddUserInputController extends HttpServlet {
 			}
 		}
 		StringBuffer urlBack = new StringBuffer(req.getContextPath());
-		// set user id ADM03 -> ADM004
+		StringBuffer urlSubmit = new StringBuffer(req.getContextPath());
+		// set user id ADM03 -> ADM003
 		if (paramUserId != null) {
 			int id = Common.parseInt(paramUserId, 0);
 			userInfor.setUserId(id);
@@ -239,10 +239,14 @@ public class AddUserInputController extends HttpServlet {
 		int userId = userInfor.getUserId();
 		if (userId > 0) {
 			urlBack.append(Constant.URL_SHOW_DETAIL_USER).append("?userId=").append(userId);
+			urlSubmit.append(Constant.URL_EDIT_USER_VALIDATE);
 			req.setAttribute("userId", userId);
 		} else {
 			urlBack.append(Constant.URL_LIST_USER).append("?type=back");
+			urlSubmit.append(Constant.URL_ADD_USER_VALIDATE);
 		}
+		urlSubmit.append("?type=").append(Constant.TYPE_ADM003);
+		req.setAttribute("urlSubmit", urlSubmit.toString());
 		req.setAttribute("urlBack", urlBack.toString());
 		return userInfor;
 	}

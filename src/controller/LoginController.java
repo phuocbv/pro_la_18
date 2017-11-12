@@ -4,11 +4,9 @@
  */
 package controller;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,11 +44,14 @@ public class LoginController extends HttpServlet {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// tạo đối tượng RequestDispatcher để forward đến trang jsp
-		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM001);
-		dispatcher.forward(request, response);// forward đến trang jsp
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			// tạo đối tượng RequestDispatcher để forward đến trang jsp
+			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM001);
+			dispatcher.forward(request, response);// forward đến trang jsp
+		} catch (Exception e) {
+			Common.processSystemError(request, response, Constant.ERROR);
+		}
 	}
 
 	/*
@@ -81,7 +82,7 @@ public class LoginController extends HttpServlet {
 				dispatcher.forward(request, response);// forward to page jsp
 			}
 		} catch (Exception e) {
-			Common.processSystemError(request, response);
+			Common.processSystemError(request, response, Constant.ERROR);
 		}
 	}
 }

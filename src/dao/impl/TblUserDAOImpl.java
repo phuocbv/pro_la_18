@@ -58,6 +58,8 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			" SET tbl_user.group_id = ?, tbl_user.password = ?, tbl_user.full_name = ?, tbl_user.full_name_kana = ?, ")
 			.append(" tbl_user.email = ?, tbl_user.tel = ?, tbl_user.birthday = ? WHERE tbl_user.user_id = ?");
 
+	private String sqlDeleteTblUser = "DELETE FROM tbl_user WHERE tbl_user.user_id = ?";
+
 	/**
 	 * get list user
 	 * 
@@ -86,18 +88,18 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		ArrayList<UserInfor> listUser = new ArrayList<>();
 		try {
 			connection = getConnection();// get connection
-			if (connection == null) {// nếu connect null thì return
+			if (connection == null) {// if connect null then return
 				return listUser;
 			}
 			String sql = getSQLSearch(sqlGetListUser.toString(), groupId, fullName);// get SQL search
 			sql = getSQLSort(sql, sortType, sortByFullName, sortByCodeLevel, sortByEndDate);// get SQL sort
 			sql = getSQLPaging(sql, offset, limit);// add paging
-			pstm = connection.prepareStatement(sql);// sử dụng PrepareStatement
+			pstm = connection.prepareStatement(sql);// use PrepareStatement
 			setParam(sql, groupId, fullName);
 			System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
 			int i;
-			while (resultSet.next()) {// lặp từng bản ghi lấy ra và thêm vào list
+			while (resultSet.next()) {
 				i = 0;
 				UserInfor user = new UserInfor();
 				user.setUserId(resultSet.getInt(++i));
@@ -330,7 +332,6 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			}
 			System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
-			// repeat record get and add to list
 			if (resultSet.next()) {
 				i = 0;
 				tblUser = new TblUser();
@@ -403,9 +404,6 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	public Integer updateUser(TblUser tblUser) throws ClassNotFoundException, SQLException {
 		Integer userId = null;
 		int i = 0;
-		if (connection == null) {
-			return userId;
-		}
 		pstm = connection.prepareStatement(sqlUpdateUser.toString());
 		pstm.setInt(++i, tblUser.getGroupId());
 		pstm.setString(++i, tblUser.getPassword());
@@ -418,6 +416,23 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		System.out.println(pstm.toString());
 		pstm.executeUpdate();
 		return userId;
+	}
+
+	/**
+	 * delete tbl_user
+	 * 
+	 * @param userId
+	 *            is user_id in table tbl_user
+	 * @return boolean check delete tbl_user
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	@Override
+	public boolean deleteUser(int userId) throws ClassNotFoundException, SQLException {
+		pstm = connection.prepareStatement(sqlDeleteTblUser);
+		pstm.setInt(1, userId);
+		pstm.executeUpdate();
+		return true;
 	}
 
 	/**
@@ -507,11 +522,5 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			closeConnect();
 		}
 		return tblUser;
-	}
-
-	@Override
-	public boolean deleteUser(int userId) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

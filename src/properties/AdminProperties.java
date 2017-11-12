@@ -32,6 +32,7 @@ public class AdminProperties {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		@SuppressWarnings (value="unchecked")//remove warning
 		Enumeration<String> en = (Enumeration<String>) prop.propertyNames();
 		while (en.hasMoreElements()) {
 			String key = (String) en.nextElement();

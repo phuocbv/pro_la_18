@@ -1,10 +1,9 @@
 /**
  * Copyright(C) 2017  Luvina
- * ErrorController.java, 20/10/2017 phuocbv
+ * DeleteController.java, 10/11/2017 phuocbv
  */
 package controller;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,12 +20,12 @@ import logic.impl.TblUserLogicImpl;
  * @author da
  *
  */
-@WebServlet(urlPatterns = Constant.URL_SHOW_DETAIL_USER)
-public class ShowDetailUserController extends HttpServlet {
+@WebServlet(urlPatterns = Constant.URL_DELETE_USER)
+public class DeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	TblUserLogic tblUserLogic = null;
 
-	public ShowDetailUserController() {
+	public DeleteController() {
 		tblUserLogic = new TblUserLogicImpl();
 	}
 
@@ -34,11 +33,11 @@ public class ShowDetailUserController extends HttpServlet {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
+	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			String userId = req.getParameter("userId");
 			UserInfor userInfor = null;
@@ -51,18 +50,12 @@ public class ShowDetailUserController extends HttpServlet {
 				Common.processSystemError(req, resp, Constant.ERROR);
 				return;
 			}
-			req.setAttribute("userInfor", userInfor);
-			req.setAttribute("userId", userId);
-			StringBuffer urlSubmit = new StringBuffer().append(req.getContextPath())
-					.append(Constant.URL_EDIT_USER_INPUT);
-			StringBuffer urlBack = new StringBuffer().append(req.getContextPath()).append(Constant.URL_LIST_USER)
-					.append("?type=back");
-			req.setAttribute("urlSubmit", urlSubmit.toString());
-			req.setAttribute("urlBack", urlBack.toString());
-			req.setAttribute("method", Constant.METHOD_GET);
-			req.setAttribute("userId", userId);
-			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM004);
-			dispatcher.forward(req, resp);// forward to page jsp
+			// send redirect to url notification
+			StringBuffer url = new StringBuffer(req.getContextPath()).append(Constant.URL_SUCCESS).append("?type=");
+			boolean success = tblUserLogic.removeUser(userInfor.getUserId());// call logic delete user
+			String type = success ? Constant.DELETE_SUCCESS : Constant.ERROR;
+			url.append(type);
+			resp.sendRedirect(url.toString());
 		} catch (Exception e) {
 			Common.processSystemError(req, resp, Constant.ERROR);
 		}

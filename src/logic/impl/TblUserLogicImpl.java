@@ -169,16 +169,26 @@ public class TblUserLogicImpl implements TblUserLogic {
 		}
 		return true;
 	}
-	
+
+	/**
+	 * update tbl_user
+	 * 
+	 * @param userInfor
+	 *            : object contain
+	 * @return boolean : check update success
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	@Override
 	public boolean editUser(UserInfor userInfor) throws ClassNotFoundException, SQLException {
-		TblUser oldTbluser = tblUserDAO.getTblUserById(userInfor.getUserId());
+		TblUser oldTbluser = tblUserDAO.getTblUserById(userInfor.getUserId());// get old tbl_user
 		if (oldTbluser == null) {
 			return false;
 		}
 		int groupId = Common.parseInt(userInfor.getGroupId(), 0);
+		int userId = userInfor.getUserId();
 		TblUser tblUser = new TblUser();
-		tblUser.setUserId(userInfor.getUserId());
+		tblUser.setUserId(userId);
 		tblUser.setGroupId(groupId);
 		tblUser.setFullName(userInfor.getFullName());
 		tblUser.setFullNameKana(userInfor.getFullNameKana());
@@ -192,6 +202,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			newPasswrod = Common.MD5(newPasswrod, oldTbluser.getSalt());
 			tblUser.setPassword(newPasswrod);
 		}
+		TblDetailUserJapan detailUserJapan = tblDetailUserJapanDAO.gettDetailUserJapanByUserId(userId);
 		try {
 			baseDAO.dbConnection();// create connection
 			baseDAO.setAutoCommit(false);// set auto commit = false
@@ -204,12 +215,46 @@ public class TblUserLogicImpl implements TblUserLogic {
 				tblDetailUserJapan.setStartDate(userInfor.getStartDate());
 				tblDetailUserJapan.setEndDate(userInfor.getEndDate());
 				tblDetailUserJapan.setTotal(total);
-				tblDetailUserJapanDAO.updateDetailUserJapan(tblDetailUserJapan);
+				if (detailUserJapan == null) {// if not exist then add to database
+					tblDetailUserJapanDAO.insertDetailUserJapan(tblDetailUserJapan);
+				} else {
+					tblDetailUserJapanDAO.updateDetailUserJapan(tblDetailUserJapan);
+				}
+			} else {// if exist detailUserJapan and codeLevel is null then delete detailUserJapan
+				if (detailUserJapan != null) {
+					tblDetailUserJapanDAO.deleteDetailUserJapan(userId);
+				}
 			}
 			baseDAO.commit();
 		} catch (SQLException e) {
 			baseDAO.rollBack();
 			e.printStackTrace();
+			return false;
+		} finally {
+			baseDAO.closeConnect();
+		}
+		return true;
+	}
+
+	/**
+	 * remote user
+	 * 
+	 * @param userId
+	 *            is user_id in table tbl_user
+	 * @return boolean is check remove success
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	@Override
+	public boolean removeUser(int userId) throws ClassNotFoundException, SQLException {
+		try {
+			baseDAO.dbConnection();// create connection
+			baseDAO.setAutoCommit(false);// set auto commit = false
+			tblDetailUserJapanDAO.deleteDetailUserJapan(userId);
+			tblUserDAO.deleteUser(userId);
+			baseDAO.commit();
+		} catch (SQLException e) {
+			baseDAO.rollBack();
 			return false;
 		} finally {
 			baseDAO.closeConnect();

@@ -78,6 +78,7 @@ public class ListUserController extends HttpServlet {
 			if (type == null) {
 
 			}
+			@SuppressWarnings(value = "unchecked")
 			Map<String, String> dataSession = (HashMap<String, String>) session
 					.getAttribute(Constant.SESSION_CONDITION_STORE);// get condition get user in session
 			int page = 1;// default page
@@ -141,7 +142,7 @@ public class ListUserController extends HttpServlet {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM002);
 			dispatcher.forward(request, response);// forward to page jsp
 		} catch (Exception e) {
-			Common.processSystemError(request, response);
+			Common.processSystemError(request, response, Constant.ERROR);
 		}
 	}
 }

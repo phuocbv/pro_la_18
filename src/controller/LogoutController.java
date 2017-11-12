@@ -37,7 +37,7 @@ public class LogoutController extends HttpServlet {
 			stringBuffer.append(Constant.URL_LOGIN);
 			response.sendRedirect(stringBuffer.toString());
 		} catch (Exception e) {
-			Common.processSystemError(request, response);
+			Common.processSystemError(request, response, Constant.ERROR);
 		}
 	}
 }

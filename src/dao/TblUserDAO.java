@@ -122,6 +122,15 @@ public interface TblUserDAO {
 	 * @throws SQLException
 	 */
 	public Integer updateUser(TblUser tblUser) throws ClassNotFoundException, SQLException;
-	
+
+	/**
+	 * delete tbl_user
+	 * 
+	 * @param userId
+	 *            is user_id in table tbl_user
+	 * @return boolean check delete tbl_user
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public boolean deleteUser(int userId) throws ClassNotFoundException, SQLException;
 }

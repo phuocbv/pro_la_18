@@ -90,12 +90,23 @@ public interface TblUserLogic {
 	/**
 	 * update tbl_user
 	 * 
-	 * @param userInfor : object contain  
+	 * @param userInfor
+	 *            : object contain
 	 * @return boolean : check update success
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
 	public boolean editUser(UserInfor userInfor) throws ClassNotFoundException, SQLException;
+
+	/**
+	 * remote user
+	 * 
+	 * @param userId is user_id in table tbl_user
+	 * @return boolean is check remove success
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public boolean removeUser(int userId) throws ClassNotFoundException, SQLException;
 
 	/**
 	 * get user by id

@@ -67,12 +67,14 @@ public class Constant {
 	public static final String URL_ADD_USER_INPUT = "/addUserInput.do";
 	public static final String URL_EDIT_USER_INPUT = "/editUserInput.do";
 	public static final String URL_ADD_USER_VALIDATE = "/addUserValidate.do";
+	public static final String URL_EDIT_USER_VALIDATE = "/editUserValidate.do";
 	public static final String URL_ADD_USER_OK = "/addUserOK.do";
+	public static final String URL_EDIT_USER_OK = "/editUserOK.do";
 	public static final String URL_ADD_USER_CONFIRM = "/addUserConfirm.do";
 	public static final String URL_EDIT_USER_CONFIRM = "/editUserConfirm.do";
 	public static final String URL_SUCCESS = "/notification.do";
 	public static final String URL_SHOW_DETAIL_USER = "/showDetailUser.do";
-	public static final String URL_VIEW_EROR = "/viewError.do";
+	public static final String URL_DELETE_USER = "/deleteUser.do";
 
 	// url filter
 	public static final String URL_FILTER = "/*";
@@ -107,6 +109,8 @@ public class Constant {
 	
 	// action
 	public static final String INSERT_SUCCESS = "insertSuccess";
+	public static final String UPDATE_SUCCESS = "updateSuccess";
+	public static final String DELETE_SUCCESS = "deleteSuccess";
 	public static final String ERROR = "error";
 
 	public static final String KEY_SESSION = "key";

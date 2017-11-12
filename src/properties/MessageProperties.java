@@ -33,6 +33,7 @@ public class MessageProperties {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		@SuppressWarnings (value="unchecked")
 		Enumeration<String> en = (Enumeration<String>) prop.propertyNames();
 		while (en.hasMoreElements()) {
 			String key = (String) en.nextElement();

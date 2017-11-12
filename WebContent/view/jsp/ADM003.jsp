@@ -17,9 +17,7 @@
 	<%-- 	<form
 		action="${pageContext.request.contextPath}${Constant.URL_ADD_USER_VALIDATE }?type=${Constant.TYPE_ADM003}"
 		method="post" name="inputform"> --%>
-	<form
-		action="${pageContext.request.contextPath}${Constant.URL_ADD_USER_VALIDATE }?type=${Constant.TYPE_ADM003}"
-		method="post" name="inputform">
+	<form action="${urlSubmit }" method="post" name="inputform">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -116,7 +114,8 @@
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
-								<td class="lbl_left"><font color="red">*</font> パスワード:</td>
+								<td class="lbl_left"><font color="red">${userId != null ? '' : '*' }</font>
+									パスワード:</td>
 								<td align="left"><input class="txBox" type="password"
 									name="${UserInfor.PASSWORD }" size="30"
 									onfocus="this.style.borderColor='#0066ff';"

@@ -12,7 +12,9 @@
 <body>
 	<jsp:include page="header.jsp" />
 	<!-- Begin vung input-->
-	<form action="listUser.do" method="post" name="inputform">
+	<form
+		action="${pageContext.request.contextPath}${Constant.URL_LIST_USER}"
+		method="post" name="inputform">
 		<table class="tbl_input" border="0" width="80%" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -23,7 +25,7 @@
 			<tr>
 				<!-- <td align="center" colspan="2"><font color="red">システムエラーが発生しました。</font></td> -->
 				<td align="center" colspan="2"><font color="${color }"><c:out
-							value="${message}"/></font></td>
+							value="${message}" /></font></td>
 			</tr>
 			<tr>
 				<td align="center" colspan="2">
@@ -32,7 +34,7 @@
 			</tr>
 			<tr>
 				<td align="center" colspan="2"><input class="btn" type="submit"
-					value="OK" onclick="" /></td>
+					value="OK" /></td>
 			</tr>
 		</table>
 	</form>
