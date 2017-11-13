@@ -133,4 +133,17 @@ public interface TblUserDAO {
 	 * @throws SQLException
 	 */
 	public boolean deleteUser(int userId) throws ClassNotFoundException, SQLException;
+
+	/**
+	 * update password
+	 * 
+	 * @param userId
+	 *            is user_id in table tbl_user
+	 * @param newPassword
+	 *            is new password
+	 * @return boolean : check update success
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public boolean updatePasswrord(Integer userId, String newPassword) throws ClassNotFoundException, SQLException;
 }

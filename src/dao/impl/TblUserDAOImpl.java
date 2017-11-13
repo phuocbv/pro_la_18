@@ -54,9 +54,11 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			.append(" tbl_detail_user_japan.end_date, tbl_detail_user_japan.total ").append(sqlJoin.toString())
 			.append(" AND tbl_user.user_id = ? ");
 
-	private StringBuffer sqlUpdateUser = new StringBuffer().append(" UPDATE tbl_user ").append(
-			" SET tbl_user.group_id = ?, tbl_user.password = ?, tbl_user.full_name = ?, tbl_user.full_name_kana = ?, ")
+	private StringBuffer sqlUpdateUser = new StringBuffer().append(" UPDATE tbl_user ")
+			.append(" SET tbl_user.group_id = ?, tbl_user.full_name = ?, tbl_user.full_name_kana = ?, ")
 			.append(" tbl_user.email = ?, tbl_user.tel = ?, tbl_user.birthday = ? WHERE tbl_user.user_id = ?");
+
+	private String sqlUpdatePassword = "UPDATE tbl_user SET tbl_user.password = ? WHERE tbl_user.user_id = ?";
 
 	private String sqlDeleteTblUser = "DELETE FROM tbl_user WHERE tbl_user.user_id = ?";
 
@@ -406,7 +408,6 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		int i = 0;
 		pstm = connection.prepareStatement(sqlUpdateUser.toString());
 		pstm.setInt(++i, tblUser.getGroupId());
-		pstm.setString(++i, tblUser.getPassword());
 		pstm.setString(++i, tblUser.getFullName());
 		pstm.setString(++i, tblUser.getFullNameKana());
 		pstm.setString(++i, tblUser.getEmail());
@@ -522,5 +523,36 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			closeConnect();
 		}
 		return tblUser;
+	}
+
+	/**
+	 * update password
+	 * 
+	 * @param userId
+	 *            is user_id in table tbl_user
+	 * @param newPassword
+	 *            is new password
+	 * @return boolean : check update success
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	@Override
+	public boolean updatePasswrord(Integer userId, String newPassword) throws ClassNotFoundException, SQLException {
+		boolean result = false;
+		try {
+			connection = getConnection();// get connection
+			if (connection == null) {// if connect null then return
+				return result;
+			}
+			int i = 0;
+			pstm = connection.prepareStatement(sqlUpdatePassword.toString());
+			pstm.setString(++i, newPassword);
+			pstm.setInt(++i, userId);
+			System.out.println(pstm.toString());
+			pstm.executeUpdate();
+		} finally {
+			closeConnect();
+		}
+		return true;
 	}
 }

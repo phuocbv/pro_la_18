@@ -101,7 +101,8 @@ public interface TblUserLogic {
 	/**
 	 * remote user
 	 * 
-	 * @param userId is user_id in table tbl_user
+	 * @param userId
+	 *            is user_id in table tbl_user
 	 * @return boolean is check remove success
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
@@ -118,4 +119,28 @@ public interface TblUserLogic {
 	 * @throws SQLException
 	 */
 	public UserInfor getUserInforById(String id) throws ClassNotFoundException, SQLException;
+
+	/**
+	 * check exist tbl_user by id
+	 * 
+	 * @param id
+	 *            is user_id in table tbl_user
+	 * @return boolean check exist tbl_user
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public boolean checkExistTblUserById(int id) throws ClassNotFoundException, SQLException;
+
+	/**
+	 * change password of user
+	 * 
+	 * @param userId
+	 *            is user_id in table tbl_user
+	 * @param newPassword
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public boolean changePasswrordOfUser(Integer userId, String newPassword)
+			throws ClassNotFoundException, SQLException;
 }

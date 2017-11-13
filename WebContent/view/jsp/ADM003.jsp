@@ -113,21 +113,23 @@
 									size="30" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
-							<tr>
-								<td class="lbl_left"><font color="red">${userId != null ? '' : '*' }</font>
-									パスワード:</td>
-								<td align="left"><input class="txBox" type="password"
-									name="${UserInfor.PASSWORD }" size="30"
-									onfocus="this.style.borderColor='#0066ff';"
-									onblur="this.style.borderColor='#aaaaaa';" /></td>
-							</tr>
-							<tr>
-								<td class="lbl_left">パスワード（確認）:</td>
-								<td align="left"><input class="txBox" type="password"
-									name="${UserInfor.CONFIRM_PASSWORD }" size="30"
-									onfocus="this.style.borderColor='#0066ff';"
-									onblur="this.style.borderColor='#aaaaaa';" /></td>
-							</tr>
+							<c:if test="${userId == null }">
+								<tr>
+									<td class="lbl_left"><font color="red">*</font> パスワード:</td>
+									<td align="left"><input class="txBox" type="password"
+										name="${UserInfor.PASSWORD }" size="30"
+										onfocus="this.style.borderColor='#0066ff';"
+										onblur="this.style.borderColor='#aaaaaa';" /></td>
+								</tr>
+								<tr>
+									<td class="lbl_left">パスワード（確認）:</td>
+									<td align="left"><input class="txBox" type="password"
+										name="${UserInfor.CONFIRM_PASSWORD }" size="30"
+										onfocus="this.style.borderColor='#0066ff';"
+										onblur="this.style.borderColor='#aaaaaa';" /></td>
+								</tr>
+							</c:if>
+
 							<!-- level japannes -->
 							<tr>
 								<th align="left" colspan="2"><a href="javascript:void(0)"

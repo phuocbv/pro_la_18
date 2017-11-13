@@ -53,6 +53,8 @@ public class SuccessController extends HttpServlet {
 				message = MessageProperties.getValue(ConstantProperties.MSG002);
 			} else if (Constant.DELETE_SUCCESS.equals(type)) {
 				message = MessageProperties.getValue(ConstantProperties.MSG003);
+			} else if (Constant.CHANGE_PASSWORD_SUCCESS.equals(type)) {
+				message = "Change password success";
 			}
 			req.setAttribute("color", color);
 			req.setAttribute("message", message);

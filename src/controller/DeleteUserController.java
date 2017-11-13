@@ -11,21 +11,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import common.Common;
 import common.Constant;
-import entity.UserInfor;
 import logic.TblUserLogic;
 import logic.impl.TblUserLogicImpl;
 
 /**
+ * servlet delete controller : delete user in tbl_user
  * 
  * @author da
  *
  */
 @WebServlet(urlPatterns = Constant.URL_DELETE_USER)
-public class DeleteController extends HttpServlet {
+public class DeleteUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	TblUserLogic tblUserLogic = null;
+	private TblUserLogic tblUserLogic = null;
 
-	public DeleteController() {
+	public DeleteUserController() {
 		tblUserLogic = new TblUserLogicImpl();
 	}
 
@@ -39,20 +39,21 @@ public class DeleteController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 		try {
-			String userId = req.getParameter("userId");
-			UserInfor userInfor = null;
+			String paramId = req.getParameter("userId");
+			int userId = Common.parseInt(paramId, 0);
+			boolean checkExistTblUser = false;
 			// check userId input
-			if (userId != null && !Constant.EMPTY_STRING.equals(userId)) {
-				userInfor = tblUserLogic.getUserInforById(userId);
+			if (userId > 0) {
+				checkExistTblUser = tblUserLogic.checkExistTblUserById(userId);
 			}
 			// check userInfor == null
-			if (userInfor == null) {
+			if (!checkExistTblUser) {
 				Common.processSystemError(req, resp, Constant.ERROR);
 				return;
 			}
+			boolean success = tblUserLogic.removeUser(userId);// call logic delete user
 			// send redirect to url notification
 			StringBuffer url = new StringBuffer(req.getContextPath()).append(Constant.URL_SUCCESS).append("?type=");
-			boolean success = tblUserLogic.removeUser(userInfor.getUserId());// call logic delete user
 			String type = success ? Constant.DELETE_SUCCESS : Constant.ERROR;
 			url.append(type);
 			resp.sendRedirect(url.toString());

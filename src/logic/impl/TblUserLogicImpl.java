@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import common.Common;
-import common.Constant;
 import dao.*;
 import dao.impl.*;
 import entity.TblDetailUserJapan;
@@ -181,10 +180,6 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean editUser(UserInfor userInfor) throws ClassNotFoundException, SQLException {
-		TblUser oldTbluser = tblUserDAO.getTblUserById(userInfor.getUserId());// get old tbl_user
-		if (oldTbluser == null) {
-			return false;
-		}
 		int groupId = Common.parseInt(userInfor.getGroupId(), 0);
 		int userId = userInfor.getUserId();
 		TblUser tblUser = new TblUser();
@@ -195,13 +190,6 @@ public class TblUserLogicImpl implements TblUserLogic {
 		tblUser.setEmail(userInfor.getEmail());
 		tblUser.setTel(userInfor.getTel());
 		tblUser.setBirthday(userInfor.getBirthday());
-		String newPasswrod = userInfor.getPassword();
-		if (newPasswrod == null || Constant.EMPTY_STRING.equals(newPasswrod)) {
-			tblUser.setPassword(oldTbluser.getPassword());
-		} else {
-			newPasswrod = Common.MD5(newPasswrod, oldTbluser.getSalt());
-			tblUser.setPassword(newPasswrod);
-		}
 		TblDetailUserJapan detailUserJapan = tblDetailUserJapanDAO.gettDetailUserJapanByUserId(userId);
 		try {
 			baseDAO.dbConnection();// create connection
@@ -210,7 +198,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			if (userInfor.getCodeLevel() != null) {
 				int total = Common.parseInt(userInfor.getTotal(), 0);
 				TblDetailUserJapan tblDetailUserJapan = new TblDetailUserJapan();
-				tblDetailUserJapan.setUserId(oldTbluser.getUserId());
+				tblDetailUserJapan.setUserId(userInfor.getUserId());
 				tblDetailUserJapan.setCodeLevel(userInfor.getCodeLevel());
 				tblDetailUserJapan.setStartDate(userInfor.getStartDate());
 				tblDetailUserJapan.setEndDate(userInfor.getEndDate());
@@ -280,5 +268,31 @@ public class TblUserLogicImpl implements TblUserLogic {
 			return null;
 		}
 		return tblUserDAO.getUserInforById(userId);
+	}
+
+	/**
+	 * check exist tbl_user by id
+	 * 
+	 * @param id
+	 *            is user_id in table tbl_user
+	 * @return boolean check exist tbl_user
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	@Override
+	public boolean checkExistTblUserById(int id) throws ClassNotFoundException, SQLException {
+		TblUser tblUser = tblUserDAO.getTblUserById(id);
+		if (tblUser == null) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean changePasswrordOfUser(Integer userId, String newPassword)
+			throws ClassNotFoundException, SQLException {
+		TblUser tblUser = tblUserDAO.getTblUserById(userId);
+		newPassword = Common.MD5(newPassword, tblUser.getSalt());
+		return tblUserDAO.updatePasswrord(userId, newPassword);
 	}
 }

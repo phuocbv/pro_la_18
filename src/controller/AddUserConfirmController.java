@@ -110,9 +110,17 @@ public class AddUserConfirmController extends HttpServlet {
 			String type = Constant.ERROR;
 			StringBuffer urlNotification = new StringBuffer(req.getContextPath());
 			if (userInfor != null) {
-				if (userInfor.getUserId() > 0) {// in case update user
-					success = tblUserLogic.editUser(userInfor);// call user logic update
-					type = Constant.UPDATE_SUCCESS;
+				int userId = userInfor.getUserId();
+				if (userId > 0) {// in case update user
+					// check exist user
+					boolean checkExist = tblUserLogic.checkExistTblUserById(userId);
+					// in case exist user then update 
+					if (checkExist) {
+						success = tblUserLogic.editUser(userInfor);// call user logic update
+						type = Constant.UPDATE_SUCCESS;
+					} else {
+						success = false;
+					}
 				} else {// in case create user
 					success = tblUserLogic.createUser(userInfor);
 					type = Constant.INSERT_SUCCESS;

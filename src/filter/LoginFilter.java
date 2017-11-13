@@ -114,6 +114,7 @@ public class LoginFilter implements Filter {
 		listUrlAllow.add(Constant.URL_EDIT_USER_VALIDATE);
 		listUrlAllow.add(Constant.URL_EDIT_USER_CONFIRM);
 		listUrlAllow.add(Constant.URL_EDIT_USER_OK);
+		listUrlAllow.add(Constant.URL_CHANGE_PASSWORD);
 	}
 
 }

@@ -129,25 +129,27 @@ public class ValidateUser {
 		} else if (tel.length() > Constant.MAX_LENGTH_TEL) {
 			listError.add(MessageErrorProperties.getValue(ConstantProperties.ER006_TEL));
 		}
-		// check password in case add (3)
-		String password = userInfor.getPassword();
-		if (password == null || Constant.EMPTY_STRING.equals(password)) {
-			if (userId == null) {
-				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_PASSWORD));
-			}
-		} else {
-			if (password.length() < Constant.MIN_LENGTH_PASSWORD || password.length() > Constant.MAX_LENGTH_PASSWORD) {
-				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER007_PASSWORD));
-			} else if (!password.matches(Constant.PASSWORD_PATTERN)) {
-				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER008_PASSWORD));
-			}
 
-			// check confirm password (1)
-			String comfirmPassword = userInfor.getConfirmPassword();
-			if (comfirmPassword == null || Constant.EMPTY_STRING.equals(comfirmPassword)) {
-				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER017));
-			} else if (!comfirmPassword.equals(password)) {
-				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER017));
+		// check password in case add (3)
+		if (userId == null) {// in case update not pass
+			String password = userInfor.getPassword();
+			if (password == null || Constant.EMPTY_STRING.equals(password)) {
+				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER001_PASSWORD));
+			} else {
+				if (password.length() < Constant.MIN_LENGTH_PASSWORD
+						|| password.length() > Constant.MAX_LENGTH_PASSWORD) {
+					listError.add(MessageErrorProperties.getValue(ConstantProperties.ER007_PASSWORD));
+				} else if (!password.matches(Constant.PASSWORD_PATTERN)) {
+					listError.add(MessageErrorProperties.getValue(ConstantProperties.ER008_PASSWORD));
+				}
+
+				// check confirm password (1)
+				String comfirmPassword = userInfor.getConfirmPassword();
+				if (comfirmPassword == null || Constant.EMPTY_STRING.equals(comfirmPassword)) {
+					listError.add(MessageErrorProperties.getValue(ConstantProperties.ER017));
+				} else if (!comfirmPassword.equals(password)) {
+					listError.add(MessageErrorProperties.getValue(ConstantProperties.ER017));
+				}
 			}
 		}
 
@@ -195,5 +197,24 @@ public class ValidateUser {
 		}
 
 		return listError;
+	}
+
+	/**
+	 * validate password
+	 * 
+	 * @param userInfor
+	 *            : object UserInfor contain newPassword and confirm password
+	 * @return List<String> list error
+	 */
+	public List<String> validatePassword(UserInfor userInfor) {
+		List<String> listMessage = new ArrayList<>();
+		String newPassword = userInfor.getPassword();
+		// check password
+		if (newPassword == null || Constant.EMPTY_STRING.equals(newPassword)) {
+			listMessage.add("Input New Password");
+		} else if (!newPassword.equals(userInfor.getConfirmPassword())) {
+			listMessage.add("Confirm Password is incorrect");
+		}
+		return listMessage;
 	}
 }

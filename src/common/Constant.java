@@ -57,6 +57,7 @@ public class Constant {
 	public static final String ADM004 = "/view/jsp/ADM004.jsp";
 	public static final String ADM005 = "/view/jsp/ADM005.jsp";
 	public static final String ADM006 = "/view/jsp/ADM006.jsp";
+	public static final String ADM007 = "/view/jsp/ADM007.jsp";
 	public static final String VIEW_ERROR = "/view/jsp/view_error.jsp";
 
 	// url
@@ -75,6 +76,7 @@ public class Constant {
 	public static final String URL_SUCCESS = "/notification.do";
 	public static final String URL_SHOW_DETAIL_USER = "/showDetailUser.do";
 	public static final String URL_DELETE_USER = "/deleteUser.do";
+	public static final String URL_CHANGE_PASSWORD = "/changePassword.do";
 
 	// url filter
 	public static final String URL_FILTER = "/*";
@@ -111,6 +113,7 @@ public class Constant {
 	public static final String INSERT_SUCCESS = "insertSuccess";
 	public static final String UPDATE_SUCCESS = "updateSuccess";
 	public static final String DELETE_SUCCESS = "deleteSuccess";
+	public static final String CHANGE_PASSWORD_SUCCESS = "changePasswordSuccess";
 	public static final String ERROR = "error";
 
 	public static final String KEY_SESSION = "key";

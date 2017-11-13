@@ -108,6 +108,8 @@
 							<td><input class="btn" type="submit" value="編集" /></td>
 							<td><input class="btn" type="button" value="削除"
 								onclick="deleteUser()" /></td>
+							<td><input class="btn" type="button" value="Change Password"
+								onclick="changePassword()" /></td>
 						</c:when>
 						<c:otherwise>
 							<input type="hidden" value="${keySession}"
@@ -132,6 +134,10 @@
 	<script>
 		function btnBack() {
 			window.location.href = '${urlBack}';
+		}
+		
+		function changePassword() {
+			window.location.href = '${pageContext.request.contextPath}${Constant.URL_CHANGE_PASSWORD}?userId=${userId}';
 		}
 	</script>
 	<script type="text/javascript" src="view/js/js.js"></script>
