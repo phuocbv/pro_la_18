@@ -46,6 +46,11 @@
 	padding-top: 2px;
 }
 
+.btn.btn_large {
+	background-image: url(../images/btn.gif);
+	width: 120px;
+}
+
 .btn.btn_wider {
 	background-image: url(../images/btn_wider_bg.gif);
 	width: 75px;

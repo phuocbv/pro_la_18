@@ -200,7 +200,7 @@ public class ValidateUser {
 	}
 
 	/**
-	 * validate password
+	 * validate password in change password
 	 * 
 	 * @param userInfor
 	 *            : object UserInfor contain newPassword and confirm password
@@ -211,9 +211,21 @@ public class ValidateUser {
 		String newPassword = userInfor.getPassword();
 		// check password
 		if (newPassword == null || Constant.EMPTY_STRING.equals(newPassword)) {
-			listMessage.add("Input New Password");
-		} else if (!newPassword.equals(userInfor.getConfirmPassword())) {
-			listMessage.add("Confirm Password is incorrect");
+			listMessage.add(MessageErrorProperties.getValue(ConstantProperties.ER001_PASSWORD));
+		} else {
+			if (newPassword.length() < Constant.MIN_LENGTH_PASSWORD
+					|| newPassword.length() > Constant.MAX_LENGTH_PASSWORD) {
+				listMessage.add(MessageErrorProperties.getValue(ConstantProperties.ER007_PASSWORD));
+			} else if (!newPassword.matches(Constant.PASSWORD_PATTERN)) {
+				listMessage.add(MessageErrorProperties.getValue(ConstantProperties.ER008_PASSWORD));
+			}
+			// check confirm password
+			String comfirmPassword = userInfor.getConfirmPassword();
+			if (comfirmPassword == null || Constant.EMPTY_STRING.equals(comfirmPassword)) {
+				listMessage.add(MessageErrorProperties.getValue(ConstantProperties.ER017));
+			} else if (!comfirmPassword.equals(newPassword)) {
+				listMessage.add(MessageErrorProperties.getValue(ConstantProperties.ER017));
+			}
 		}
 		return listMessage;
 	}

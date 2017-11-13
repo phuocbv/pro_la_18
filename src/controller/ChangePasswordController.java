@@ -73,28 +73,23 @@ public class ChangePasswordController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 		try {
+			String paramId = req.getParameter("userId");
+			int userId = Common.parseInt(paramId, 0);
+			boolean checkExist = tblUserLogic.checkExistTblUserById(userId);
+			// check exist user
+			if (!checkExist) {
+				Common.processSystemError(req, resp, Constant.ERROR);
+				return;
+			}
 			UserInfor userInfor = new UserInfor();
 			userInfor.setPassword(req.getParameter("newPassword"));
 			userInfor.setConfirmPassword(req.getParameter("confirmPassword"));
 			ValidateUser validateUser = new ValidateUser();
-			// validate password
-			List<String> listMessage = validateUser.validatePassword(userInfor);
-			String paramId = req.getParameter("userId");
+			List<String> listMessage = validateUser.validatePassword(userInfor);// validate password
 			// haven't error
 			if (listMessage.isEmpty()) {
-				int userId = Common.parseInt(paramId, 0);
-				boolean checkExist = tblUserLogic.checkExistTblUserById(userId);
-				// check exist user
-				if (!checkExist) {
-					Common.processSystemError(req, resp, Constant.ERROR);
-					return;
-				}
 				boolean checkSuccess = tblUserLogic.changePasswrordOfUser(userId, userInfor.getPassword());
-				String type = Constant.ERROR;
-				// check change password
-				if (checkSuccess) {
-					type = Constant.CHANGE_PASSWORD_SUCCESS;
-				}
+				String type = checkSuccess ? Constant.CHANGE_PASSWORD_SUCCESS : Constant.ERROR;
 				Common.processSystemError(req, resp, type);
 				return;
 			}
