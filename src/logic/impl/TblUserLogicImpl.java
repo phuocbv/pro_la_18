@@ -1,6 +1,6 @@
 /**
  * Copyright(C) 2017  Luvina
- * UserLogicImpl.java, 20/10/2017 phuocbv
+ * TblUserLogicImpl.java, 20/10/2017 phuocbv
  */
 package logic.impl;
 
@@ -288,6 +288,16 @@ public class TblUserLogicImpl implements TblUserLogic {
 		return true;
 	}
 
+	/**
+	 * change password of user
+	 * 
+	 * @param userId
+	 *            is user_id in table tbl_user
+	 * @param newPassword is new password
+	 * @return boolean check change pass success
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	@Override
 	public boolean changePasswrordOfUser(Integer userId, String newPassword)
 			throws ClassNotFoundException, SQLException {

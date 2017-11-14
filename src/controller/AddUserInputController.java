@@ -1,6 +1,6 @@
 /**
  * Copyright(C) 2017  Luvina
- * AddUserInputUser.java, 30/10/2017 phuocbv
+ * AddUserInputController.java, 30/10/2017 phuocbv
  */
 package controller;
 
@@ -63,9 +63,10 @@ public class AddUserInputController extends HttpServlet {
 			String paramUserId = req.getParameter("userId");
 			String type = req.getParameter(Constant.TYPE);
 			UserInfor userInfor = null;
+			// in case back from ADM005 then check userInfor exist
 			if (Constant.TYPE_ADM005.equals(type)) {
 				userInfor = tblUserLogic.getUserInforById(paramUserId);
-				if (userInfor == null) {// in case userInfor not exist
+				if (userInfor == null) {
 					Common.processSystemError(req, resp, Constant.ERROR);
 					return;
 				}
@@ -94,19 +95,19 @@ public class AddUserInputController extends HttpServlet {
 			UserInfor userInfor = setDefaultValue(req, resp);
 			ValidateUser validateUser = new ValidateUser();
 			List<String> listError = validateUser.validateUserInfor(userInfor);// validate user
-			StringBuffer stringBuffer = new StringBuffer(req.getContextPath());
+			StringBuffer urlRedirect = new StringBuffer(req.getContextPath());
 			// case haven't error
 			if (listError.isEmpty()) {
 				String keySession = Common.MD5(Common.randomString());
 				String action = userInfor.getUserId() > 0 ? Constant.URL_EDIT_USER_CONFIRM
 						: Constant.URL_ADD_USER_CONFIRM;
-				stringBuffer.append(action);
-				stringBuffer.append("?");
-				stringBuffer.append(Constant.KEY_SESSION);
-				stringBuffer.append("=");
-				stringBuffer.append(keySession);
+				urlRedirect.append(action);
+				urlRedirect.append("?");
+				urlRedirect.append(Constant.KEY_SESSION);
+				urlRedirect.append("=");
+				urlRedirect.append(keySession);
 				req.getSession().setAttribute(keySession, userInfor);
-				resp.sendRedirect(stringBuffer.toString());
+				resp.sendRedirect(urlRedirect.toString());
 			} else {// case validate have error then back ADM003
 				setDataLogic(req, resp);
 				req.setAttribute("userInfor", userInfor);
@@ -208,9 +209,8 @@ public class AddUserInputController extends HttpServlet {
 				userInfor.setTotal(req.getParameter(UserInfor.TOTAL));
 			}
 		} else if (Constant.TYPE_ADM005.equals(type)) {// from ADM005
-			// String userId = req.getParameter("userId");
 			userInfor = tblUserLogic.getUserInforById(paramUserId);
-			// get array integer of birthday
+			// get year, month, day of birthday
 			ArrayList<Integer> birthday = Common.toArrayInteger(userInfor.getBirthday());
 			userInfor.setBirthdayYear(String.valueOf(birthday.get(0)));
 			userInfor.setBirthdayMonth(String.valueOf(birthday.get(1)));
@@ -218,10 +218,12 @@ public class AddUserInputController extends HttpServlet {
 			String codeLevel = userInfor.getCodeLevel();
 			// check exist code level
 			if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
+				// get year, month, day of startDate
 				ArrayList<Integer> startDate = Common.toArrayInteger(userInfor.getStartDate());
 				userInfor.setStartYear(String.valueOf(startDate.get(0)));
 				userInfor.setStartMonth(String.valueOf(startDate.get(1)));
 				userInfor.setStartDay(String.valueOf(startDate.get(2)));
+				// get year, month, day of startDate
 				ArrayList<Integer> endDate = Common.toArrayInteger(userInfor.getEndDate());
 				userInfor.setEndYear(String.valueOf(endDate.get(0)));
 				userInfor.setEndMonth(String.valueOf(endDate.get(1)));
@@ -230,13 +232,14 @@ public class AddUserInputController extends HttpServlet {
 		}
 		StringBuffer urlBack = new StringBuffer(req.getContextPath());
 		StringBuffer urlSubmit = new StringBuffer(req.getContextPath());
-		// set user id ADM03 -> ADM003
+		// set user id in case ADM03 -> ADM003
 		if (paramUserId != null) {
 			int id = Common.parseInt(paramUserId, 0);
 			userInfor.setUserId(id);
 		}
 		// get userId
 		int userId = userInfor.getUserId();
+		// set url submit and url back
 		if (userId > 0) {
 			urlBack.append(Constant.URL_SHOW_DETAIL_USER).append("?userId=").append(userId);
 			urlSubmit.append(Constant.URL_EDIT_USER_VALIDATE);

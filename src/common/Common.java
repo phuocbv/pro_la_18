@@ -56,10 +56,10 @@ public class Common {
 	 * @return String : encode string with salt
 	 */
 	public static String MD5(String value, String salt) {
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append(MD5(value));
-		stringBuffer.append(salt);
-		return MD5(stringBuffer.toString());
+		StringBuffer result = new StringBuffer();
+		result.append(MD5(value));
+		result.append(salt);
+		return MD5(result.toString());
 	}
 
 	/**
@@ -243,7 +243,7 @@ public class Common {
 	/**
 	 * get expired day
 	 * 
-	 * @return int
+	 * @return int is exprire day
 	 */
 	public static int getExpireDay() {
 		Calendar now = Calendar.getInstance();
@@ -360,8 +360,9 @@ public class Common {
 	 * date[0] = Year, date[1]=Month , date[2]=Day
 	 * 
 	 * @param date
-	 *            Date ngày tháng cần chuyển về mảng
-	 * @return Xử lý để tạo ra 1 mảng chứa năm, tháng ngày từ 1 ngày
+	 *            is param convert to array integer
+	 *
+	 * @return ArrayList containt year, month, day
 	 */
 	public static ArrayList<Integer> toArrayInteger(Date date) {
 		Calendar calendar = Calendar.getInstance();
@@ -426,6 +427,7 @@ public class Common {
 	 * 
 	 * @param req
 	 * @param resp
+	 * @param type
 	 */
 	public static void processSystemError(HttpServletRequest req, HttpServletResponse resp, String type) {
 		StringBuffer urlNotification = new StringBuffer(req.getContextPath());

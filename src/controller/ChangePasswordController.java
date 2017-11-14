@@ -86,7 +86,7 @@ public class ChangePasswordController extends HttpServlet {
 			userInfor.setConfirmPassword(req.getParameter("confirmPassword"));
 			ValidateUser validateUser = new ValidateUser();
 			List<String> listMessage = validateUser.validatePassword(userInfor);// validate password
-			// haven't error
+			// validate success
 			if (listMessage.isEmpty()) {
 				boolean checkSuccess = tblUserLogic.changePasswrordOfUser(userId, userInfor.getPassword());
 				String type = checkSuccess ? Constant.CHANGE_PASSWORD_SUCCESS : Constant.ERROR;
@@ -102,5 +102,4 @@ public class ChangePasswordController extends HttpServlet {
 			Common.processSystemError(req, resp, Constant.ERROR);
 		}
 	}
-
 }

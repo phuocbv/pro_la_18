@@ -25,6 +25,9 @@ public class DeleteUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TblUserLogic tblUserLogic = null;
 
+	/**
+	 * contructer
+	 */
 	public DeleteUserController() {
 		tblUserLogic = new TblUserLogicImpl();
 	}
@@ -46,7 +49,7 @@ public class DeleteUserController extends HttpServlet {
 			if (userId > 0) {
 				checkExistTblUser = tblUserLogic.checkExistTblUserById(userId);
 			}
-			// check userInfor == null
+			// check userInfor exist
 			if (!checkExistTblUser) {
 				Common.processSystemError(req, resp, Constant.ERROR);
 				return;

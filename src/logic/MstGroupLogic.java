@@ -28,7 +28,7 @@ public interface MstGroupLogic {
 	 * 
 	 * @param groupId
 	 *            : id of table mst_group
-	 * @return MstGroup : exist group
+	 * @return boolean check exist group
 	 */
 	public boolean checkExistGroup(String groupId) throws ClassNotFoundException, SQLException;
 
@@ -37,7 +37,7 @@ public interface MstGroupLogic {
 	 * 
 	 * @param groupId
 	 *            : group_id in table mst_group
-	 * @return MstGroup
+	 * @return MstGroup is object of table tbl_user
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */

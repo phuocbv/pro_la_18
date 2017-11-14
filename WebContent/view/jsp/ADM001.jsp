@@ -1,3 +1,4 @@
+<%@page import="common.Constant"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -8,9 +9,9 @@
 <link href="view/css/style.css" rel="stylesheet" type="text/css" />
 <title>ユーザ管理</title>
 </head>
-
 <body>
-	<form action="login" method="post">
+	<form action="${pageContext.request.contextPath}${Constant.URL_LOGIN}"
+		method="post">
 		<center>
 			<table class="tbl_input" cellpadding="4" cellspacing="0"
 				width="400px">
@@ -29,7 +30,8 @@
 				<tr align="left">
 					<td class="lbl_left">アカウント名:</td>
 					<td align="left"><input class="txBox" type="text"
-						name="login_name" value="<c:out value="${loginName}" escapeXml="true" />" size="20"
+						name="login_name"
+						value="<c:out value="${loginName}" escapeXml="true" />" size="20"
 						onfocus="this.style.borderColor='#0066ff';"
 						onblur="this.style.borderColor='#aaaaaa';" /></td>
 				</tr>

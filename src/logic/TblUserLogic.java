@@ -137,7 +137,7 @@ public interface TblUserLogic {
 	 * @param userId
 	 *            is user_id in table tbl_user
 	 * @param newPassword
-	 * @return
+	 * @return boolean check change pass success
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */

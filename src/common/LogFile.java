@@ -16,52 +16,29 @@ import java.util.logging.SimpleFormatter;
  *
  */
 public class LogFile {
-	//
+	private static Logger logger = Logger.getLogger("log");
 
-	// try {
-	// FileHandler handler = new FileHandler("default.log", true);
-	// SimpleFormatter simpleFormatter = new SimpleFormatter();
-	// handler.setFormatter(simpleFormatter);
-	// logger.addHandler(handler);
-	// } catch (SecurityException | IOException e) {
-	// }
-	// return logger;
-
-	// static Logger logger = Logger.getLogger("log");
-
-	public static Logger getLogger() {
-		Logger logger = Logger.getLogger(Logger.class.getName());
-
-		//
-		// Create an instance of FileHandler that write log to a file called
-		// app.log. Each new message will be appended at the at of the log file.
-		//
-		FileHandler fileHandler;
-		try {
-			fileHandler = new FileHandler("app.log", true);
-			logger.addHandler(fileHandler);
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return logger;
-	}
-
-	static Logger logger = Logger.getLogger("log");
-
-	public static void main(String[] args) {
-
+	static {
 		try {
 			FileHandler handler = new FileHandler("default.log", true);
 			SimpleFormatter simpleFormatter = new SimpleFormatter();
 			handler.setFormatter(simpleFormatter);
 			logger.addHandler(handler);
 		} catch (SecurityException | IOException e) {
+
 		}
-		// return logger;
+	}
+
+	public static void warning(String value) {
+		logger.warning(value);
+	}
+
+	public static void info(String value) {
+		logger.info(value);
+	}
+
+	public static void main(String[] args) {
+		LogFile.info("ok");
+		LogFile.warning("not good");
 	}
 }

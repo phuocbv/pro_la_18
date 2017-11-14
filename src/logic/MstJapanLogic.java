@@ -28,7 +28,7 @@ public interface MstJapanLogic {
 	 * 
 	 * @param codeLevel
 	 *            : code_level of mst japan
-	 * @return MstJapan
+	 * @return MstGroup is object of table tbl_user 
 	 */
 	public MstJapan getMstJapanByCodeLevel(String codeLevel) throws ClassNotFoundException, SQLException;
 

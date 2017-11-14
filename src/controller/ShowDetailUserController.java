@@ -1,6 +1,6 @@
 /**
  * Copyright(C) 2017  Luvina
- * ErrorController.java, 20/10/2017 phuocbv
+ * ShowDetailUserController.java, 20/10/2017 phuocbv
  */
 package controller;
 
@@ -17,6 +17,7 @@ import logic.TblUserLogic;
 import logic.impl.TblUserLogicImpl;
 
 /**
+ * class show detail user
  * 
  * @author da
  *
@@ -26,6 +27,9 @@ public class ShowDetailUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	TblUserLogic tblUserLogic = null;
 
+	/**
+	 * contructer
+	 */
 	public ShowDetailUserController() {
 		tblUserLogic = new TblUserLogicImpl();
 	}

@@ -1,0 +1,6 @@
+Nov 14, 2017 8:44:07 AM common.LogFile main
+WARNING: sdad
+Nov 14, 2017 10:01:09 AM common.LogFile info
+INFO: ok
+Nov 14, 2017 10:01:09 AM common.LogFile warning
+WARNING: not good

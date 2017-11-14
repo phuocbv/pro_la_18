@@ -15,7 +15,7 @@ import properties.MessageErrorProperties;
 import validate.ValidateLogin;
 
 /**
- * process logic login, logout
+ * process logic login
  * 
  * @author da
  *

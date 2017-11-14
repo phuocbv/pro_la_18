@@ -1,3 +1,7 @@
+/**
+ * Copyright(C) 2017  Luvina
+ * MstJapanLogicImpl.java, 20/10/2017 phuocbv
+ */
 package logic.impl;
 
 import java.sql.SQLException;
@@ -8,9 +12,18 @@ import dao.impl.MstJapanDAOImpl;
 import entity.MstJapan;
 import logic.MstJapanLogic;
 
+/**
+ * class japan logic impl
+ * 
+ * @author LA-AM
+ *
+ */
 public class MstJapanLogicImpl implements MstJapanLogic {
 	private MstJapanDAO mstJapanDAO;
 
+	/**
+	 * contructer
+	 */
 	public MstJapanLogicImpl() {
 		mstJapanDAO = new MstJapanDAOImpl();
 	}
@@ -30,7 +43,7 @@ public class MstJapanLogicImpl implements MstJapanLogic {
 	 * 
 	 * @param codeLevel
 	 *            : code_level of mst japan
-	 * @return MstJapan
+	 * @return MstJapan is object of table tbl_user
 	 */
 	@Override
 	public MstJapan getMstJapanByCodeLevel(String codeLevel) throws ClassNotFoundException, SQLException {
@@ -42,7 +55,7 @@ public class MstJapanLogicImpl implements MstJapanLogic {
 	 * 
 	 * @param codeLevel
 	 *            : code level om table mst_japan
-	 * @return boolean : check exits
+	 * @return boolean : check exits detail japan
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */

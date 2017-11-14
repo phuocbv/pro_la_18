@@ -23,7 +23,7 @@
 					</tr>
 				</c:forEach>
 				<tr align="left">
-					<td class="lbl_left">New Password:</td>
+					<td class="lbl_left"><font color="red">*</font> New Password:</td>
 					<td align="left"><input class="txBox" type="password"
 						name="newPassword"
 						value="<c:out value="${loginName}" escapeXml="true" />" size="22"
