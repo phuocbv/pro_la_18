@@ -93,6 +93,14 @@ public class AddUserInputController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			UserInfor userInfor = setDefaultValue(req, resp);
+			int userId = userInfor.getUserId();
+			if (userId > 0) {
+				userInfor = tblUserLogic.getUserInforById(String.valueOf(userId));
+				if (userInfor == null) {
+					Common.processSystemError(req, resp, Constant.ERROR);
+					return;
+				}
+			}
 			ValidateUser validateUser = new ValidateUser();
 			List<String> listError = validateUser.validateUserInfor(userInfor);// validate user
 			StringBuffer urlRedirect = new StringBuffer(req.getContextPath());
