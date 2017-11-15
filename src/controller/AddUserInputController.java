@@ -62,17 +62,17 @@ public class AddUserInputController extends HttpServlet {
 		try {
 			String paramUserId = req.getParameter("userId");
 			String type = req.getParameter(Constant.TYPE);
-			UserInfor userInfor = null;
 			// in case back from ADM005 then check userInfor exist
 			if (Constant.TYPE_ADM005.equals(type)) {
-				userInfor = tblUserLogic.getUserInforById(paramUserId);
-				if (userInfor == null) {
+				int userId = Common.parseInt(paramUserId, 0);
+				boolean checkExist = tblUserLogic.checkExistTblUserById(userId);
+				if (!checkExist) {
 					Common.processSystemError(req, resp, Constant.ERROR);
 					return;
 				}
 			}
 			setDataLogic(req, resp);
-			userInfor = setDefaultValue(req, resp);
+			UserInfor userInfor = setDefaultValue(req, resp);
 			req.setAttribute("userInfor", userInfor);
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM003);
 			dispatcher.forward(req, resp);// forward to page jsp
@@ -95,8 +95,8 @@ public class AddUserInputController extends HttpServlet {
 			UserInfor userInfor = setDefaultValue(req, resp);
 			int userId = userInfor.getUserId();
 			if (userId > 0) {
-				userInfor = tblUserLogic.getUserInforById(String.valueOf(userId));
-				if (userInfor == null) {
+				boolean checkExist = tblUserLogic.checkExistTblUserById(userId);
+				if (!checkExist) {
 					Common.processSystemError(req, resp, Constant.ERROR);
 					return;
 				}
