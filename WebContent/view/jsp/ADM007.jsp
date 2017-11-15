@@ -41,7 +41,7 @@
 					<td></td>
 					<td align="left"><input class="btn btn_wider" type="submit"
 						value="Change Pass" /> <input class="btn" type="button"
-						value="戻る" onclick="btnBack()" /></td>
+						value="Back" onclick="btnBack()" /></td>
 				</tr>
 			</table>
 		</center>

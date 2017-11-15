@@ -23,7 +23,7 @@ import logic.impl.MstJapanLogicImpl;
 import logic.impl.TblUserLogicImpl;
 
 /**
- * class add user ok
+ * class add, edit user confirm
  * 
  * @author LA-AM
  *
@@ -89,7 +89,7 @@ public class AddUserConfirmController extends HttpServlet {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM004);
 			dispatcher.forward(req, resp);// forward to page jsp
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			Common.processSystemError(req, resp, Constant.ERROR);
 		}
 	}
@@ -133,7 +133,7 @@ public class AddUserConfirmController extends HttpServlet {
 			urlNotification.append(type);
 			resp.sendRedirect(urlNotification.toString());
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			Common.processSystemError(req, resp, Constant.ERROR);
 		}
 	}

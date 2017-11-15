@@ -98,7 +98,6 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			sql = getSQLPaging(sql, offset, limit);// add paging
 			pstm = connection.prepareStatement(sql);// use PrepareStatement
 			setParam(sql, groupId, fullName);
-			System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
 			int i;
 			while (resultSet.next()) {
@@ -283,7 +282,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			if (userId != null) {
 				pstm.setInt(++i, userId);
 			}
-			System.out.println(pstm.toString());
+			//System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
 			// repeat record get and add to list
 			if (resultSet.next()) {
@@ -332,7 +331,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			if (userId != null) {
 				pstm.setInt(++i, userId);
 			}
-			System.out.println(pstm.toString());
+			//System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
 			if (resultSet.next()) {
 				i = 0;
@@ -381,7 +380,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			pstm.setString(++i, tblUser.getTel());
 			pstm.setDate(++i, new Date(tblUser.getBirthday().getTime()));
 			pstm.setString(++i, tblUser.getSalt());
-			System.out.println(pstm.toString());
+			//System.out.println(pstm.toString());
 			pstm.executeUpdate();
 			resultSet = pstm.getGeneratedKeys();
 			if (resultSet.next()) {
@@ -414,7 +413,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		pstm.setString(++i, tblUser.getTel());
 		pstm.setDate(++i, new Date(tblUser.getBirthday().getTime()));
 		pstm.setInt(++i, tblUser.getUserId());
-		System.out.println(pstm.toString());
+		//System.out.println(pstm.toString());
 		pstm.executeUpdate();
 		return userId;
 	}
@@ -501,7 +500,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			StringBuffer sqlGetTblUserById = new StringBuffer(sqlGetTblUser.toString());
 			sqlGetTblUserById.append(" WHERE tbl_user.user_id = ? ");
 			pstm = connection.prepareStatement(sqlGetTblUserById.toString());// use PrepareStatement
-			System.out.println(pstm.toString());
+			//System.out.println(pstm.toString());
 			pstm.setInt(1, id);
 			resultSet = pstm.executeQuery();// execute sql
 			int i;
@@ -548,7 +547,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			pstm = connection.prepareStatement(sqlUpdatePassword.toString());
 			pstm.setString(++i, newPassword);
 			pstm.setInt(++i, userId);
-			System.out.println(pstm.toString());
+			//System.out.println(pstm.toString());
 			pstm.executeUpdate();
 		} finally {
 			closeConnect();

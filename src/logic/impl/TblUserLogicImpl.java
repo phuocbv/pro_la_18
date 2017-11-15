@@ -216,7 +216,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			baseDAO.commit();
 		} catch (SQLException e) {
 			baseDAO.rollBack();
-			e.printStackTrace();
+			// e.printStackTrace();
 			return false;
 		} finally {
 			baseDAO.closeConnect();
@@ -293,7 +293,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * 
 	 * @param userId
 	 *            is user_id in table tbl_user
-	 * @param newPassword is new password
+	 * @param newPassword
+	 *            is new password
 	 * @return boolean check change pass success
 	 * @throws ClassNotFoundException
 	 * @throws SQLException

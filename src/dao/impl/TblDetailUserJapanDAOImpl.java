@@ -48,7 +48,7 @@ public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDetailU
 		pstm.setDate(++i, new Date(tblDetailUserJapan.getStartDate().getTime()));
 		pstm.setDate(++i, new Date(tblDetailUserJapan.getEndDate().getTime()));
 		pstm.setInt(++i, tblDetailUserJapan.getTotal());
-		System.out.println(pstm.toString());
+		//System.out.println(pstm.toString());
 		pstm.executeUpdate();
 		return true;
 	}
@@ -70,7 +70,7 @@ public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDetailU
 		pstm.setDate(++i, new Date(tblDetailUserJapan.getEndDate().getTime()));
 		pstm.setInt(++i, tblDetailUserJapan.getTotal());
 		pstm.setInt(++i, tblDetailUserJapan.getUserId());
-		System.out.println(pstm.toString());
+		//System.out.println(pstm.toString());
 		pstm.executeUpdate();
 		return true;
 	}
@@ -106,10 +106,6 @@ public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDetailU
 		TblDetailUserJapan tblDetailUserJapan = null;
 		try {
 			connection = getConnection();// get connection
-			// if connect null then return
-			if (connection == null) {
-				return null;
-			}
 			pstm = connection.prepareStatement(sqlGetDetailUserJapanByUserId.toString());// use PrepareStatement
 			pstm.setInt(1, userId);
 			resultSet = pstm.executeQuery();// execute sql

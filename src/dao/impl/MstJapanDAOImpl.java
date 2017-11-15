@@ -65,7 +65,6 @@ public class MstJapanDAOImpl extends BaseDAOImpl implements MstJapanDAO {
 			pstm = connection.prepareStatement(SQL_GET_MST_JAPAN_BY_CODE_LEVEL);// use PrepareStatement
 			pstm.setString(1, codeLevel);
 			resultSet = pstm.executeQuery();// execute sql
-			// repeat record get and add to list
 			int i;
 			if (resultSet.next()) {
 				i = 0;

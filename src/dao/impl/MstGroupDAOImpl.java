@@ -11,8 +11,7 @@ import dao.MstGroupDAO;
 import entity.MstGroup;
 
 /**
- * class MstGroupDAOImpl
- * manipulation with table mst_group
+ * class MstGroupDAOImpl manipulation with table mst_group
  * 
  * @author da
  *
@@ -21,12 +20,13 @@ public class MstGroupDAOImpl extends BaseDAOImpl implements MstGroupDAO {
 	// sql get all group
 	private static String SQL_GET_ALL_GROUP = "SELECT mst_group.group_id, mst_group.group_name FROM mst_group ORDER BY mst_group.group_name ASC";
 	private static String SQL_GET_GROUP_BY_GROUP_ID = "SELECT mst_group.group_id, mst_group.group_name FROM mst_group WHERE mst_group.group_id = ?";
+
 	/**
 	 * get all group
 	 * 
 	 * @return ArrayList<MstGroup> : store list all group
-	 * @throws SQLException 
-	 * @throws ClassNotFoundException 
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
 	 */
 	@Override
 	public ArrayList<MstGroup> getAllListGroups() throws ClassNotFoundException, SQLException {
@@ -51,6 +51,7 @@ public class MstGroupDAOImpl extends BaseDAOImpl implements MstGroupDAO {
 		}
 		return listGroup;
 	}
+
 	/**
 	 * check exist group
 	 * 
@@ -70,7 +71,6 @@ public class MstGroupDAOImpl extends BaseDAOImpl implements MstGroupDAO {
 			pstm = connection.prepareStatement(SQL_GET_GROUP_BY_GROUP_ID);// use PrepareStatement
 			pstm.setInt(1, groupId);
 			resultSet = pstm.executeQuery();// execute sql
-			System.out.println(pstm.toString());
 			// reader record
 			if (resultSet.next()) {
 				mstGroup = new MstGroup();
@@ -80,7 +80,7 @@ public class MstGroupDAOImpl extends BaseDAOImpl implements MstGroupDAO {
 		} finally {
 			closeConnect();
 		}
-		
+
 		return mstGroup;
 	}
 
