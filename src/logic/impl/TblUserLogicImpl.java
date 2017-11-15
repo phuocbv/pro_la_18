@@ -192,6 +192,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 		tblUser.setBirthday(userInfor.getBirthday());
 		TblDetailUserJapan detailUserJapan = tblDetailUserJapanDAO.gettDetailUserJapanByUserId(userId);
 		try {
+			boolean check = true;
 			baseDAO.dbConnection();// create connection
 			baseDAO.setAutoCommit(false);// set auto commit = false
 			tblUserDAO.updateUser(tblUser);
@@ -204,19 +205,22 @@ public class TblUserLogicImpl implements TblUserLogic {
 				tblDetailUserJapan.setEndDate(userInfor.getEndDate());
 				tblDetailUserJapan.setTotal(total);
 				if (detailUserJapan == null) {// if not exist then add to database
-					tblDetailUserJapanDAO.insertDetailUserJapan(tblDetailUserJapan);
+					check = tblDetailUserJapanDAO.insertDetailUserJapan(tblDetailUserJapan);
 				} else {
-					tblDetailUserJapanDAO.updateDetailUserJapan(tblDetailUserJapan);
+					check = tblDetailUserJapanDAO.updateDetailUserJapan(tblDetailUserJapan);
 				}
 			} else {// if exist detailUserJapan and codeLevel is null then delete detailUserJapan
 				if (detailUserJapan != null) {
-					tblDetailUserJapanDAO.deleteDetailUserJapan(userId);
+					check = tblDetailUserJapanDAO.deleteDetailUserJapan(userId);
 				}
+			}
+			if (!check) {
+				baseDAO.rollBack();
+				return false;
 			}
 			baseDAO.commit();
 		} catch (SQLException e) {
 			baseDAO.rollBack();
-			// e.printStackTrace();
 			return false;
 		} finally {
 			baseDAO.closeConnect();

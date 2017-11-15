@@ -121,7 +121,7 @@ public interface TblUserDAO {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public Integer updateUser(TblUser tblUser) throws ClassNotFoundException, SQLException;
+	public boolean updateUser(TblUser tblUser) throws ClassNotFoundException, SQLException;
 
 	/**
 	 * delete tbl_user
