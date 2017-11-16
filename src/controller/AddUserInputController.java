@@ -67,7 +67,7 @@ public class AddUserInputController extends HttpServlet {
 				int userId = Common.parseInt(paramUserId, 0);
 				boolean checkExist = tblUserLogic.checkExistTblUserById(userId);
 				if (!checkExist) {
-					Common.processSystemError(req, resp, Constant.ERROR);
+					Common.processSystemError(req, resp, Constant.NOT_FOUND_USER);
 					return;
 				}
 			}
@@ -97,7 +97,7 @@ public class AddUserInputController extends HttpServlet {
 			if (userId > 0) {
 				boolean checkExist = tblUserLogic.checkExistTblUserById(userId);
 				if (!checkExist) {
-					Common.processSystemError(req, resp, Constant.ERROR);
+					Common.processSystemError(req, resp, Constant.NOT_FOUND_USER);
 					return;
 				}
 			}
@@ -124,6 +124,7 @@ public class AddUserInputController extends HttpServlet {
 				dispatcher.forward(req, resp);// forward to page jsp
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			Common.processSystemError(req, resp, Constant.ERROR);
 		}
 	}

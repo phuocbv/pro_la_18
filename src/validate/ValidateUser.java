@@ -180,7 +180,7 @@ public class ValidateUser {
 			// check end date (2)
 			if (endDate == null) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER011_END_DATE));
-			} else if (LocalDate.of(endYear, endMonth, endDay)
+			} else if (startDate != null && LocalDate.of(endYear, endMonth, endDay)
 					.compareTo(LocalDate.of(startYear, startMonth, startDay)) <= 0) {
 				listError.add(MessageErrorProperties.getValue(ConstantProperties.ER012));
 			} else { // in case haven't error then add to enddate

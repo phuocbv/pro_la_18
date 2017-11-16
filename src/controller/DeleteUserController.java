@@ -51,7 +51,7 @@ public class DeleteUserController extends HttpServlet {
 			}
 			// check userInfor exist
 			if (!checkExistTblUser) {
-				Common.processSystemError(req, resp, Constant.ERROR);
+				Common.processSystemError(req, resp, Constant.NOT_FOUND_USER);
 				return;
 			}
 			boolean success = tblUserLogic.removeUser(userId);// call logic delete user

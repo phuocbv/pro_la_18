@@ -114,8 +114,9 @@ public class Constant {
 	public static final String UPDATE_SUCCESS = "updateSuccess";
 	public static final String DELETE_SUCCESS = "deleteSuccess";
 	public static final String CHANGE_PASSWORD_SUCCESS = "changePasswordSuccess";
+	public static final String NOT_FOUND_USER = "notFoundUser";
 	public static final String ERROR = "error";
-
+	
 	public static final String KEY_SESSION = "key";
 
 	// sort
@@ -146,8 +147,8 @@ public class Constant {
 	public static final int MAX_LENGTH_TEL = 14;
 	
 	//pattern
-	public static final String LOGIN_NAME_PATTERN = "^[a-zA-Z]{1}[a-zA-Z0-9_]{3,14}$";
-	public static final String FULL_NAME_KATA_PATTERN = "^[ア-ンーッ ]{0,255}$";
+	public static final String LOGIN_NAME_PATTERN = "^[a-zA-Z]{1}[a-zA-Z0-9_]*$";
+	public static final String FULL_NAME_KATA_PATTERN = "^[ア-ンーッ ]*$";
 	public static final String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
 	public static final String TEL_PATTERN = "^[0-9]{1,4}-[0-9]{1,4}-[0-9]{1,4}$";
 	public static final String TOTAL_PATTERN = "^[1-9]{1}[0-9]{0,10}$";

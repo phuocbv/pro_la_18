@@ -59,7 +59,7 @@ public class AddUserConfirmController extends HttpServlet {
 			UserInfor userInfor = (UserInfor) req.getSession().getAttribute(keySession);
 			// check userInfor exist
 			if (userInfor == null) {
-				Common.processSystemError(req, resp, Constant.ERROR);
+				Common.processSystemError(req, resp, Constant.NOT_FOUND_USER);
 				return;
 			}
 			// case edit user

@@ -52,7 +52,7 @@ public class ChangePasswordController extends HttpServlet {
 			boolean checkExist = tblUserLogic.checkExistTblUserById(userId);
 			// check exist user
 			if (!checkExist) {
-				Common.processSystemError(req, resp, Constant.ERROR);
+				Common.processSystemError(req, resp, Constant.NOT_FOUND_USER);
 				return;
 			}
 			req.setAttribute("userId", paramId);
@@ -78,7 +78,7 @@ public class ChangePasswordController extends HttpServlet {
 			boolean checkExist = tblUserLogic.checkExistTblUserById(userId);
 			// check exist user
 			if (!checkExist) {
-				Common.processSystemError(req, resp, Constant.ERROR);
+				Common.processSystemError(req, resp, Constant.NOT_FOUND_USER);
 				return;
 			}
 			UserInfor userInfor = new UserInfor();

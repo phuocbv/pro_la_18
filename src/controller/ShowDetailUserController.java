@@ -52,7 +52,7 @@ public class ShowDetailUserController extends HttpServlet {
 			}
 			// check userInfor == null
 			if (userInfor == null) {
-				Common.processSystemError(req, resp, Constant.ERROR);
+				Common.processSystemError(req, resp, Constant.NOT_FOUND_USER);
 				return;
 			}
 			req.setAttribute("userInfor", userInfor);
