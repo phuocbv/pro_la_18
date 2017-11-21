@@ -23,7 +23,7 @@
 					</tr>
 				</c:forEach>
 				<tr align="left">
-					<td class="lbl_left"><font color="red">*</font> New Password:</td>
+					<td class="lbl_left"><font color="red">*</font> パスワード :</td>
 					<td align="left"><input class="txBox" type="password"
 						name="newPassword"
 						value="<c:out value="${loginName}" escapeXml="true" />" size="22"
@@ -31,7 +31,7 @@
 						onblur="this.style.borderColor='#aaaaaa';" /></td>
 				</tr>
 				<tr>
-					<td class="lbl_left">Confirm Password:</td>
+					<td class="lbl_left">パスワード（確認）:</td>
 					<td align="left"><input class="txBox" type="password"
 						name="confirmPassword" value="" size="22"
 						onfocus="this.style.borderColor='#0066ff';"
@@ -41,7 +41,7 @@
 					<td></td>
 					<td align="left"><input class="btn btn_wider" type="submit"
 						value="Change Pass" /> <input class="btn" type="button"
-						value="Back" onclick="btnBack()" /></td>
+						value="戻る" onclick="btnBack()" /></td>
 				</tr>
 			</table>
 		</center>
