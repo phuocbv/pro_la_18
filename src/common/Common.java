@@ -37,7 +37,7 @@ public class Common {
 	public static String SHA1(String value) {
 		String result = "";
 		try {
-			MessageDigest m = MessageDigest.getInstance("SHA1");
+			MessageDigest m = MessageDigest.getInstance("SHA-1");
 			m.update(value.getBytes(), 0, value.length());
 			result = new BigInteger(1, m.digest()).toString(16).toUpperCase();
 		} catch (NoSuchAlgorithmException e) {
