@@ -12,11 +12,14 @@
 <body>
 	<jsp:include page="header.jsp" />
 	<!-- Begin vung input-->
+	<center>
+		<div style="padding-top: 50px;">パスワードを変更する</div>
+	</center>
 	<form
 		action="${pageContext.request.contextPath}${Constant.URL_CHANGE_PASSWORD}"
 		method="post">
 		<center>
-			<table class="tbl_input" border="0" style="padding-top: 50px">
+			<table class="tbl_input" border="0" cellpadding="0" cellspacing="0" style="padding-top: 15px">
 				<c:forEach var="item" items="${listMessage}">
 					<tr>
 						<td class="errMsg" colspan="2"><c:out value="${item}"></c:out></td>
@@ -39,9 +42,9 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td align="left"><input class="btn btn_wider" type="submit"
-						value="Change Pass" /> <input class="btn" type="button"
-						value="戻る" onclick="btnBack()" /></td>
+					<td align="left"><input class="btn btn_large" type="submit"
+						value="パスワードを変更する" /> <input class="btn" type="button" value="戻る"
+						onclick="btnBack()" /></td>
 				</tr>
 			</table>
 		</center>

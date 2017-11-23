@@ -108,7 +108,7 @@
 							<td><input class="btn" type="submit" value="編集" /></td>
 							<td><input class="btn" type="button" value="削除"
 								onclick="deleteUser()" /></td>
-							<td><input class="btn btn_large" type="button" value="パスワード変化"
+							<td><input class="btn btn_large" type="button" value="パスワードを変更する"
 								onclick="changePassword()" /></td>
 						</c:when>
 						<c:otherwise>
