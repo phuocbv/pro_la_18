@@ -78,7 +78,7 @@ public class LoginFilter implements Filter {
 
 		// in case logined
 		if (loginName != null) {
-			// domain name have not in list url do then redirect to list user
+			// domain name have not in list url do then redirect to system error
 			if (!listUrlAllow.contains(path)) {
 				url.append(Constant.URL_SUCCESS).append("?type=").append(Constant.ERROR);
 				res.sendRedirect(url.toString());

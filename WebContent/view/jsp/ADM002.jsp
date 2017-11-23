@@ -125,15 +125,15 @@
 								<c:out value="${item.userId}" escapeXml="true" />
 						</a></td>
 						<td><c:out value="${item.fullName}" escapeXml="true" /></td>
-						<td align="center"><fmt:formatDate pattern="yyyy/MM/dd"
+						<td align="center" class="wid75"><fmt:formatDate pattern="yyyy/MM/dd"
 								value="${item.birthday}" /></td>
-						<td><c:out value="${item.groupName}" escapeXml="true" /></td>
-						<td><c:out value="${item.email}" escapeXml="true" /></td>
-						<td><c:out value="${item.tel}" escapeXml="true" /></td>
-						<td><c:out value="${item.nameLevel }" escapeXml="true" /></td>
-						<td align="center"><fmt:formatDate pattern="yyyy/MM/dd"
+						<td class="wid50"><c:out value="${item.groupName}" escapeXml="true" /></td>
+						<td class="wid150"><c:out value="${item.email}" escapeXml="true" /></td>
+						<td class="wid75"><c:out value="${item.tel}" escapeXml="true" /></td>
+						<td  class="wid100"d><c:out value="${item.nameLevel }" escapeXml="true" /></td>
+						<td align="center" class="wid75"><fmt:formatDate pattern="yyyy/MM/dd"
 								value="${item.endDate}" /></td>
-						<td align="right"><c:out value="${item.total}"
+						<td align="right" class="wid50"><c:out value="${item.total}"
 								escapeXml="true" /></td>
 					</tr>
 				</c:forEach>

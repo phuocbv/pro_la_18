@@ -49,7 +49,7 @@ public class AuthLogicImpl implements AuthLogic {
 			return listMessage;
 		}
 		// md5 password
-		String inputPassword = Common.MD5(password, AdminProperties.getValue(Constant.SALT_ADMIN));
+		String inputPassword = Common.SHA1(password, AdminProperties.getValue(Constant.SALT_ADMIN));
 		// compare password
 		if (!AdminProperties.getValue(Constant.PASSWORD).equals(inputPassword)) {
 			listMessage.add(MessageErrorProperties.getValue(ConstantProperties.ER016));

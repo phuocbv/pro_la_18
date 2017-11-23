@@ -94,6 +94,7 @@ public class AddUserInputController extends HttpServlet {
 		try {
 			UserInfor userInfor = setDefaultValue(req, resp);
 			int userId = userInfor.getUserId();
+			// check exist user
 			if (userId > 0) {
 				boolean checkExist = tblUserLogic.checkExistTblUserById(userId);
 				if (!checkExist) {
@@ -106,7 +107,7 @@ public class AddUserInputController extends HttpServlet {
 			StringBuffer urlRedirect = new StringBuffer(req.getContextPath());
 			// case haven't error
 			if (listError.isEmpty()) {
-				String keySession = Common.MD5(Common.randomString());
+				String keySession = Common.SHA1(Common.randomString());// create key session
 				String action = userInfor.getUserId() > 0 ? Constant.URL_EDIT_USER_CONFIRM
 						: Constant.URL_ADD_USER_CONFIRM;
 				urlRedirect.append(action);
@@ -166,7 +167,7 @@ public class AddUserInputController extends HttpServlet {
 	}
 
 	/**
-	 * set default value for field text box in screen ADM003
+	 * set default value for field text box and select box in screen ADM003
 	 * 
 	 * @param req
 	 *            : object request
@@ -180,13 +181,14 @@ public class AddUserInputController extends HttpServlet {
 		String type = req.getParameter(Constant.TYPE);
 		String paramUserId = req.getParameter("userId");
 		UserInfor userInfor = null;
+		// check type
 		if (type == null || Constant.EMPTY_STRING.equals(type) || Constant.TYPE_ADM002.equals(type)) {// from ADM002
 			userInfor = new UserInfor();
-		} else if (Constant.TYPE_ADM004.equals(type)) {// from ADM004
-			String keySession = req.getParameter(Constant.KEY_SESSION);
+		} else if (Constant.TYPE_ADM004.equals(type)) {// type from ADM004
+			String keySession = req.getParameter(Constant.KEY_SESSION);// get key session back from ADM004
 			userInfor = (UserInfor) req.getSession().getAttribute(keySession);
 			req.getSession().removeAttribute(keySession);
-		} else if (Constant.TYPE_ADM003.equals(type)) {// from ADM003
+		} else if (Constant.TYPE_ADM003.equals(type)) {// type from ADM003
 			userInfor = new UserInfor();
 			userInfor.setLoginName(req.getParameter(UserInfor.LOGIN_NAME));
 			userInfor.setGroupId(req.getParameter(UserInfor.GROUP_ID));
@@ -232,7 +234,7 @@ public class AddUserInputController extends HttpServlet {
 				userInfor.setStartYear(String.valueOf(startDate.get(0)));
 				userInfor.setStartMonth(String.valueOf(startDate.get(1)));
 				userInfor.setStartDay(String.valueOf(startDate.get(2)));
-				// get year, month, day of startDate
+				// get year, month, day of endDate
 				ArrayList<Integer> endDate = Common.toArrayInteger(userInfor.getEndDate());
 				userInfor.setEndYear(String.valueOf(endDate.get(0)));
 				userInfor.setEndMonth(String.valueOf(endDate.get(1)));
@@ -241,7 +243,7 @@ public class AddUserInputController extends HttpServlet {
 		}
 		StringBuffer urlBack = new StringBuffer(req.getContextPath());
 		StringBuffer urlSubmit = new StringBuffer(req.getContextPath());
-		// set user id in case ADM03 -> ADM003
+		// set user id in case ADM03 -> ADM003 in case edit
 		if (paramUserId != null) {
 			int id = Common.parseInt(paramUserId, 0);
 			userInfor.setUserId(id);
@@ -249,11 +251,11 @@ public class AddUserInputController extends HttpServlet {
 		// get userId
 		int userId = userInfor.getUserId();
 		// set url submit and url back
-		if (userId > 0) {
+		if (userId > 0) {// in case edit
 			urlBack.append(Constant.URL_SHOW_DETAIL_USER).append("?userId=").append(userId);
 			urlSubmit.append(Constant.URL_EDIT_USER_VALIDATE);
 			req.setAttribute("userId", userId);
-		} else {
+		} else {//in case add
 			urlBack.append(Constant.URL_LIST_USER).append("?type=back");
 			urlSubmit.append(Constant.URL_ADD_USER_VALIDATE);
 		}

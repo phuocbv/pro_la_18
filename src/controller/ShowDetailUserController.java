@@ -50,7 +50,7 @@ public class ShowDetailUserController extends HttpServlet {
 			if (userId != null && !Constant.EMPTY_STRING.equals(userId)) {
 				userInfor = tblUserLogic.getUserInforById(userId);
 			}
-			// check userInfor == null
+			// check exist userInfor
 			if (userInfor == null) {
 				Common.processSystemError(req, resp, Constant.NOT_FOUND_USER);
 				return;
@@ -58,9 +58,9 @@ public class ShowDetailUserController extends HttpServlet {
 			req.setAttribute("userInfor", userInfor);
 			req.setAttribute("userId", userId);
 			StringBuffer urlSubmit = new StringBuffer().append(req.getContextPath())
-					.append(Constant.URL_EDIT_USER_INPUT);
+					.append(Constant.URL_EDIT_USER_INPUT);//create url submit to ADM003
 			StringBuffer urlBack = new StringBuffer().append(req.getContextPath()).append(Constant.URL_LIST_USER)
-					.append("?type=back");
+					.append("?type=back");//create url back ADM002
 			req.setAttribute("urlSubmit", urlSubmit.toString());
 			req.setAttribute("urlBack", urlBack.toString());
 			req.setAttribute("method", Constant.METHOD_GET);

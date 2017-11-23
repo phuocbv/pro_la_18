@@ -82,6 +82,7 @@ public class LoginController extends HttpServlet {
 				dispatcher.forward(request, response);// forward to page jsp
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			Common.processSystemError(request, response, Constant.ERROR);
 		}
 	}

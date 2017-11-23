@@ -75,14 +75,11 @@ public class ListUserController extends HttpServlet {
 			// get param
 			String type = request.getParameter(Constant.TYPE);
 			HttpSession session = request.getSession();// get session
-			if (type == null) {
-
-			}
 			@SuppressWarnings(value = "unchecked")
 			Map<String, String> dataSession = (HashMap<String, String>) session
-					.getAttribute(Constant.SESSION_CONDITION_STORE);// get condition get user in session
+					.getAttribute(Constant.SESSION_CONDITION_STORE);// get all condition for get user in session
 			int page = 1;// default page
-			if (type == null) {// first request then set params sort and default sort type
+			if (type == null) {// first request then set default params sort and default sort type
 				session.removeAttribute(Constant.SESSION_CONDITION_STORE);// remote session
 				dataSession = new HashMap<>();
 				dataSession.put(Constant.SORT_TYPE, Constant.SORT_BY_FULL_NAME);
@@ -113,7 +110,8 @@ public class ListUserController extends HttpServlet {
 				if (currentPage != null) {// get current page
 					page = Common.parseInt(currentPage, Constant.DEFAULT_PAGE);
 				}
-			} else if (Constant.TYPE_BACK.equals(type)) {
+				
+			} else if (Constant.TYPE_BACK.equals(type)) {// in case back from diffrent screen
 				page = Common.parseInt(dataSession.get(Constant.PAGE), 1);
 			}
 			// add page into session

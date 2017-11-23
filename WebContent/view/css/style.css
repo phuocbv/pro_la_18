@@ -96,3 +96,23 @@
 	text-align: center;
 	width: 850px;
 }
+
+td {
+	word-break: break-all;
+}
+
+.wid150 {
+	width: 150px;
+}
+
+.wid100 {
+	width: 100px;
+}
+
+.wid75 {
+	width: 75px;
+}
+
+.wid50 {
+	width: 50px;
+}

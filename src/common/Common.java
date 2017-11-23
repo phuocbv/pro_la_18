@@ -34,10 +34,10 @@ public class Common {
 	 *            : string need encode
 	 * @return String : encoded string
 	 */
-	public static String MD5(String value) {
+	public static String SHA1(String value) {
 		String result = "";
 		try {
-			MessageDigest m = MessageDigest.getInstance(Constant.MD5);
+			MessageDigest m = MessageDigest.getInstance("SHA1");
 			m.update(value.getBytes(), 0, value.length());
 			result = new BigInteger(1, m.digest()).toString(16).toUpperCase();
 		} catch (NoSuchAlgorithmException e) {
@@ -55,11 +55,11 @@ public class Common {
 	 *            : string random
 	 * @return String : encode string with salt
 	 */
-	public static String MD5(String value, String salt) {
+	public static String SHA1(String value, String salt) {
 		StringBuffer result = new StringBuffer();
-		result.append(MD5(value));
+		result.append(SHA1(value));
 		result.append(salt);
-		return MD5(result.toString());
+		return SHA1(result.toString());
 	}
 
 	/**
@@ -97,13 +97,6 @@ public class Common {
 				Constant.DEFAULT_NUMBER_PAGE_IN_PAGE);
 		// total page follow limit
 		int totalPage = totalPage(totalRecords, limit);// (int) Math.ceil((float) totalRecords / limit);
-		// if (currentPage < 1) {// if page < 1 still display paging 1 2 3 and data
-		// empty
-		// currentPage = 1;
-		// }
-		// if (currentPage > totalPage) {
-		// currentPage = totalPage;
-		// }
 		int currentRange = getCurrentRange(currentPage, numberPageInPage);// get current range
 		int start = getStartPage(currentRange, numberPageInPage);// start paging
 		int end = getEndPage(currentRange, numberPageInPage, totalPage);// end paging
@@ -398,10 +391,6 @@ public class Common {
 		if (date == null) {
 			return false;
 		}
-		// if birthday > current date then return false
-		// if ((new Date()).compareTo(date) < 0) {
-		// return false;
-		// }
 		return true;
 	}
 

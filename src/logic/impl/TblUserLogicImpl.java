@@ -130,8 +130,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	@Override
 	public boolean createUser(UserInfor userInfor) throws ClassNotFoundException, SQLException {
 		int groupId = Common.parseInt(userInfor.getGroupId(), 0);
-		String salt = Common.MD5(Common.randomString());
-		String password = Common.MD5(userInfor.getPassword(), salt);
+		String salt = Common.SHA1(Common.randomString());
+		String password = Common.SHA1(userInfor.getPassword(), salt);
 		TblUser tblUser = new TblUser();
 		tblUser.setGroupId(groupId);
 		tblUser.setLoginName(userInfor.getLoginName());
@@ -307,7 +307,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	public boolean changePasswrordOfUser(Integer userId, String newPassword)
 			throws ClassNotFoundException, SQLException {
 		TblUser tblUser = tblUserDAO.getTblUserById(userId);
-		newPassword = Common.MD5(newPassword, tblUser.getSalt());
+		newPassword = Common.SHA1(newPassword, tblUser.getSalt());
 		return tblUserDAO.updatePasswrord(userId, newPassword);
 	}
 }
