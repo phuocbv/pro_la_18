@@ -410,12 +410,6 @@ public class Common {
 		}
 		return result;
 	}
-	
-//	public static String filterString(String value) {
-//		if (va)
-//		
-//		return value;
-//	}
 
 	/**
 	 * proccess when system error

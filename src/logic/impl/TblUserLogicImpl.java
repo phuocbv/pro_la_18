@@ -131,17 +131,6 @@ public class TblUserLogicImpl implements TblUserLogic {
 		String salt = Common.SHA1(Common.randomString());
 		String password = Common.SHA1(userInfor.getPassword(), salt);
 		userInfor.setPassword(password);
-
-		// TblUser tblUser = new TblUser();
-		// tblUser.setGroupId(groupId);
-		// tblUser.setLoginName(userInfor.getLoginName());
-		// tblUser.setPassword(password);
-		// tblUser.setFullName(userInfor.getFullName());
-		// tblUser.setFullNameKana(userInfor.getFullNameKana());
-		// tblUser.setEmail(userInfor.getEmail());
-		// tblUser.setTel(userInfor.getTel());
-		// tblUser.setBirthday(userInfor.getBirthday());
-		// tblUser.setSalt(salt);
 		TblUser tblUser = getTblUserFromUserInfor(userInfor);
 		tblUser.setSalt(salt);
 		try {
@@ -151,14 +140,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 			if (userId == null) {// if insert tbl_user not success then return false
 				return false;
 			}
+			// if exist japan
 			if (userInfor.getCodeLevel() != null) {
-				// int total = Common.parseInt(userInfor.getTotal(), 0);
-				// TblDetailUserJapan tblDetailUserJapan = new TblDetailUserJapan();
-				// tblDetailUserJapan.setUserId(userId);
-				// tblDetailUserJapan.setCodeLevel(userInfor.getCodeLevel());
-				// tblDetailUserJapan.setStartDate(userInfor.getStartDate());
-				// tblDetailUserJapan.setEndDate(userInfor.getEndDate());
-				// tblDetailUserJapan.setTotal(total);
 				TblDetailUserJapan tblDetailUserJapan = getTblDetailUserJapanFromUserInfor(userInfor);
 				tblDetailUserJapanDAO.insertDetailUserJapan(tblDetailUserJapan);
 			}
@@ -224,14 +207,6 @@ public class TblUserLogicImpl implements TblUserLogic {
 	@Override
 	public boolean editUser(UserInfor userInfor) throws ClassNotFoundException, SQLException {
 		int userId = userInfor.getUserId();
-		// TblUser tblUser = new TblUser();
-		// tblUser.setUserId(userId);
-		// tblUser.setGroupId(groupId);
-		// tblUser.setFullName(userInfor.getFullName());
-		// tblUser.setFullNameKana(userInfor.getFullNameKana());
-		// tblUser.setEmail(userInfor.getEmail());
-		// tblUser.setTel(userInfor.getTel());
-		// tblUser.setBirthday(userInfor.getBirthday());
 		TblUser tblUser = getTblUserFromUserInfor(userInfor);
 		TblDetailUserJapan detailUserJapan = tblDetailUserJapanDAO.gettDetailUserJapanByUserId(userId);
 		try {
@@ -239,14 +214,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 			baseDAO.dbConnection();// create connection
 			baseDAO.setAutoCommit(false);// set auto commit = false
 			tblUserDAO.updateUser(tblUser);
+			// if exist japan
 			if (userInfor.getCodeLevel() != null) {
-				// int total = Common.parseInt(userInfor.getTotal(), 0);
-				// TblDetailUserJapan tblDetailUserJapan = new TblDetailUserJapan();
-				// tblDetailUserJapan.setUserId(userInfor.getUserId());
-				// tblDetailUserJapan.setCodeLevel(userInfor.getCodeLevel());
-				// tblDetailUserJapan.setStartDate(userInfor.getStartDate());
-				// tblDetailUserJapan.setEndDate(userInfor.getEndDate());
-				// tblDetailUserJapan.setTotal(total);
 				TblDetailUserJapan tblDetailUserJapan = getTblDetailUserJapanFromUserInfor(userInfor);
 				if (detailUserJapan == null) {// if not exist then add to database
 					check = tblDetailUserJapanDAO.insertDetailUserJapan(tblDetailUserJapan);
