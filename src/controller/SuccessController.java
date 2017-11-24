@@ -44,6 +44,7 @@ public class SuccessController extends HttpServlet {
 				resp.sendRedirect(stringBuffer.toString());
 				return;
 			}
+			//check type and sei value for message
 			if (Constant.ERROR.equals(type)) {
 				color = "red";
 				message = MessageProperties.getValue(ConstantProperties.SYSTEM_ERROR);

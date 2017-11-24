@@ -54,7 +54,7 @@ public class ValidateUser {
 	public List<String> validateUserInfor(UserInfor userInfor) throws ClassNotFoundException, SQLException {
 		List<String> listError = new ArrayList<>();
 		Integer userId = userInfor.getUserId() > 0 ? userInfor.getUserId() : null;
-		//System.out.println(userId);
+		
 		// check login name (4)
 		if (userInfor.getUserId() == 0) {
 			String loginName = userInfor.getLoginName();

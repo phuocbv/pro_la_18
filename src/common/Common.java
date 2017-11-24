@@ -28,7 +28,7 @@ import properties.ConfigProperties;
  */
 public class Common {
 	/**
-	 * function md5
+	 * function encode
 	 * 
 	 * @param value
 	 *            : string need encode
@@ -37,7 +37,7 @@ public class Common {
 	public static String SHA1(String value) {
 		String result = "";
 		try {
-			MessageDigest m = MessageDigest.getInstance("SHA-1");
+			MessageDigest m = MessageDigest.getInstance("SHA1");
 			m.update(value.getBytes(), 0, value.length());
 			result = new BigInteger(1, m.digest()).toString(16).toUpperCase();
 		} catch (NoSuchAlgorithmException e) {
@@ -410,6 +410,12 @@ public class Common {
 		}
 		return result;
 	}
+	
+//	public static String filterString(String value) {
+//		if (va)
+//		
+//		return value;
+//	}
 
 	/**
 	 * proccess when system error

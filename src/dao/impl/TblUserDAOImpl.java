@@ -141,7 +141,6 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			setParam(sql, groupId, fullName);// set param into pstm
 			resultSet = pstm.executeQuery();// execute sql
 			resultSet.next();
-			// totalUser = resultSet.getInt(UserInfor.TOTAL_USER);// read total user
 			totalUser = resultSet.getInt(1);// read total user
 		} finally {
 			closeConnect();
@@ -282,7 +281,6 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			if (userId != null) {
 				pstm.setInt(++i, userId);
 			}
-			// System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
 			// repeat record get and add to list
 			if (resultSet.next()) {
@@ -331,7 +329,6 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			if (userId != null) {
 				pstm.setInt(++i, userId);
 			}
-			// System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
 			if (resultSet.next()) {
 				i = 0;
@@ -370,6 +367,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			if (connection == null) {
 				return userId;
 			}
+			//config return user_id but not commit
 			pstm = connection.prepareStatement(sqlInsertUser.toString(), Statement.RETURN_GENERATED_KEYS);
 			pstm.setInt(++i, tblUser.getGroupId());
 			pstm.setString(++i, tblUser.getLoginName());
@@ -380,7 +378,6 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			pstm.setString(++i, tblUser.getTel());
 			pstm.setDate(++i, new Date(tblUser.getBirthday().getTime()));
 			pstm.setString(++i, tblUser.getSalt());
-			// System.out.println(pstm.toString());
 			pstm.executeUpdate();
 			resultSet = pstm.getGeneratedKeys();
 			if (resultSet.next()) {
@@ -504,7 +501,6 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			StringBuffer sqlGetTblUserById = new StringBuffer(sqlGetTblUser.toString());
 			sqlGetTblUserById.append(" WHERE tbl_user.user_id = ? ");
 			pstm = connection.prepareStatement(sqlGetTblUserById.toString());// use PrepareStatement
-			// System.out.println(pstm.toString());
 			pstm.setInt(1, id);
 			resultSet = pstm.executeQuery();// execute sql
 			int i;

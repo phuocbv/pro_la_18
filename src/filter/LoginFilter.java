@@ -22,7 +22,7 @@ import common.Constant;
 
 /**
  * filter login
- * 
+ * phai sua phan if de bo return
  * @author da
  *
  */
@@ -37,8 +37,7 @@ public class LoginFilter implements Filter {
 	 */
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	/*
@@ -90,7 +89,6 @@ public class LoginFilter implements Filter {
 
 		// if not login then redirect to path login
 		res.sendRedirect(url.append(Constant.URL_LOGIN).toString());
-
 	}
 
 	/*

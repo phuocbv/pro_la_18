@@ -86,7 +86,7 @@
 				<tr class="tr2">
 					<th align="center" width="20px">ID</th>
 					<th align="left">氏名 <a
-						href="listUser.do?${paramSort}
+						href="${pageContext.request.contextPath}${Constant.URL_LIST_USER}?${paramSort}
 				&sortByFullName=${sessionScope.CONDITION_STORE.sortByFullName == Constant.ASC ? Constant.DESC : Constant.ASC}
 				&sortByCodeLevel=${sortByCodeLevel}
 				&sortByEndDate=${sortByEndDate}&sortType=${Constant.SORT_BY_FULL_NAME}">
@@ -98,7 +98,7 @@
 					<th align="left">メールアドレス</th>
 					<th align="left" width="150px">電話番号</th>
 					<th align="left">日本語能力 <a
-						href="listUser.do?${paramSort}
+						href="${pageContext.request.contextPath}${Constant.URL_LIST_USER}?${paramSort}
 				&sortByFullName=${sortByFullName}
 				&sortByCodeLevel=${sessionScope.CONDITION_STORE.sortByCodeLevel == Constant.ASC ? Constant.DESC : Constant.ASC}
 				&sortByEndDate=${sortByEndDate}
@@ -107,7 +107,7 @@
 					</a>
 					</th>
 					<th align="left">失効日 <a
-						href="listUser.do?${paramSort}
+						href="${pageContext.request.contextPath}${Constant.URL_LIST_USER}?${paramSort}
 				&sortByFullName=${sortByFullName}
 				&sortByCodeLevel=${sortByCodeLevel}
 				&sortByEndDate=${sessionScope.CONDITION_STORE.sortByEndDate == Constant.ASC ? Constant.DESC : Constant.ASC}
@@ -125,14 +125,17 @@
 								<c:out value="${item.userId}" escapeXml="true" />
 						</a></td>
 						<td><c:out value="${item.fullName}" escapeXml="true" /></td>
-						<td align="center" class="wid75"><fmt:formatDate pattern="yyyy/MM/dd"
-								value="${item.birthday}" /></td>
-						<td class="wid50"><c:out value="${item.groupName}" escapeXml="true" /></td>
-						<td class="wid150"><c:out value="${item.email}" escapeXml="true" /></td>
+						<td align="center" class="wid75"><fmt:formatDate
+								pattern="yyyy/MM/dd" value="${item.birthday}" /></td>
+						<td class="wid50"><c:out value="${item.groupName}"
+								escapeXml="true" /></td>
+						<td class="wid150"><c:out value="${item.email}"
+								escapeXml="true" /></td>
 						<td class="wid75"><c:out value="${item.tel}" escapeXml="true" /></td>
-						<td  class="wid100"d><c:out value="${item.nameLevel }" escapeXml="true" /></td>
-						<td align="center" class="wid75"><fmt:formatDate pattern="yyyy/MM/dd"
-								value="${item.endDate}" /></td>
+						<td class="wid100" d><c:out value="${item.nameLevel }"
+								escapeXml="true" /></td>
+						<td align="center" class="wid75"><fmt:formatDate
+								pattern="yyyy/MM/dd" value="${item.endDate}" /></td>
 						<td align="right" class="wid50"><c:out value="${item.total}"
 								escapeXml="true" /></td>
 					</tr>
@@ -154,26 +157,25 @@
 			<c:if test="${not empty listPaging}">
 				<table>
 					<tr>
-						<td class="lbl_paging"><c:if
-								test="${currentPage > totalPaging}">
-								<a
-									href="listUser.do?page=${listPaging.get(0) - 1}&${paramPaging}"><<</a>&nbsp;
-			</c:if> <c:forEach var="item" items="${listPaging}">
+						<td class="lbl_paging">
+							<c:if test="${currentPage > totalPaging}">
+								<a href="${pageContext.request.contextPath}${Constant.URL_LIST_USER}?page=${listPaging.get(0) - 1}&${paramPaging}"><<</a>&nbsp;
+							</c:if> 
+							<c:forEach var="item" items="${listPaging}">
 								<c:choose>
 									<c:when test="${item == currentPage }">
-							${item} &nbsp;
-						</c:when>
+										${item} &nbsp;
+									</c:when>
 									<c:otherwise>
-										<a href="listUser.do?page=${item}&${paramPaging}">${item}</a> &nbsp;
-						</c:otherwise>
+										<a href="${pageContext.request.contextPath}${Constant.URL_LIST_USER}?page=${item}&${paramPaging}">${item}</a> &nbsp;
+									</c:otherwise>
 								</c:choose>
-
-							</c:forEach> <c:if
+							</c:forEach>
+							<c:if
 								test="${listPaging.get(listPaging.size() - 1) % totalPaging == 0 &&  totalUser > listPaging.get(listPaging.size() - 1) * limit}">
-								<a
-									href="listUser.do?page=${listPaging.get(listPaging.size() - 1) + 1}&${paramPaging}">>></a>
-
-							</c:if></td>
+								<a href="${pageContext.request.contextPath}${Constant.URL_LIST_USER}?page=${listPaging.get(listPaging.size() - 1) + 1}&${paramPaging}">>></a>
+							</c:if>
+						</td>
 					</tr>
 				</table>
 			</c:if>

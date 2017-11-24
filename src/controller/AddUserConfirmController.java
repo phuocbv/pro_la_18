@@ -133,7 +133,6 @@ public class AddUserConfirmController extends HttpServlet {
 			urlNotification.append(type);
 			resp.sendRedirect(urlNotification.toString());
 		} catch (Exception e) {
-			//e.printStackTrace();
 			Common.processSystemError(req, resp, Constant.ERROR);
 		}
 	}

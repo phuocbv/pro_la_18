@@ -32,7 +32,7 @@ public class LogoutController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			request.getSession().invalidate(); // removeAttribute(Constant.SESSION_LOGGINED_USER);// remote session
+			request.getSession().invalidate(); //remove all value in session
 			StringBuffer stringBuffer = new StringBuffer(request.getContextPath());
 			stringBuffer.append(Constant.URL_LOGIN);
 			response.sendRedirect(stringBuffer.toString());

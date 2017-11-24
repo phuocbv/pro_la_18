@@ -88,7 +88,6 @@ public class AddUserInputController extends HttpServlet {
 	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
 	 * javax.servlet.http.HttpServletResponse)
 	 */
-
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 		try {

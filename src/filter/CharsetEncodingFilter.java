@@ -34,8 +34,7 @@ public class CharsetEncodingFilter implements Filter {
 	 */
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	/*
@@ -49,9 +48,6 @@ public class CharsetEncodingFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-		res.setHeader("Pragma", "no-cache");
-		res.setDateHeader("Expires", 0);
 		req.setCharacterEncoding(Constant.UTF_8);// set utf 8 for request
 		res.setContentType(Constant.CONTANT_TYPE);// set contant type for response
 		chain.doFilter(request, response);
@@ -64,8 +60,7 @@ public class CharsetEncodingFilter implements Filter {
 	 */
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

@@ -20,7 +20,8 @@
 					<th></th>
 				</tr>
 				<tr>
-					<th colspan="2" align="left">アカウント名およびパスワードを入力してください</th>
+					<th colspan="2" align="left"><c:out
+							value="アカウント名およびパスワードを入力してください" escapeXml="true"></c:out></th>
 				</tr>
 				<c:forEach var="item" items="${listMessage}">
 					<tr>

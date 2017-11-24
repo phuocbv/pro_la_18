@@ -46,9 +46,8 @@ public class LoginController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			// tạo đối tượng RequestDispatcher để forward đến trang jsp
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM001);
-			dispatcher.forward(request, response);// forward đến trang jsp
+			dispatcher.forward(request, response);
 		} catch (Exception e) {
 			Common.processSystemError(request, response, Constant.ERROR);
 		}
@@ -82,7 +81,6 @@ public class LoginController extends HttpServlet {
 				dispatcher.forward(request, response);// forward to page jsp
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			Common.processSystemError(request, response, Constant.ERROR);
 		}
 	}

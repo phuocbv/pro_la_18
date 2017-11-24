@@ -98,7 +98,6 @@ public class ChangePasswordController extends HttpServlet {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM007);
 			dispatcher.forward(req, resp);// forward to jsp page
 		} catch (Exception e) {
-			//e.printStackTrace();
 			Common.processSystemError(req, resp, Constant.ERROR);
 		}
 	}
