@@ -19,6 +19,7 @@ public interface TblDetailUserJapanDAO {
 	 * insert in detail user japan
 	 * 
 	 * @param tblDeatilUserJapanDAO
+	 *            is object of table tbl_detail_user_japan
 	 * @return boolean test insert success
 	 * @throws SQLException
 	 */

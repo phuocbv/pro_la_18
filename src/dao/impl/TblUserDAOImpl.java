@@ -98,6 +98,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			sql = getSQLPaging(sql, offset, limit);// add paging
 			pstm = connection.prepareStatement(sql);// use PrepareStatement
 			setParam(sql, groupId, fullName);
+			System.out.println(pstm.toString());
 			resultSet = pstm.executeQuery();// execute sql
 			int i;
 			while (resultSet.next()) {
@@ -169,7 +170,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		}
 		// add where fullName
 		if (fullName != null && !Constant.EMPTY_STRING.equals(fullName)) {
-			pstm.setString(++i, stringBuffer.append(fullName).toString());
+			pstm.setString(++i, stringBuffer.append(Constant.PERCENT).append(fullName).append(Constant.PERCENT).toString());
 		}
 	}
 
@@ -193,7 +194,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		}
 		// if fullName is not null , is not empty string then add condition in where
 		if (fullName != null && !Constant.EMPTY_STRING.equals(fullName)) {
-			stringBuffer.append(" AND ( tbl_user.full_name REGEXP ? ) ");
+			stringBuffer.append(" AND ( tbl_user.full_name LIKE ? ) ");
 		}
 		return stringBuffer.toString();
 	}
@@ -270,6 +271,9 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		TblUser tblUser = null;
 		try {
 			connection = getConnection();// get connection
+			if (connection == null) {
+				return tblUser;
+			}
 			StringBuffer sql = new StringBuffer(sqlGetTblUser.toString()).append(" WHERE tbl_user.login_name = ?  ");
 			if (userId != null) {
 				sql.append(" AND tbl_user.user_id != ? ");
@@ -319,6 +323,9 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		TblUser tblUser = null;
 		try {
 			connection = getConnection();// get connection
+			if (connection == null) {
+				return tblUser;
+			}
 			StringBuffer sql = new StringBuffer(sqlGetTblUser.toString()).append(" WHERE tbl_user.email = ? ");
 			if (userId != null) {
 				sql.append(" AND tbl_user.user_id != ? ");

@@ -411,6 +411,34 @@ public class Common {
 		return result;
 	}
 
+	public String filterString(String value) {
+		return value.replaceAll("%", "\\%");
+	}
+
+	/**
+	 * format special char
+	 * 
+	 * @param ioString
+	 * @return ioString
+	 */
+	public static String formatCondSearch(String ioString) {
+		//check exist value
+		if (ioString == null || Constant.EMPTY_STRING.equals(ioString)) {
+			return ioString;
+		}
+		// array special char
+		String[] specialChars = { "\\", "%", "_", "[", "]", "-", "!" };
+		String[] replaceSpecialChars = { "\\\\", "\\%", "\\_", "\\[", "\\]", "\\-", "\\!" };
+		// replace special char
+		int specialCharsLeng = specialChars.length;
+		for (int i = 0; i < specialCharsLeng; i++) {
+			if (ioString.contains(specialChars[i])) {
+				ioString = ioString.replace(specialChars[i], replaceSpecialChars[i]);
+			}
+		}
+		return ioString;
+	}
+
 	/**
 	 * proccess when system error
 	 * 

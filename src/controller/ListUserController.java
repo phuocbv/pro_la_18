@@ -72,10 +72,9 @@ public class ListUserController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			// get param
-			String type = request.getParameter(Constant.TYPE);
+			String type = request.getParameter(Constant.TYPE); // get param type
 			HttpSession session = request.getSession();// get session
-			@SuppressWarnings(value = "unchecked")
+			@SuppressWarnings(value = "unchecked")// unwarning
 			Map<String, String> dataSession = (HashMap<String, String>) session
 					.getAttribute(Constant.SESSION_CONDITION_STORE);// get all condition for get user in session
 			int page = 1;// default page
@@ -116,8 +115,8 @@ public class ListUserController extends HttpServlet {
 			}
 			// add page into session
 			dataSession.put(Constant.PAGE, String.valueOf(page));
-			int totalUser = tblUserLogic.getTotalUsers(dataSession.get(Constant.GROUP_ID),
-					dataSession.get(Constant.FULL_NAME));// get total user
+			String fullName = Common.formatCondSearch((String) dataSession.get(Constant.FULL_NAME));
+			int totalUser = tblUserLogic.getTotalUsers(dataSession.get(Constant.GROUP_ID), fullName);// get total user
 			if (totalUser != 0) {// check total user
 				// get limit in page
 				int limit = Common.parseInt(ConfigProperties.getValue(ConstantProperties.LIMIT_RECORD),
@@ -126,7 +125,7 @@ public class ListUserController extends HttpServlet {
 				List<Integer> listPaging = Common.getListPaging(totalUser, limit, page);// get list paging
 				int offset = Common.getOffset(page, limit);// get offset of paging
 				ArrayList<UserInfor> listUser = tblUserLogic.getListUsers(offset, limit,
-						(String) dataSession.get(Constant.GROUP_ID), (String) dataSession.get(Constant.FULL_NAME),
+						(String) dataSession.get(Constant.GROUP_ID), fullName,
 						(String) dataSession.get(Constant.SORT_TYPE),
 						(String) dataSession.get(Constant.SORT_BY_FULL_NAME),
 						(String) dataSession.get(Constant.SORT_BY_CODE_LEVEL),

@@ -75,7 +75,6 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public int getTotalUsers(String groupId, String fullName) throws ClassNotFoundException, SQLException {
-		// fullName = Common.filterString(fullName);
 		return tblUserDAO.getTotalUsers(groupId, fullName);
 	}
 

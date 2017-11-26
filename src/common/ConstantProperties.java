@@ -64,7 +64,7 @@ public class ConstantProperties {
 	public static final String MSG005 = "MSG005";
 	public static final String SYSTEM_ERROR = "SYSTEM_ERROR";
 
-	// message error
+	//attribute message error
 	public static final String ER001 = "ER001";
 	public static final String ER002 = "ER002";
 	public static final String ER003 = "ER003";
@@ -84,5 +84,4 @@ public class ConstantProperties {
 	public static final String ER017 = "ER017";
 	public static final String ER018 = "ER018";
 	public static final String ER019 = "ER019";
-
 }

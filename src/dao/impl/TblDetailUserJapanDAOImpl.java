@@ -113,6 +113,9 @@ public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDetailU
 		TblDetailUserJapan tblDetailUserJapan = null;
 		try {
 			connection = getConnection();// get connection
+			if (connection == null) {
+				return tblDetailUserJapan;
+			}
 			pstm = connection.prepareStatement(sqlGetDetailUserJapanByUserId.toString());// use PrepareStatement
 			pstm.setInt(1, userId);
 			resultSet = pstm.executeQuery();// execute sql

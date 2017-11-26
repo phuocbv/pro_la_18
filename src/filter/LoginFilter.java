@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import common.Constant;
 
 /**
- * filter login
- * phai sua phan if de bo return
+ * filter login phai sua phan if de bo return
+ * 
  * @author da
  *
  */
@@ -37,7 +37,7 @@ public class LoginFilter implements Filter {
 	 */
 	@Override
 	public void destroy() {
-		
+
 	}
 
 	/*
@@ -61,34 +61,24 @@ public class LoginFilter implements Filter {
 		if (Constant.URL_LOGIN.equals(path)) {
 			if (loginName != null) {// if logined then direct to list user
 				res.sendRedirect(url.append(Constant.URL_LIST_USER).toString());
-				return;
 			} else {// to login page
 				chain.doFilter(request, response);
-				return;
 			}
-		}
-
-		// if is folder /css/, /image/, /js/ then pass
-		if (path.indexOf(Constant.FOLDER_CSS) > 0 || path.indexOf(Constant.FOLDER_IMAGES) > 0
+		} else if (path.indexOf(Constant.FOLDER_CSS) > 0 || path.indexOf(Constant.FOLDER_IMAGES) > 0
 				|| path.indexOf(Constant.FOLDER_JS) > 0) {
+			// if is folder /css/, /image/, /js/ then pass
 			chain.doFilter(request, response);
-			return;
-		}
-
-		// in case logined
-		if (loginName != null) {
+		} else if (loginName != null) {// in case logined
 			// domain name have not in list url do then redirect to system error
 			if (!listUrlAllow.contains(path)) {
 				url.append(Constant.URL_SUCCESS).append("?type=").append(Constant.ERROR);
 				res.sendRedirect(url.toString());
-				return;
+			} else {
+				chain.doFilter(request, response);
 			}
-			chain.doFilter(request, response);
-			return;
+		} else {// if not login then redirect to path login
+			res.sendRedirect(url.append(Constant.URL_LOGIN).toString());
 		}
-
-		// if not login then redirect to path login
-		res.sendRedirect(url.append(Constant.URL_LOGIN).toString());
 	}
 
 	/*
