@@ -57,7 +57,7 @@ public class AddUserConfirmController extends HttpServlet {
 		try {
 			String keySession = req.getParameter(Constant.KEY_SESSION);
 			UserInfor userInfor = (UserInfor) req.getSession().getAttribute(keySession);
-			// check userInfor exist
+			// check userInfor exist in session
 			if (userInfor == null) {
 				Common.processSystemError(req, resp, Constant.NOT_FOUND_USER);
 				return;
@@ -89,7 +89,6 @@ public class AddUserConfirmController extends HttpServlet {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM004);
 			dispatcher.forward(req, resp);// forward to page jsp
 		} catch (Exception e) {
-			//e.printStackTrace();
 			Common.processSystemError(req, resp, Constant.ERROR);
 		}
 	}
@@ -113,7 +112,7 @@ public class AddUserConfirmController extends HttpServlet {
 			if (userInfor != null) {
 				int userId = userInfor.getUserId();
 				if (userId > 0) {// in case update user
-					// check exist user
+					// check exist user in database
 					boolean checkExist = tblUserLogic.checkExistTblUserById(userId);
 					// in case exist user then update
 					if (checkExist) {

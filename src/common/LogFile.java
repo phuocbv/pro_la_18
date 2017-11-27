@@ -29,10 +29,22 @@ public class LogFile {
 		}
 	}
 
+	/**
+	 * write log type warning
+	 * 
+	 * @param value
+	 *            write into file log
+	 */
 	public static void warning(String value) {
 		logger.warning(value);
 	}
 
+	/**
+	 * write log type info
+	 * 
+	 * @param value
+	 *            write into file log
+	 */
 	public static void info(String value) {
 		logger.info(value);
 	}

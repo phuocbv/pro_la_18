@@ -412,7 +412,7 @@ public class Common {
 	}
 
 	/**
-	 * format special char
+	 * replace special char
 	 * 
 	 * @param ioString
 	 * @return ioString
