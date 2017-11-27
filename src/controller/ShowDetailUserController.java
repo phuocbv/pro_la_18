@@ -53,20 +53,20 @@ public class ShowDetailUserController extends HttpServlet {
 			// check exist userInfor
 			if (userInfor == null) {
 				Common.processSystemError(req, resp, Constant.NOT_FOUND_USER);
-				return;
+			} else {
+				req.setAttribute("userInfor", userInfor);
+				req.setAttribute("userId", userId);
+				StringBuffer urlSubmit = new StringBuffer().append(req.getContextPath())
+						.append(Constant.URL_EDIT_USER_INPUT);//create url submit to ADM003
+				StringBuffer urlBack = new StringBuffer().append(req.getContextPath()).append(Constant.URL_LIST_USER)
+						.append("?type=back");//create url back ADM002
+				req.setAttribute("urlSubmit", urlSubmit.toString());
+				req.setAttribute("urlBack", urlBack.toString());
+				req.setAttribute("method", Constant.METHOD_GET);
+				req.setAttribute("userId", userId);
+				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM004);
+				dispatcher.forward(req, resp);// forward to page jsp
 			}
-			req.setAttribute("userInfor", userInfor);
-			req.setAttribute("userId", userId);
-			StringBuffer urlSubmit = new StringBuffer().append(req.getContextPath())
-					.append(Constant.URL_EDIT_USER_INPUT);//create url submit to ADM003
-			StringBuffer urlBack = new StringBuffer().append(req.getContextPath()).append(Constant.URL_LIST_USER)
-					.append("?type=back");//create url back ADM002
-			req.setAttribute("urlSubmit", urlSubmit.toString());
-			req.setAttribute("urlBack", urlBack.toString());
-			req.setAttribute("method", Constant.METHOD_GET);
-			req.setAttribute("userId", userId);
-			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM004);
-			dispatcher.forward(req, resp);// forward to page jsp
 		} catch (Exception e) {
 			Common.processSystemError(req, resp, Constant.ERROR);
 		}

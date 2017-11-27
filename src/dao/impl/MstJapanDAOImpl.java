@@ -25,20 +25,18 @@ public class MstJapanDAOImpl extends BaseDAOImpl implements MstJapanDAO {
 		ArrayList<MstJapan> listJapan = new ArrayList<>();
 		try {
 			connection = getConnection();// get connection
-			// if connect null then return
-			if (connection == null) {
-				return listJapan;
-			}
-			pstm = connection.prepareStatement(SQL_GET_ALL_JAPAN);// use PrepareStatement
-			resultSet = pstm.executeQuery();// execute sql
-			// repeat record get and add to list
-			int i;
-			while (resultSet.next()) {
-				i = 0;
-				MstJapan japan = new MstJapan();
-				japan.setCodeLevel(resultSet.getString(++i));
-				japan.setNameLevel(resultSet.getString(++i));
-				listJapan.add(japan);
+			// check connection
+			if (connection != null) {
+				pstm = connection.prepareStatement(SQL_GET_ALL_JAPAN);// use PrepareStatement
+				resultSet = pstm.executeQuery();// execute sql
+				int i;
+				while (resultSet.next()) {
+					i = 0;
+					MstJapan japan = new MstJapan();
+					japan.setCodeLevel(resultSet.getString(++i));
+					japan.setNameLevel(resultSet.getString(++i));
+					listJapan.add(japan);
+				}
 			}
 		} finally {
 			closeConnect();
@@ -58,19 +56,18 @@ public class MstJapanDAOImpl extends BaseDAOImpl implements MstJapanDAO {
 		MstJapan mstJapan = null;
 		try {
 			connection = getConnection();// get connection
-			// if connect null then return
-			if (connection == null) {
-				return null;
-			}
-			pstm = connection.prepareStatement(SQL_GET_MST_JAPAN_BY_CODE_LEVEL);// use PrepareStatement
-			pstm.setString(1, codeLevel);
-			resultSet = pstm.executeQuery();// execute sql
-			int i;
-			if (resultSet.next()) {
-				i = 0;
-				mstJapan = new MstJapan();
-				mstJapan.setCodeLevel(resultSet.getString(++i));
-				mstJapan.setNameLevel(resultSet.getString(++i));
+			// check connection
+			if (connection != null) {
+				pstm = connection.prepareStatement(SQL_GET_MST_JAPAN_BY_CODE_LEVEL);// use PrepareStatement
+				pstm.setString(1, codeLevel);
+				resultSet = pstm.executeQuery();// execute sql
+				int i;
+				if (resultSet.next()) {
+					i = 0;
+					mstJapan = new MstJapan();
+					mstJapan.setCodeLevel(resultSet.getString(++i));
+					mstJapan.setNameLevel(resultSet.getString(++i));
+				}
 			}
 		} finally {
 			closeConnect();

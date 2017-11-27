@@ -143,6 +143,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			}
 			// if exist japan
 			if (userInfor.getCodeLevel() != null) {
+				userInfor.setUserId(userId);
 				TblDetailUserJapan tblDetailUserJapan = getTblDetailUserJapanFromUserInfor(userInfor);
 				tblDetailUserJapanDAO.insertDetailUserJapan(tblDetailUserJapan);
 			}

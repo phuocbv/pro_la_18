@@ -33,18 +33,17 @@ public class MstGroupDAOImpl extends BaseDAOImpl implements MstGroupDAO {
 		ArrayList<MstGroup> listGroup = new ArrayList<>();
 		try {
 			connection = getConnection();// get connection
-			// if connect null then return
-			if (connection == null) {
-				return listGroup;
-			}
-			pstm = connection.prepareStatement(SQL_GET_ALL_GROUP);// use PrepareStatement
-			resultSet = pstm.executeQuery();// execute sql
-			// repeat record get and add to list
-			while (resultSet.next()) {
-				MstGroup group = new MstGroup();
-				group.setGroupId(resultSet.getInt(MstGroup.GROUP_ID));
-				group.setGroupName(resultSet.getString(MstGroup.GROUP_NAME));
-				listGroup.add(group);
+			// if connect != null then run next
+			if (connection != null) {
+				pstm = connection.prepareStatement(SQL_GET_ALL_GROUP);// use PrepareStatement
+				resultSet = pstm.executeQuery();// execute sql
+				// repeat record get and add to list
+				while (resultSet.next()) {
+					MstGroup group = new MstGroup();
+					group.setGroupId(resultSet.getInt(MstGroup.GROUP_ID));
+					group.setGroupName(resultSet.getString(MstGroup.GROUP_NAME));
+					listGroup.add(group);
+				}
 			}
 		} finally {
 			closeConnect();
@@ -64,23 +63,21 @@ public class MstGroupDAOImpl extends BaseDAOImpl implements MstGroupDAO {
 		MstGroup mstGroup = null;
 		try {
 			connection = getConnection();// get connection
-			// if connect null then return
-			if (connection == null) {
-				return null;
-			}
-			pstm = connection.prepareStatement(SQL_GET_GROUP_BY_GROUP_ID);// use PrepareStatement
-			pstm.setInt(1, groupId);
-			resultSet = pstm.executeQuery();// execute sql
-			// reader record
-			if (resultSet.next()) {
-				mstGroup = new MstGroup();
-				mstGroup.setGroupId(resultSet.getInt(1));
-				mstGroup.setGroupName(resultSet.getString(2));
+			// if connect != null then run next
+			if (connection != null) {
+				pstm = connection.prepareStatement(SQL_GET_GROUP_BY_GROUP_ID);// use PrepareStatement
+				pstm.setInt(1, groupId);
+				resultSet = pstm.executeQuery();// execute sql
+				// reader record
+				if (resultSet.next()) {
+					mstGroup = new MstGroup();
+					mstGroup.setGroupId(resultSet.getInt(1));
+					mstGroup.setGroupName(resultSet.getString(2));
+				}
 			}
 		} finally {
 			closeConnect();
 		}
-
 		return mstGroup;
 	}
 

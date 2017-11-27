@@ -113,22 +113,22 @@ public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDetailU
 		TblDetailUserJapan tblDetailUserJapan = null;
 		try {
 			connection = getConnection();// get connection
-			if (connection == null) {
-				return tblDetailUserJapan;
-			}
-			pstm = connection.prepareStatement(sqlGetDetailUserJapanByUserId.toString());// use PrepareStatement
-			pstm.setInt(1, userId);
-			resultSet = pstm.executeQuery();// execute sql
-			int i;
-			if (resultSet.next()) {
-				i = 0;
-				tblDetailUserJapan = new TblDetailUserJapan();
-				tblDetailUserJapan.setDetailUserJapanId(resultSet.getInt(++i));
-				tblDetailUserJapan.setUserId(resultSet.getInt(++i));
-				tblDetailUserJapan.setCodeLevel(resultSet.getString(++i));
-				tblDetailUserJapan.setStartDate(resultSet.getDate(++i));
-				tblDetailUserJapan.setEndDate(resultSet.getDate(++i));
-				tblDetailUserJapan.setTotal(resultSet.getInt(++i));
+			// check connection
+			if (connection != null) {
+				pstm = connection.prepareStatement(sqlGetDetailUserJapanByUserId.toString());// use PrepareStatement
+				pstm.setInt(1, userId);
+				resultSet = pstm.executeQuery();// execute sql
+				int i;
+				if (resultSet.next()) {
+					i = 0;
+					tblDetailUserJapan = new TblDetailUserJapan();
+					tblDetailUserJapan.setDetailUserJapanId(resultSet.getInt(++i));
+					tblDetailUserJapan.setUserId(resultSet.getInt(++i));
+					tblDetailUserJapan.setCodeLevel(resultSet.getString(++i));
+					tblDetailUserJapan.setStartDate(resultSet.getDate(++i));
+					tblDetailUserJapan.setEndDate(resultSet.getDate(++i));
+					tblDetailUserJapan.setTotal(resultSet.getInt(++i));
+				}
 			}
 		} finally {
 			closeConnect();

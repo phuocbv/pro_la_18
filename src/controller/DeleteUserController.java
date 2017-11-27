@@ -44,22 +44,18 @@ public class DeleteUserController extends HttpServlet {
 		try {
 			String paramId = req.getParameter("userId");
 			int userId = Common.parseInt(paramId, 0);
-			boolean checkExistTblUser = false;
-			// check userId input
-			if (userId > 0) {
-				checkExistTblUser = tblUserLogic.checkExistTblUserById(userId);
-			}
-			// check userInfor exist
+			boolean checkExistTblUser = tblUserLogic.checkExistTblUserById(userId);
+			// check tbl_user exist
 			if (!checkExistTblUser) {
 				Common.processSystemError(req, resp, Constant.NOT_FOUND_USER);
-				return;
+			} else {
+				boolean success = tblUserLogic.removeUser(userId);// call logic delete user
+				// send redirect to url notification
+				StringBuffer url = new StringBuffer(req.getContextPath()).append(Constant.URL_SUCCESS).append("?type=");
+				String type = success ? Constant.DELETE_SUCCESS : Constant.ERROR;
+				url.append(type);
+				resp.sendRedirect(url.toString());
 			}
-			boolean success = tblUserLogic.removeUser(userId);// call logic delete user
-			// send redirect to url notification
-			StringBuffer url = new StringBuffer(req.getContextPath()).append(Constant.URL_SUCCESS).append("?type=");
-			String type = success ? Constant.DELETE_SUCCESS : Constant.ERROR;
-			url.append(type);
-			resp.sendRedirect(url.toString());
 		} catch (Exception e) {
 			Common.processSystemError(req, resp, Constant.ERROR);
 		}

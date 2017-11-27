@@ -62,23 +62,32 @@ public class AddUserConfirmController extends HttpServlet {
 				Common.processSystemError(req, resp, Constant.NOT_FOUND_USER);
 				return;
 			}
-			// case edit user
+			//get userId in userInfor 
+			int userId = userInfor.getUserId();
+			if (userId > 0) {
+				//check exist in database
+				boolean checkExist = tblUserLogic.checkExistTblUserById(userId);
+				if (!checkExist) {
+					Common.processSystemError(req, resp, Constant.NOT_FOUND_USER);
+					return;
+				}
+			}
+			//get group_name for userInfor
 			MstGroup mstGroup = mstGroupLogic.getGroupById(userInfor.getGroupId());
 			userInfor.setGroupName(mstGroup.getGroupName());
 			String codeLevel = userInfor.getCodeLevel();
-			// check have level japan
+			//if check have level japan then set name_level into userInfor
 			if (codeLevel != null && !Constant.EMPTY_STRING.equals(codeLevel) && !Constant.ZERO.equals(codeLevel)) {
 				MstJapan mstJapan = mstJapanLogic.getMstJapanByCodeLevel(userInfor.getCodeLevel());
 				userInfor.setNameLevel(mstJapan.getNameLevel());
 			}
-			int userId = userInfor.getUserId();
-			StringBuffer urlSubmit = new StringBuffer();
 			// url submit
+			StringBuffer urlSubmit = new StringBuffer();
 			String urlActionSubmit = userId > 0 ? Constant.URL_EDIT_USER_OK : Constant.URL_ADD_USER_OK;
 			urlSubmit.append(req.getContextPath()).append(urlActionSubmit);
+			// url back
 			StringBuffer urlBack = new StringBuffer();
 			String urlActionBack = userId > 0 ? Constant.URL_EDIT_USER_INPUT : Constant.URL_ADD_USER_INPUT;
-			// url back
 			urlBack.append(req.getContextPath()).append(urlActionBack).append("?type=").append(Constant.TYPE_ADM004)
 					.append("&key=").append(keySession);
 			req.setAttribute("urlSubmit", urlSubmit.toString());

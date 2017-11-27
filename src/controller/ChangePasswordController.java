@@ -53,11 +53,11 @@ public class ChangePasswordController extends HttpServlet {
 			// check exist user
 			if (!checkExist) {
 				Common.processSystemError(req, resp, Constant.NOT_FOUND_USER);
-				return;
+			} else {
+				req.setAttribute("userId", paramId);
+				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM007);
+				dispatcher.forward(req, resp);// forward to jsp page
 			}
-			req.setAttribute("userId", paramId);
-			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM007);
-			dispatcher.forward(req, resp);// forward to jsp page
 		} catch (Exception e) {
 			Common.processSystemError(req, resp, Constant.ERROR);
 		}
@@ -91,12 +91,12 @@ public class ChangePasswordController extends HttpServlet {
 				boolean checkSuccess = tblUserLogic.changePasswrordOfUser(userId, userInfor.getPassword());
 				String type = checkSuccess ? Constant.CHANGE_PASSWORD_SUCCESS : Constant.ERROR;
 				Common.processSystemError(req, resp, type);
-				return;
+			} else {
+				req.setAttribute("userId", paramId);
+				req.setAttribute("listMessage", listMessage);
+				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM007);
+				dispatcher.forward(req, resp);// forward to jsp page
 			}
-			req.setAttribute("userId", paramId);
-			req.setAttribute("listMessage", listMessage);
-			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM007);
-			dispatcher.forward(req, resp);// forward to jsp page
 		} catch (Exception e) {
 			Common.processSystemError(req, resp, Constant.ERROR);
 		}
