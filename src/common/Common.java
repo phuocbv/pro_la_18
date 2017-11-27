@@ -27,6 +27,28 @@ import properties.ConfigProperties;
  *
  */
 public class Common {
+	private static List<String> columnSort = new ArrayList<>();
+
+	/**
+	 * check field sort exist
+	 * 
+	 * @param sortField
+	 *            : filed need check
+	 * @return boolean : result after check
+	 */
+	public static boolean checkColumnSort(String sortField) {
+		boolean result = false;
+		if (columnSort.isEmpty()) {
+			columnSort.add(Constant.SORT_BY_FULL_NAME);
+			columnSort.add(Constant.SORT_BY_CODE_LEVEL);
+			columnSort.add(Constant.SORT_BY_END_DATE);
+		}
+		if (columnSort.contains(sortField)) {
+			result = true;
+		}
+		return result;
+	}
+
 	/**
 	 * function encode
 	 * 
@@ -418,7 +440,7 @@ public class Common {
 	 * @return ioString
 	 */
 	public static String formatCondSearch(String ioString) {
-		//check exist value
+		// check exist value
 		if (ioString == null || Constant.EMPTY_STRING.equals(ioString)) {
 			return ioString;
 		}
@@ -438,9 +460,12 @@ public class Common {
 	/**
 	 * proccess when system error
 	 * 
-	 * @param req is object HttpServletRequest
-	 * @param resp is object HttpServletResponse
-	 * @param type is param type notification
+	 * @param req
+	 *            is object HttpServletRequest
+	 * @param resp
+	 *            is object HttpServletResponse
+	 * @param type
+	 *            is param type notification
 	 */
 	public static void processSystemError(HttpServletRequest req, HttpServletResponse resp, String type) {
 		StringBuffer urlNotification = new StringBuffer(req.getContextPath());

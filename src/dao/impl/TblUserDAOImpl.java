@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import common.Common;
 import common.Constant;
 import dao.TblUserDAO;
 import entity.TblUser;
@@ -216,18 +217,24 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 	private String getSQLSort(String SQL, String sortType, String sortByFullName, String sortByCodeLevel,
 			String sortByEndDate) {
 		StringBuffer stringBuffer = new StringBuffer(SQL);
-		if (Constant.SORT_BY_FULL_NAME.equals(sortType)) {// in case sort by full name
-			// add order full_name - name_level - end_date
-			stringBuffer.append(" ORDER BY full_name ").append(sortByFullName).append(" , name_level ")
-					.append(sortByCodeLevel).append(" , end_date ").append(sortByEndDate);
-		} else if (Constant.SORT_BY_CODE_LEVEL.equals(sortType)) {// sort by code level
-			// add order name_level - full_name - end_date
-			stringBuffer.append(" ORDER BY name_level ").append(sortByCodeLevel).append(" , full_name ")
-					.append(sortByFullName).append(" , end_date ").append(sortByEndDate);
-		} else if (Constant.SORT_BY_END_DATE.equals(sortType)) {// sort by end date
-			// add order end_date - full_name - name_level
-			stringBuffer.append(" ORDER BY end_date ").append(sortByEndDate).append(" , full_name ")
-					.append(sortByFullName).append(" , name_level ").append(sortByCodeLevel);
+		boolean checkField = Common.checkColumnSort(sortType);
+		if (checkField) {
+			if (Constant.SORT_BY_FULL_NAME.equals(sortType)) {// in case sort by full name
+				// add order full_name - name_level - end_date
+				stringBuffer.append(" ORDER BY full_name ").append(sortByFullName).append(" , name_level ")
+						.append(sortByCodeLevel).append(" , end_date ").append(sortByEndDate);
+			} else if (Constant.SORT_BY_CODE_LEVEL.equals(sortType)) {// sort by code level
+				// add order name_level - full_name - end_date
+				stringBuffer.append(" ORDER BY name_level ").append(sortByCodeLevel).append(" , full_name ")
+						.append(sortByFullName).append(" , end_date ").append(sortByEndDate);
+			} else if (Constant.SORT_BY_END_DATE.equals(sortType)) {// sort by end date
+				// add order end_date - full_name - name_level
+				stringBuffer.append(" ORDER BY end_date ").append(sortByEndDate).append(" , full_name ")
+						.append(sortByFullName).append(" , name_level ").append(sortByCodeLevel);
+			}
+		} else {
+			stringBuffer.append(" ORDER BY full_name ").append(Constant.ASC).append(" , name_level ")
+					.append(Constant.ASC).append(" , end_date ").append(Constant.DESC);
 		}
 		return stringBuffer.toString();
 	}
@@ -271,7 +278,8 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 		try {
 			connection = getConnection();// get connection
 			if (connection != null) {
-				StringBuffer sql = new StringBuffer(sqlGetTblUser.toString()).append(" WHERE tbl_user.login_name = ?  ");
+				StringBuffer sql = new StringBuffer(sqlGetTblUser.toString())
+						.append(" WHERE tbl_user.login_name = ?  ");
 				if (userId != null) {
 					sql.append(" AND tbl_user.user_id != ? ");
 				}
