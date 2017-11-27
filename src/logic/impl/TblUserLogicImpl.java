@@ -60,8 +60,9 @@ public class TblUserLogicImpl implements TblUserLogic {
 	public ArrayList<UserInfor> getListUsers(int offset, int limit, String groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate)
 			throws ClassNotFoundException, SQLException {
-		return tblUserDAO.getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName, sortByCodeLevel,
+		 ArrayList<UserInfor> list =  tblUserDAO.getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName, sortByCodeLevel,
 				sortByEndDate);
+		 return list;
 	}
 
 	/**
@@ -75,7 +76,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public int getTotalUsers(String groupId, String fullName) throws ClassNotFoundException, SQLException {
-		return tblUserDAO.getTotalUsers(groupId, fullName);
+		int sum = tblUserDAO.getTotalUsers(groupId, fullName);
+		return sum;
 	}
 
 	/**
@@ -283,7 +285,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 		if (tblUser == null) {
 			return null;
 		}
-		return tblUserDAO.getUserInforById(userId);
+		UserInfor userInfor = tblUserDAO.getUserInforById(userId);
+		return userInfor;
 	}
 
 	/**
@@ -320,6 +323,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			throws ClassNotFoundException, SQLException {
 		TblUser tblUser = tblUserDAO.getTblUserById(userId);
 		newPassword = Common.SHA1(newPassword, tblUser.getSalt());
-		return tblUserDAO.updatePasswrord(userId, newPassword);
+		boolean check = tblUserDAO.updatePasswrord(userId, newPassword);
+		return check;
 	}
 }

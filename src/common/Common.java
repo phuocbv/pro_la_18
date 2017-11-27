@@ -411,10 +411,6 @@ public class Common {
 		return result;
 	}
 
-	public String filterString(String value) {
-		return value.replaceAll("%", "\\%");
-	}
-
 	/**
 	 * format special char
 	 * 
@@ -442,9 +438,9 @@ public class Common {
 	/**
 	 * proccess when system error
 	 * 
-	 * @param req
-	 * @param resp
-	 * @param type
+	 * @param req is object HttpServletRequest
+	 * @param resp is object HttpServletResponse
+	 * @param type is param type notification
 	 */
 	public static void processSystemError(HttpServletRequest req, HttpServletResponse resp, String type) {
 		StringBuffer urlNotification = new StringBuffer(req.getContextPath());

@@ -36,7 +36,8 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	 */
 	@Override
 	public ArrayList<MstGroup> getAllListGroups() throws ClassNotFoundException, SQLException {
-		return mstGroupDAO.getAllListGroups();
+		ArrayList<MstGroup>  list = mstGroupDAO.getAllListGroups();
+		return list;
 	}
 
 	/**
@@ -68,6 +69,7 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	@Override
 	public MstGroup getGroupById(String groupId) throws ClassNotFoundException, SQLException {
 		int id = Common.parseInt(groupId, 0);
-		return mstGroupDAO.getGroupById(id);
+		MstGroup mstGroup = mstGroupDAO.getGroupById(id);
+		return mstGroup;
 	}
 }

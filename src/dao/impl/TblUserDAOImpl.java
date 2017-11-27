@@ -97,8 +97,7 @@ public class TblUserDAOImpl extends BaseDAOImpl implements TblUserDAO {
 			sql = getSQLSort(sql, sortType, sortByFullName, sortByCodeLevel, sortByEndDate);// get SQL sort
 			sql = getSQLPaging(sql, offset, limit);// add paging
 			pstm = connection.prepareStatement(sql);// use PrepareStatement
-			setParam(sql, groupId, fullName);
-			System.out.println(pstm.toString());
+			setParam(sql, groupId, fullName);//set data into sql
 			resultSet = pstm.executeQuery();// execute sql
 			int i;
 			while (resultSet.next()) {

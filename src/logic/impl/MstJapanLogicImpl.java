@@ -35,7 +35,8 @@ public class MstJapanLogicImpl implements MstJapanLogic {
 	 */
 	@Override
 	public ArrayList<MstJapan> getAllMstJapan() throws ClassNotFoundException, SQLException {
-		return mstJapanDAO.getAllMstJapan();
+		ArrayList<MstJapan> list = mstJapanDAO.getAllMstJapan();
+		return list;
 	}
 
 	/**
@@ -47,7 +48,8 @@ public class MstJapanLogicImpl implements MstJapanLogic {
 	 */
 	@Override
 	public MstJapan getMstJapanByCodeLevel(String codeLevel) throws ClassNotFoundException, SQLException {
-		return mstJapanDAO.getMstJapanByCodeLevel(codeLevel);
+		MstJapan mstJapan = mstJapanDAO.getMstJapanByCodeLevel(codeLevel);
+		return mstJapan;
 	}
 
 	/**

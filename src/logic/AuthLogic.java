@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * interface LoginLogic
  * 
- * @author da
+ * @author phuocbv
  *
  */
 public interface AuthLogic {
