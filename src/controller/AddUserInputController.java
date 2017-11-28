@@ -73,6 +73,7 @@ public class AddUserInputController extends HttpServlet {
 			}
 			setDataLogic(req, resp);
 			UserInfor userInfor = setDefaultValue(req, resp);
+			setUrl(userInfor.getUserId(), req);
 			req.setAttribute("userInfor", userInfor);
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM003);
 			dispatcher.forward(req, resp);// forward to page jsp
@@ -103,10 +104,11 @@ public class AddUserInputController extends HttpServlet {
 			}
 			ValidateUser validateUser = new ValidateUser();
 			List<String> listError = validateUser.validateUserInfor(userInfor);// validate user
+			// url redirect of button
 			StringBuffer urlRedirect = new StringBuffer(req.getContextPath());
 			// case haven't error
 			if (listError.isEmpty()) {
-				String keySession = Common.SHA1(Common.randomString());// create key session
+				String keySession = Common.getKey();// create key session
 				String action = userInfor.getUserId() > 0 ? Constant.URL_EDIT_USER_CONFIRM
 						: Constant.URL_ADD_USER_CONFIRM;
 				urlRedirect.append(action);
@@ -118,6 +120,7 @@ public class AddUserInputController extends HttpServlet {
 				resp.sendRedirect(urlRedirect.toString());
 			} else {// case validate have error then back ADM003
 				setDataLogic(req, resp);
+				setUrl(userId, req);
 				req.setAttribute("userInfor", userInfor);
 				req.setAttribute("listError", listError);
 				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(Constant.ADM003);
@@ -240,27 +243,32 @@ public class AddUserInputController extends HttpServlet {
 				userInfor.setEndDay(String.valueOf(endDate.get(2)));
 			}
 		}
-		StringBuffer urlBack = new StringBuffer(req.getContextPath());
-		StringBuffer urlSubmit = new StringBuffer(req.getContextPath());
 		// set user id in case ADM03 -> ADM003 in case edit
 		if (paramUserId != null) {
 			int id = Common.parseInt(paramUserId, 0);
 			userInfor.setUserId(id);
 		}
-		// get userId
-		int userId = userInfor.getUserId();
-		// set url submit and url back
+		return userInfor;
+	}
+
+	/**
+	 * 
+	 * @param userId
+	 * @param req
+	 */
+	private void setUrl(int userId, HttpServletRequest req) {
+		StringBuffer urlBack = new StringBuffer(req.getContextPath());
+		StringBuffer urlSubmit = new StringBuffer(req.getContextPath());
 		if (userId > 0) {// in case edit
 			urlBack.append(Constant.URL_SHOW_DETAIL_USER).append("?userId=").append(userId);
 			urlSubmit.append(Constant.URL_EDIT_USER_VALIDATE);
 			req.setAttribute("userId", userId);
-		} else {//in case add
+		} else {// in case add
 			urlBack.append(Constant.URL_LIST_USER).append("?type=back");
 			urlSubmit.append(Constant.URL_ADD_USER_VALIDATE);
 		}
 		urlSubmit.append("?type=").append(Constant.TYPE_ADM003);
 		req.setAttribute("urlSubmit", urlSubmit.toString());
 		req.setAttribute("urlBack", urlBack.toString());
-		return userInfor;
 	}
 }

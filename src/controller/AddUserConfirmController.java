@@ -81,11 +81,11 @@ public class AddUserConfirmController extends HttpServlet {
 				MstJapan mstJapan = mstJapanLogic.getMstJapanByCodeLevel(userInfor.getCodeLevel());
 				userInfor.setNameLevel(mstJapan.getNameLevel());
 			}
-			// url submit
+			// url submit in ADM004
 			StringBuffer urlSubmit = new StringBuffer();
 			String urlActionSubmit = userId > 0 ? Constant.URL_EDIT_USER_OK : Constant.URL_ADD_USER_OK;
 			urlSubmit.append(req.getContextPath()).append(urlActionSubmit);
-			// url back
+			// url back of button back in ADM004
 			StringBuffer urlBack = new StringBuffer();
 			String urlActionBack = userId > 0 ? Constant.URL_EDIT_USER_INPUT : Constant.URL_ADD_USER_INPUT;
 			urlBack.append(req.getContextPath()).append(urlActionBack).append("?type=").append(Constant.TYPE_ADM004)

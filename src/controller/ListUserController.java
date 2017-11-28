@@ -115,7 +115,7 @@ public class ListUserController extends HttpServlet {
 			}
 			// add page into session
 			dataSession.put(Constant.PAGE, String.valueOf(page));
-			String fullName = Common.formatCondSearch((String) dataSession.get(Constant.FULL_NAME));
+			String fullName = Common.replaceWildCard((String) dataSession.get(Constant.FULL_NAME));
 			int totalUser = tblUserLogic.getTotalUsers(dataSession.get(Constant.GROUP_ID), fullName);// get total user
 			if (totalUser != 0) {// check total user
 				// get limit in page

@@ -135,7 +135,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 		TblUser tblUser = getTblUserFromUserInfor(userInfor);
 		tblUser.setSalt(salt);
 		try {
-			baseDAO.dbConnection();// create connection
+			baseDAO.transactionConnection();// create connection
 			baseDAO.setAutoCommit(false);// set auto commit = false
 			Integer userId = tblUserDAO.insertUser(tblUser);
 			if (userId == null) {// if insert tbl_user not success then return false
@@ -213,7 +213,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 		TblDetailUserJapan detailUserJapan = tblDetailUserJapanDAO.gettDetailUserJapanByUserId(userId);
 		try {
 			boolean check = true;
-			baseDAO.dbConnection();// create connection
+			baseDAO.transactionConnection();// create connection
 			baseDAO.setAutoCommit(false);// set auto commit = false
 			tblUserDAO.updateUser(tblUser);
 			// if exist japan
@@ -221,7 +221,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 				TblDetailUserJapan tblDetailUserJapan = getTblDetailUserJapanFromUserInfor(userInfor);
 				if (detailUserJapan == null) {// if not exist then add to database
 					check = tblDetailUserJapanDAO.insertDetailUserJapan(tblDetailUserJapan);
-				} else {
+				} else {//if exist then update detailUserJapan
 					check = tblDetailUserJapanDAO.updateDetailUserJapan(tblDetailUserJapan);
 				}
 			} else {// if exist detailUserJapan and codeLevel is null then delete detailUserJapan
@@ -255,7 +255,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	@Override
 	public boolean removeUser(int userId) throws ClassNotFoundException, SQLException {
 		try {
-			baseDAO.dbConnection();// create connection
+			baseDAO.transactionConnection();// create connection
 			baseDAO.setAutoCommit(false);// set auto commit = false
 			tblDetailUserJapanDAO.deleteDetailUserJapan(userId);
 			tblUserDAO.deleteUser(userId);

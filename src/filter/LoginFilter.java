@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import common.Constant;
 
 /**
- * filter login
+ * filter login : check login
  * 
  * @author da
  *

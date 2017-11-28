@@ -79,7 +79,7 @@ public class BaseDAOImpl implements BaseDAO {
 	 * 
 	 */
 	@Override
-	public void dbConnection() throws SQLException, ClassNotFoundException {
+	public void transactionConnection() throws SQLException, ClassNotFoundException {
 		connection = getConnection();
 	}
 

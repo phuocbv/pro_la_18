@@ -53,7 +53,7 @@ public interface BaseDAO {
 	 * @throws ClassNotFoundException
 	 * 
 	 */
-	public void dbConnection() throws SQLException, ClassNotFoundException;
+	public void transactionConnection() throws SQLException, ClassNotFoundException;
 
 	/**
 	 * function rollBack

@@ -50,6 +50,15 @@ public class Common {
 	}
 
 	/**
+	 * function create key
+	 * 
+	 * @return string is key
+	 */
+	public static String getKey() {
+		return SHA1(randomString());
+	}
+
+	/**
 	 * function encode
 	 * 
 	 * @param value
@@ -437,24 +446,15 @@ public class Common {
 	 * replace special char
 	 * 
 	 * @param ioString
-	 * @return ioString
+	 *            : is string input
+	 * @return ioString : is string output after replace
 	 */
-	public static String formatCondSearch(String ioString) {
-		// check exist value
-		if (ioString == null || Constant.EMPTY_STRING.equals(ioString)) {
+	public static String replaceWildCard(String ioString) {
+		// check exist ioString
+		if (ioString == null) {
 			return ioString;
 		}
-		// array special char
-		String[] specialChars = { "\\", "%", "_", "[", "]", "-", "!" };
-		String[] replaceSpecialChars = { "\\\\", "\\%", "\\_", "\\[", "\\]", "\\-", "\\!" };
-		// replace special char
-		int specialCharsLeng = specialChars.length;
-		for (int i = 0; i < specialCharsLeng; i++) {
-			if (ioString.contains(specialChars[i])) {
-				ioString = ioString.replace(specialChars[i], replaceSpecialChars[i]);
-			}
-		}
-		return ioString;
+		return ioString.replace("%", "\\%").replace("_", "\\_");
 	}
 
 	/**
