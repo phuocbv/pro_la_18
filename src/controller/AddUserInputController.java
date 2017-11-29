@@ -252,9 +252,10 @@ public class AddUserInputController extends HttpServlet {
 	}
 
 	/**
+	 * function set url on screen
 	 * 
-	 * @param userId
-	 * @param req
+	 * @param userId is id of tbl_user
+	 * @param req object HttpServletRequest
 	 */
 	private void setUrl(int userId, HttpServletRequest req) {
 		StringBuffer urlBack = new StringBuffer(req.getContextPath());

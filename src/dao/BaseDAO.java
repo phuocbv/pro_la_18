@@ -37,8 +37,6 @@ public interface BaseDAO {
 	 */
 	public void setAutoCommit(boolean value) throws SQLException;
 
-	// public void executeUpdate() throws SQLException;
-
 	/**
 	 * commit database
 	 * 

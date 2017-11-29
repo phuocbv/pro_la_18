@@ -443,7 +443,7 @@ public class Common {
 	}
 
 	/**
-	 * replace special char
+	 * replace wildcard char
 	 * 
 	 * @param ioString
 	 *            : is string input
@@ -454,7 +454,7 @@ public class Common {
 		if (ioString == null) {
 			return ioString;
 		}
-		return ioString.replace("%", "\\%").replace("_", "\\_");
+		return ioString.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_");
 	}
 
 	/**
