@@ -76,7 +76,7 @@ public class TblDetailUserJapanDAOImpl extends BaseDAOImpl implements TblDetailU
 		if (row == 0) {
 			return false;
 		}
-		return true;
+		return true;-
 	}
 
 	/**

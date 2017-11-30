@@ -48,9 +48,4 @@ public class LogFile {
 	public static void info(String value) {
 		logger.info(value);
 	}
-
-	public static void main(String[] args) {
-		LogFile.info("ok");
-		LogFile.warning("not good");
-	}
 }
