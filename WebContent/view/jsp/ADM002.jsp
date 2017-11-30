@@ -159,7 +159,7 @@
 					<tr>
 						<td class="lbl_paging">
 							<c:if test="${currentPage > totalPaging}">
-								<a href="${pageContext.request.contextPath}${Constant.URL_LIST_USER}?page=${listPaging.get(0) - 1}&${paramPaging}"><<</a>&nbsp;
+								<a href="${pageContext.request.contextPath}${Constant.URL_LIST_USER}?page=${listPaging.get(0) - totalPaging}&${paramPaging}"><<</a>&nbsp;
 							</c:if> 
 							<c:forEach var="item" items="${listPaging}">
 								<c:choose>

@@ -69,6 +69,7 @@ public class BaseDAOImpl implements BaseDAO {
 		if (connection != null) {
 			connection.close();
 		}
+		connection = null;
 	}
 
 	/**

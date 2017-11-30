@@ -109,7 +109,6 @@ public class ListUserController extends HttpServlet {
 				if (currentPage != null) {// get current page
 					page = Common.parseInt(currentPage, Constant.DEFAULT_PAGE);
 				}
-				
 			} else if (Constant.TYPE_BACK.equals(type)) {// in case back from diffrent screen
 				page = Common.parseInt(dataSession.get(Constant.PAGE), 1);
 			}
